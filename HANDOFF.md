@@ -27,6 +27,9 @@ Everything below is implemented, tested, and on the PR branch:
   load and can switch it from the nav; the choice is stored in `localStorage`
   (`np-theme`). `public/theme.js` applies the theme before hydration to avoid
   a flash.
+- **PWA install support**: manifest, standalone display metadata, 192/512px
+  app icons, and a small production service worker cache the app shell for
+  repeat visits/offline fallback.
 - **Contact form** → Netlify Function `POST /api/contact`
   ([netlify/functions/contact.mjs](netlify/functions/contact.mjs)):
   validation, honeypot, per-IP rate limit (5/10 min, best-effort), Resend
@@ -87,6 +90,13 @@ through semantic tokens in `src/styles/tokens/colors.css` and shadow overrides
 in `src/styles/tokens/spacing.css`; section/component styles should keep using
 semantic tokens where possible. The nav theme toggle is intentionally stable
 between SSR and hydration, with icon visibility handled in CSS.
+
+## PWA implementation notes
+
+Install metadata lives in `public/manifest.webmanifest`; the production-only
+service worker registration is at the end of `src/main.jsx`, and the worker is
+`public/sw.js`. If you change app-shell files or want returning installed apps
+to refresh cached shell assets immediately, bump `CACHE_NAME` in `sw.js`.
 
 ## Known quirks / gotchas
 

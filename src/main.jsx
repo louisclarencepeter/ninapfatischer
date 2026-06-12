@@ -19,3 +19,11 @@ if (container.hasChildNodes()) {
 } else {
   createRoot(container).render(app)
 }
+
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      // The site still works normally if install support is unavailable.
+    })
+  })
+}

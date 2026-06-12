@@ -1,0 +1,62 @@
+{
+  "name": "Nina Pfatischer Yoga",
+  "short_name": "Nina Yoga",
+  "description": "Yoga, Achtsamkeit, Vinyasa Flow, Hatha, Yin und Meditation mit Nina Pfatischer.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F5EDE1",
+  "theme_color": "#F5EDE1",
+  "orientation": "portrait-primary",
+  "lang": "de",
+  "dir": "ltr",
+  "categories": ["health", "fitness", "lifestyle"],
+  "icons": [
+    {
+      "src": "/pwa-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/pwa-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Kurs anfragen",
+      "short_name": "Kontakt",
+      "description": "Eine Yoga-Stunde mit Nina anfragen.",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "/pwa-icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Classes in English",
+      "short_name": "English",
+      "description": "Open the English version of the yoga site.",
+      "url": "/en/",
+      "icons": [
+        {
+          "src": "/pwa-icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
