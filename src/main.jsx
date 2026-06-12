@@ -1,10 +1,29 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import App from './App.jsx'
+import { languageFromPath } from './i18n.js'
 import './styles/index.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const container = document.getElementById('root')
+const language = languageFromPath(window.location.pathname)
+const app = (
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <App language={language} />
+  </React.StrictMode>
 )
+
+// Production builds are prerendered (scripts/prerender.mjs), so the HTML
+// already contains the page — hydrate it. In dev the root is empty.
+if (container.hasChildNodes()) {
+  hydrateRoot(container, app)
+} else {
+  createRoot(container).render(app)
+}
+
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      // The site still works normally if install support is unavailable.
+    })
+  })
+}

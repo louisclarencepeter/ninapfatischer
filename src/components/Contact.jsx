@@ -1,9 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-const POINTS = [
+const POINT_ICONS = [
   {
-    title: 'Studios & outdoors',
-    desc: 'Group classes, privates & retreats — Germany and beyond.',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
@@ -12,8 +10,6 @@ const POINTS = [
     ),
   },
   {
-    title: 'All levels welcome',
-    desc: 'Beginners to seasoned practitioners. Come exactly as you are.',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
@@ -23,8 +19,6 @@ const POINTS = [
     ),
   },
   {
-    title: 'Sound-led sessions',
-    desc: 'Each class is shaped by music and the mood of the day.',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9 18V5l12-2v13" />
@@ -35,8 +29,13 @@ const POINTS = [
   },
 ]
 
-export default function Contact({ onSent }) {
+export default function Contact({ copy, onSent }) {
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
+  const confirmRef = useRef(null)
+
+  useEffect(() => {
+    if (status === 'sent') confirmRef.current?.focus()
+  }, [status])
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -61,17 +60,14 @@ export default function Contact({ onSent }) {
     <section id="contact" className="np-contact-section">
       <div className="np-container np-contact">
         <div>
-          <span className="np-section-eyebrow">Let&rsquo;s practice together</span>
-          <h2 className="np-section-title">Come breathe with me</h2>
-          <p className="np-contact-lead">
-            Tell me a little about what you&rsquo;re looking for &mdash; a class, a private
-            session, or simply where to begin. I&rsquo;ll write back personally.
-          </p>
+          <span className="np-section-eyebrow">{copy.eyebrow}</span>
+          <h2 className="np-section-title">{copy.title}</h2>
+          <p className="np-contact-lead">{copy.lead}</p>
           <div className="np-contact-points">
-            {POINTS.map((p) => (
+            {copy.points.map((p, index) => (
               <div key={p.title} className="np-point">
                 <span aria-hidden="true" className="np-point-icon">
-                  {p.icon}
+                  {POINT_ICONS[index].icon}
                 </span>
                 <div>
                   <div className="np-point-title">{p.title}</div>
@@ -90,45 +86,46 @@ export default function Contact({ onSent }) {
                   <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                 </svg>
               </span>
-              <h3>Thank you</h3>
-              <p>
-                Your message is on its way. I&rsquo;ll be in touch soon &mdash; take a deep breath,
-                you&rsquo;re already on your way.
-              </p>
+              <h3 tabIndex={-1} ref={confirmRef}>
+                {copy.confirmationTitle}
+              </h3>
+              <p>{copy.confirmation}</p>
             </div>
           ) : (
             <form className="np-form" onSubmit={handleSubmit}>
               <div className="np-form-two">
                 <div className="np-field">
-                  <label htmlFor="np-name">Your name</label>
-                  <input id="np-name" name="name" type="text" required placeholder="Jane Doe" autoComplete="name" />
+                  <label htmlFor="np-name">{copy.labels.name}</label>
+                  <input id="np-name" name="name" type="text" required placeholder={copy.placeholders.name} autoComplete="name" />
                 </div>
                 <div className="np-field">
-                  <label htmlFor="np-email">Email</label>
-                  <input id="np-email" name="email" type="email" required placeholder="you@example.com" autoComplete="email" />
+                  <label htmlFor="np-email">{copy.labels.email}</label>
+                  <input id="np-email" name="email" type="email" required placeholder={copy.placeholders.email} autoComplete="email" />
                 </div>
               </div>
               <div className="np-field">
-                <label htmlFor="np-practice">Which practice calls you?</label>
-                <input id="np-practice" name="practice" type="text" placeholder="Vinyasa, Yin, a private session…" />
+                <label htmlFor="np-practice">{copy.labels.practice}</label>
+                <input id="np-practice" name="practice" type="text" placeholder={copy.placeholders.practice} />
               </div>
               <div className="np-field">
-                <label htmlFor="np-msg">Message</label>
-                <textarea id="np-msg" name="message" rows="4" required placeholder="Tell me what you're looking for…" />
+                <label htmlFor="np-msg">{copy.labels.message}</label>
+                <textarea id="np-msg" name="message" rows="4" required placeholder={copy.placeholders.message} />
               </div>
               <div className="np-hp" aria-hidden="true">
-                <label htmlFor="np-website">Leave this field empty</label>
+                <label htmlFor="np-website">{copy.labels.website}</label>
                 <input id="np-website" name="website" type="text" tabIndex="-1" autoComplete="off" />
               </div>
               {status === 'error' && (
                 <p className="np-form-error" role="alert">
-                  Something went quiet on the way &mdash; please try again, or write to me directly
-                  at nina@ninapfatischer.com.
+                  {copy.errorPrefix} <a href="mailto:nina@ninapfatischer.com">nina@ninapfatischer.com</a>.
                 </p>
               )}
               <button type="submit" className="np-btn np-btn-primary np-submit" disabled={status === 'sending'}>
-                {status === 'sending' ? 'Sending…' : 'Send a message'}
+                {status === 'sending' ? copy.sending : copy.submit}
               </button>
+              <p className="np-form-privacy">
+                {copy.privacyPrefix} <a href="/datenschutz.html">{copy.privacyLink}</a>.
+              </p>
             </form>
           )}
         </div>

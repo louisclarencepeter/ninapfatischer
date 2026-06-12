@@ -1,14 +1,67 @@
 import { useEffect, useState } from 'react'
+import { LANGUAGES, pathForLanguage } from '../i18n.js'
 
-const LINKS = [
-  { href: '#about', label: 'Story' },
-  { href: '#classes', label: 'Classes' },
-  { href: '#music', label: 'Music' },
-  { href: '#gallery', label: 'Moments' },
-  { href: '#contact', label: 'Contact' },
-]
+function LanguageSwitcher({ copy, language }) {
+  return (
+    <div className="np-lang-switch" aria-label={copy.language.label}>
+      {LANGUAGES.map((lang) => (
+        <a
+          key={lang}
+          href={pathForLanguage(lang)}
+          className={`np-lang-link${language === lang ? ' is-active' : ''}`}
+          hrefLang={lang}
+          aria-current={language === lang ? 'true' : undefined}
+        >
+          {copy.language[lang]}
+        </a>
+      ))}
+    </div>
+  )
+}
 
-export default function Nav({ onBook }) {
+function ThemeToggle({ copy, onToggleTheme }) {
+  return (
+    <button
+      type="button"
+      className="np-theme-toggle"
+      aria-label={copy.theme.label}
+      title={copy.theme.label}
+      onClick={onToggleTheme}
+    >
+      <svg
+        className="np-theme-icon np-theme-icon-sun"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      </svg>
+      <svg
+        className="np-theme-icon np-theme-icon-moon"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </svg>
+    </button>
+  )
+}
+
+export default function Nav({ copy, language, onBook, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -21,32 +74,36 @@ export default function Nav({ onBook }) {
 
   return (
     <header className={`np-nav${scrolled ? ' is-scrolled' : ''}`}>
-      <nav className="np-container np-nav-inner" aria-label="Primary">
+      <nav className="np-container np-nav-inner" aria-label={copy.navLabel}>
         <a href="#top" className="np-brand">
           <span className="np-wordmark">Nina Pfatischer</span>
-          <span className="np-sub">Yoga &middot; Mindfulness</span>
+          <span className="np-sub">{copy.brandSub}</span>
         </a>
         <div className="np-nav-links">
-          {LINKS.map((l) => (
+          {copy.nav.map((l) => (
             <a key={l.href} href={l.href} className="np-link">
               {l.label}
             </a>
           ))}
-          <button
-            type="button"
-            className="np-bookbtn"
-            onClick={() => {
-              setMenuOpen(false)
-              onBook()
-            }}
-          >
-            Book a class
-          </button>
+          <div className="np-nav-controls">
+            <LanguageSwitcher copy={copy} language={language} />
+            <ThemeToggle copy={copy} onToggleTheme={onToggleTheme} />
+            <button
+              type="button"
+              className="np-bookbtn"
+              onClick={() => {
+                setMenuOpen(false)
+                onBook()
+              }}
+            >
+              {copy.buttons.book}
+            </button>
+          </div>
         </div>
         <button
           type="button"
           className="np-menu-btn"
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-label={menuOpen ? copy.menu.close : copy.menu.open}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((o) => !o)}
         >
@@ -67,11 +124,15 @@ export default function Nav({ onBook }) {
       {menuOpen && (
         <div className="np-menu">
           <div className="np-container np-menu-inner">
-            {LINKS.map((l) => (
+            {copy.nav.map((l) => (
               <a key={l.href} href={l.href} className="np-menu-link" onClick={() => setMenuOpen(false)}>
                 {l.label}
               </a>
             ))}
+            <div className="np-menu-controls">
+              <LanguageSwitcher copy={copy} language={language} />
+              <ThemeToggle copy={copy} onToggleTheme={onToggleTheme} />
+            </div>
           </div>
         </div>
       )}

@@ -1,6 +1,7 @@
 /* Nina Pfatischer Yoga — global stylesheet entry point.
-   Tokens come from the design system; fonts are loaded in index.html. */
+   Tokens come from the design system; fonts are self-hosted. */
 
+@import './tokens/fonts.css';
 @import './tokens/colors.css';
 @import './tokens/typography.css';
 @import './tokens/spacing.css';

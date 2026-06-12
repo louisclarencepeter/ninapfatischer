@@ -1,8 +1,5 @@
-const CLASSES = [
+const CLASS_META = [
   {
-    title: 'Vinyasa Flow',
-    desc: 'Dynamic, powerful sequences that link breath to movement — building heat, strength, and a steady, flowing focus.',
-    tags: ['75 min', 'Dynamic'],
     tint: 'np-tint-clay',
     icon: (
       <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
@@ -13,9 +10,6 @@ const CLASSES = [
     ),
   },
   {
-    title: 'Hatha Yoga',
-    desc: 'Inner peace and stability through mindful alignment and conscious breathing. Slower, deliberate, deeply grounding.',
-    tags: ['60 min', 'Foundational'],
     tint: 'np-tint-sage',
     icon: (
       <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
@@ -24,9 +18,6 @@ const CLASSES = [
     ),
   },
   {
-    title: 'Yin Yoga',
-    desc: 'Calm and gentle, with long-held poses, philosophy, and meditation. A quiet space to soften and let go.',
-    tags: ['75 min', 'Gentle'],
     tint: 'np-tint-ochre',
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
@@ -35,9 +26,6 @@ const CLASSES = [
     ),
   },
   {
-    title: 'Meditation & Long Stretches',
-    desc: 'Guided stillness, long held stretches, and conscious breath — settling the mind and returning to gratitude.',
-    tags: ['30 min', 'Stillness'],
     tint: 'np-tint-sage',
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
@@ -48,35 +36,35 @@ const CLASSES = [
   },
 ]
 
-export default function Classes() {
+export default function Classes({ copy }) {
   return (
     <section id="classes" className="np-classes">
       <div className="np-container">
         <header className="np-classes-header">
-          <span className="np-section-eyebrow">The Practice</span>
-          <h2 className="np-section-title">Find the class that meets you today</h2>
-          <p className="np-classes-intro">
-            Every session balances movement and stillness. Come exactly as you are &mdash; each
-            practice is designed flexibly to fit the day.
-          </p>
+          <span className="np-section-eyebrow">{copy.eyebrow}</span>
+          <h2 className="np-section-title">{copy.title}</h2>
+          <p className="np-classes-intro">{copy.intro}</p>
         </header>
         <div className="np-class-grid">
-          {CLASSES.map((c) => (
+          {copy.items.map((c, index) => {
+            const meta = CLASS_META[index]
+            return (
             <article key={c.title} className="np-class-card">
-              <span aria-hidden="true" className={`np-class-icon ${c.tint}`}>
-                {c.icon}
+              <span aria-hidden="true" className={`np-class-icon ${meta.tint}`}>
+                {meta.icon}
               </span>
               <h3 className="np-class-title">{c.title}</h3>
               <p className="np-class-desc">{c.desc}</p>
               <div className="np-class-tags">
                 {c.tags.map((t) => (
-                  <span key={t} className={`np-tag ${c.tint}`}>
+                  <span key={t} className={`np-tag ${meta.tint}`}>
                     {t}
                   </span>
                 ))}
               </div>
             </article>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
