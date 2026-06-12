@@ -1,0 +1,49 @@
+/* ============================================================
+   Nina Pfatischer Yoga — Spacing, Radii, Shadows, Motion
+   Generous whitespace. Soft rounded corners. Gentle shadows.
+   Calm, unhurried transitions.
+   ============================================================ */
+
+:root {
+  /* ---- Spacing scale (4px base, breathes upward) ---- */
+  --space-0:   0;
+  --space-1:   0.25rem;  /* 4 */
+  --space-2:   0.5rem;   /* 8 */
+  --space-3:   0.75rem;  /* 12 */
+  --space-4:   1rem;     /* 16 */
+  --space-5:   1.5rem;   /* 24 */
+  --space-6:   2rem;     /* 32 */
+  --space-7:   3rem;     /* 48 */
+  --space-8:   4rem;     /* 64 */
+  --space-9:   6rem;     /* 96 */
+  --space-10:  8rem;     /* 128 — section rhythm */
+
+  /* ---- Layout ---- */
+  --content-max:   1200px;  /* page container */
+  --content-text:  680px;   /* comfortable reading measure */
+  --gutter:        var(--space-5);
+
+  /* ---- Radii: soft & organic ---- */
+  --radius-xs:   6px;
+  --radius-sm:   10px;
+  --radius-md:   16px;   /* cards, buttons default */
+  --radius-lg:   24px;   /* large cards */
+  --radius-xl:   40px;   /* hero image frames */
+  --radius-pill: 999px;  /* pill buttons, chips */
+  --radius-arch: 50% 50% var(--radius-lg) var(--radius-lg) / 38% 38% var(--radius-lg) var(--radius-lg); /* arch-topped frame */
+
+  /* ---- Shadows: subtle, warm-tinted ---- */
+  --shadow-xs:  0 1px 2px rgba(58, 51, 44, 0.05);
+  --shadow-sm:  0 2px 8px rgba(58, 51, 44, 0.06);
+  --shadow-md:  0 8px 24px rgba(58, 51, 44, 0.08);
+  --shadow-lg:  0 18px 48px rgba(58, 51, 44, 0.12);
+  --shadow-image: 0 24px 60px rgba(58, 51, 44, 0.18);
+
+  /* ---- Motion: calm & gentle ---- */
+  --ease-calm:   cubic-bezier(0.22, 0.61, 0.36, 1); /* @kind other */
+  --ease-soft:   cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --dur-fast:    160ms; /* @kind other */
+  --dur-base:    260ms; /* @kind other */
+  --dur-slow:    420ms; /* @kind other */
+  --transition-base: all var(--dur-base) var(--ease-calm);
+}
