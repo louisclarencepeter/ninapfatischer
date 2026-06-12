@@ -1,0 +1,73 @@
+/* ============================================================
+   Nina Pfatischer Yoga — Color Tokens
+   Warm, grounded, serene. Sun-warmed neutrals with clay,
+   sage and golden-light accents. Derived from the brand's
+   golden-hour outdoor photography (desert, gardens, mountains).
+   ============================================================ */
+
+:root {
+  /* ---- Base palette: Sand / Cream surfaces ---- */
+  --np-cream-lightest: #FBF7F0;  /* lightest sand wash */
+  --np-cream:          #F5EDE1;  /* primary warm background */
+  --np-warm-white:     #FCFAF6;  /* warm white surface */
+  --np-sand:           #EFE3D2;  /* deeper sand, subtle fills */
+
+  /* ---- Clay / Terracotta (primary accent) ---- */
+  --np-clay:           #C17B5A;  /* primary accent */
+  --np-clay-deep:      #A85F40;  /* deep terracotta, hover/press */
+  --np-clay-soft:      #E2BBA4;  /* tint, soft fills */
+
+  /* ---- Sage / Olive (secondary accent) ---- */
+  --np-sage:           #8A9A7B;  /* soft sage */
+  --np-olive:          #6E7A5E;  /* muted olive, deeper */
+  --np-sage-soft:      #C5CFB8;  /* tint, soft fills */
+
+  /* ---- Golden ochre (highlight) ---- */
+  --np-ochre:          #D9A864;  /* golden light highlight */
+  --np-ochre-soft:     #EBD2A8;  /* tint */
+
+  /* ---- Warm neutrals (stone / taupe) ---- */
+  --np-taupe:          #B7A78F;  /* warm taupe / stone */
+  --np-stone:          #9C8C74;  /* deeper stone */
+
+  /* ---- Text ---- */
+  --np-ink:            #3A332C;  /* charcoal-brown, headings */
+  --np-body:           #5C5246;  /* soft brown, body text */
+  --np-muted:          #8A7E6F;  /* muted captions / meta */
+
+  /* ============================================================
+     Semantic aliases — reference these in components & layouts
+     ============================================================ */
+
+  /* Surfaces */
+  --surface-page:      var(--np-cream);
+  --surface-raised:    var(--np-warm-white);
+  --surface-card:      var(--np-cream-lightest);
+  --surface-sunk:      var(--np-sand);
+  --surface-invert:    var(--np-ink);
+
+  /* Text */
+  --text-heading:      var(--np-ink);
+  --text-body:         var(--np-body);
+  --text-muted:        var(--np-muted);
+  --text-on-accent:    var(--np-cream-lightest);
+  --text-on-dark:      var(--np-cream);
+
+  /* Accents */
+  --accent-primary:        var(--np-clay);
+  --accent-primary-strong: var(--np-clay-deep);
+  --accent-primary-soft:   var(--np-clay-soft);
+  --accent-secondary:      var(--np-sage);
+  --accent-secondary-strong: var(--np-olive);
+  --accent-secondary-soft: var(--np-sage-soft);
+  --accent-highlight:      var(--np-ochre);
+
+  /* Lines & borders */
+  --border-soft:       rgba(58, 51, 44, 0.10);
+  --border-medium:     rgba(58, 51, 44, 0.16);
+  --border-accent:     var(--np-clay);
+  --border-sage:       var(--np-sage);
+
+  /* Focus ring */
+  --focus-ring:        rgba(193, 123, 90, 0.45);
+}
