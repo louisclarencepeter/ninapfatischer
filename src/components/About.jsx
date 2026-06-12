@@ -1,14 +1,26 @@
+const WIDTHS = [640, 1024, 1600, 2000]
+const jpg = WIDTHS.map((w) => `/images/tree-pose-mountains${w === 2000 ? '' : `-w${w}`}.jpg ${w}w`).join(', ')
+const webp = WIDTHS.map((w) => `/images/tree-pose-mountains-w${w}.webp ${w}w`).join(', ')
+const SIZES = '(max-width: 860px) 92vw, 40vw'
+
 export default function About() {
   return (
     <section id="about" className="np-about">
       <div className="np-container np-split">
         <div className="np-about-media">
           <div className="np-about-frame">
-            <img
-              src="/images/tree-pose-mountains.jpg"
-              alt="Nina balancing in tree pose before soft, misty mountains"
-              loading="lazy"
-            />
+            <picture>
+              <source type="image/webp" srcSet={webp} sizes={SIZES} />
+              <img
+                src="/images/tree-pose-mountains.jpg"
+                srcSet={jpg}
+                sizes={SIZES}
+                width="2000"
+                height="1995"
+                alt="Nina balancing in tree pose before soft, misty mountains"
+                loading="lazy"
+              />
+            </picture>
           </div>
           <div className="np-floatstat">
             <div className="np-floatstat-num">5</div>

@@ -1,12 +1,23 @@
+const WIDTHS = [640, 960, 1440, 1800]
+const jpg = WIDTHS.map((w) => `/images/portrait-garden${w === 1800 ? '' : `-w${w}`}.jpg ${w}w`).join(', ')
+const webp = WIDTHS.map((w) => `/images/portrait-garden-w${w}.webp ${w}w`).join(', ')
+
 export default function Hero({ onBook }) {
   return (
     <section id="top" className="np-hero">
-      <img
-        src="/images/portrait-garden.jpg"
-        alt="Nina smiling toward the sun on a wooden boardwalk in a green garden"
-        className="np-hero-img"
-        fetchpriority="high"
-      />
+      <picture>
+        <source type="image/webp" srcSet={webp} sizes="100vw" />
+        <img
+          src="/images/portrait-garden.jpg"
+          srcSet={jpg}
+          sizes="100vw"
+          width="1800"
+          height="2400"
+          alt="Nina smiling toward the sun on a wooden boardwalk in a green garden"
+          className="np-hero-img"
+          fetchpriority="high"
+        />
+      </picture>
       <div className="np-hero-scrim" aria-hidden="true" />
       <div className="np-container np-hero-content">
         <div className="np-hero-copy">

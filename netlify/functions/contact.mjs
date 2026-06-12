@@ -7,15 +7,47 @@
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+// Best-effort rate limit. State is per function instance, so a cold start
+// resets it — good enough to stop casual flooding without a datastore.
+const WINDOW_MS = 10 * 60 * 1000
+const MAX_PER_WINDOW = 5
+const hits = new Map()
+
+function rateLimited(ip) {
+  const now = Date.now()
+  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS)
+  recent.push(now)
+  hits.set(ip, recent)
+  if (hits.size > 1000) {
+    for (const [key, times] of hits) {
+      if (times.every((t) => now - t >= WINDOW_MS)) hits.delete(key)
+    }
+  }
+  return recent.length > MAX_PER_WINDOW
+}
+
+// Single-line fields: collapse whitespace (including CR/LF) so nothing
+// odd reaches the email subject.
+const line = (value, max) =>
+  String(value ?? '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, max)
+
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), {
     status,
     headers: { 'Content-Type': 'application/json' },
   })
 
-export default async (req) => {
+export default async (req, context) => {
   if (req.method !== 'POST') {
     return json({ error: 'Method not allowed' }, 405)
+  }
+
+  const ip = context?.ip ?? req.headers.get('x-nf-client-connection-ip') ?? 'unknown'
+  if (rateLimited(ip)) {
+    return json({ error: 'Too many messages — please try again a little later.' }, 429)
   }
 
   let data
@@ -30,10 +62,13 @@ export default async (req) => {
     return json({ ok: true })
   }
 
-  const name = String(data.name ?? '').trim().slice(0, 200)
-  const email = String(data.email ?? '').trim().slice(0, 200)
-  const practice = String(data.practice ?? '').trim().slice(0, 200)
-  const message = String(data.message ?? '').trim().slice(0, 5000)
+  const name = line(data.name, 200)
+  const email = line(data.email, 200)
+  const practice = line(data.practice, 200)
+  const message = String(data.message ?? '')
+    .replace(/\r/g, '')
+    .trim()
+    .slice(0, 5000)
 
   if (!name || !message || !EMAIL_RE.test(email)) {
     return json({ error: 'Please provide your name, a valid email, and a message.' }, 400)

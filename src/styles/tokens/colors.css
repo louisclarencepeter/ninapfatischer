@@ -33,7 +33,7 @@
   /* ---- Text ---- */
   --np-ink:            #3A332C;  /* charcoal-brown, headings */
   --np-body:           #5C5246;  /* soft brown, body text */
-  --np-muted:          #8A7E6F;  /* muted captions / meta */
+  --np-muted:          #6E6354;  /* muted captions / meta (darkened from #8A7E6F for WCAG AA) */
 
   /* ============================================================
      Semantic aliases — reference these in components & layouts
@@ -52,6 +52,9 @@
   --text-muted:        var(--np-muted);
   --text-on-accent:    var(--np-cream-lightest);
   --text-on-dark:      var(--np-cream);
+  /* Deep clay for small accent text (eyebrows, labels) — brand clay
+     #C17B5A only reaches ~2.9:1 on cream, below WCAG AA 4.5:1. */
+  --text-accent:       #9C5536;
 
   /* Accents */
   --accent-primary:        var(--np-clay);

@@ -1,12 +1,23 @@
+const WIDTHS = [768, 1280, 1920, 2200]
+const jpg = WIDTHS.map((w) => `/images/wildthing-clay${w === 2200 ? '' : `-w${w}`}.jpg ${w}w`).join(', ')
+const webp = WIDTHS.map((w) => `/images/wildthing-clay-w${w}.webp ${w}w`).join(', ')
+
 export default function Music() {
   return (
     <section id="music" className="np-music">
-      <img
-        src="/images/wildthing-clay.jpg"
-        alt="Nina arching into wild thing pose on sun-warmed clay rock at golden hour"
-        className="np-music-img"
-        loading="lazy"
-      />
+      <picture>
+        <source type="image/webp" srcSet={webp} sizes="100vw" />
+        <img
+          src="/images/wildthing-clay.jpg"
+          srcSet={jpg}
+          sizes="100vw"
+          width="2200"
+          height="1833"
+          alt="Nina arching into wild thing pose on sun-warmed clay rock at golden hour"
+          className="np-music-img"
+          loading="lazy"
+        />
+      </picture>
       <div className="np-music-scrim" aria-hidden="true" />
       <div className="np-container np-music-content">
         <div className="np-music-copy">

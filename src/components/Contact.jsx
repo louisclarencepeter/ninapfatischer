@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const POINTS = [
   {
@@ -37,6 +37,11 @@ const POINTS = [
 
 export default function Contact({ onSent }) {
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
+  const confirmRef = useRef(null)
+
+  useEffect(() => {
+    if (status === 'sent') confirmRef.current?.focus()
+  }, [status])
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -90,7 +95,9 @@ export default function Contact({ onSent }) {
                   <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                 </svg>
               </span>
-              <h3>Thank you</h3>
+              <h3 tabIndex={-1} ref={confirmRef}>
+                Thank you
+              </h3>
               <p>
                 Your message is on its way. I&rsquo;ll be in touch soon &mdash; take a deep breath,
                 you&rsquo;re already on your way.
@@ -123,12 +130,16 @@ export default function Contact({ onSent }) {
               {status === 'error' && (
                 <p className="np-form-error" role="alert">
                   Something went quiet on the way &mdash; please try again, or write to me directly
-                  at nina@ninapfatischer.com.
+                  at <a href="mailto:nina@ninapfatischer.com">nina@ninapfatischer.com</a>.
                 </p>
               )}
               <button type="submit" className="np-btn np-btn-primary np-submit" disabled={status === 'sending'}>
                 {status === 'sending' ? 'Sending…' : 'Send a message'}
               </button>
+              <p className="np-form-privacy">
+                I&rsquo;ll only use your details to reply to you &mdash; nothing else. Details in
+                the <a href="/datenschutz.html">privacy policy</a>.
+              </p>
             </form>
           )}
         </div>
