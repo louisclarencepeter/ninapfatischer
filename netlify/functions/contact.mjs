@@ -1,9 +1,7 @@
 // Contact form handler — Netlify Function (v2 API).
-// Validates the submission and forwards it by email via Resend when
-// RESEND_API_KEY is configured. Delivery goes to nina@ninapfatischer.com
-// unless CONTACT_TO_EMAIL overrides it; the sender address requires the
-// ninapfatischer.com domain to be verified in Resend. Without an API key
-// submissions are logged and the form still succeeds.
+// Validates the submission and sends outbound email through Resend's
+// /emails API. Resend is used only for sending; EMAIL_NOTIFICATION_TO must be
+// a real receiving mailbox hosted through normal MX records.
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -40,6 +38,59 @@ const json = (body, status = 200) =>
     headers: { 'Content-Type': 'application/json' },
   })
 
+const getEnv = (key) => String(process.env[key] ?? '').trim()
+
+const isTruthy = (value) => ['1', 'true', 'yes', 'on'].includes(String(value ?? '').trim().toLowerCase())
+
+const parseEmailList = (value) =>
+  String(value ?? '')
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean)
+
+const sendWithResend = async ({ apiKey, from, to, subject, text, replyTo, bcc }) => {
+  const payload = {
+    from,
+    to,
+    subject,
+    text,
+    reply_to: replyTo || undefined,
+    bcc: bcc?.length ? bcc : undefined,
+  }
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+
+  if (!res.ok) {
+    throw new Error(`Resend error ${res.status}: ${await res.text()}`)
+  }
+
+  return res.json()
+}
+
+const getMailConfig = () => {
+  const config = {
+    apiKey: getEnv('RESEND_API_KEY'),
+    from: getEnv('EMAIL_FROM'),
+    replyTo: getEnv('EMAIL_REPLY_TO'),
+    notificationTo: getEnv('EMAIL_NOTIFICATION_TO'),
+    notificationBcc: parseEmailList(getEnv('EMAIL_NOTIFICATION_BCC')),
+    confirmationsEnabled: isTruthy(getEnv('EMAIL_CONFIRMATIONS_ENABLED')),
+  }
+
+  if (!config.apiKey) return { ok: false, reason: 'RESEND_API_KEY is missing.', ...config }
+  if (!config.from) return { ok: false, reason: 'EMAIL_FROM is missing.', ...config }
+  if (!config.notificationTo) return { ok: false, reason: 'EMAIL_NOTIFICATION_TO is missing.', ...config }
+
+  return { ok: true, reason: '', ...config }
+}
+
 export default async (req, context) => {
   if (req.method !== 'POST') {
     return json({ error: 'Method not allowed' }, 405)
@@ -74,44 +125,65 @@ export default async (req, context) => {
     return json({ error: 'Please provide your name, a valid email, and a message.' }, 400)
   }
 
-  const apiKey = process.env.RESEND_API_KEY
-  const to = process.env.CONTACT_TO_EMAIL || 'nina@ninapfatischer.com'
+  const mailConfig = getMailConfig()
+  if (!mailConfig.ok) {
+    console.error('Contact email delivery is not configured:', mailConfig.reason)
+    return json({ error: 'Could not deliver the message. Please try again later.' }, 503)
+  }
 
-  if (apiKey) {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: process.env.CONTACT_FROM_EMAIL || 'Nina Pfatischer Yoga <nina@ninapfatischer.com>',
-        to: [to],
-        reply_to: email,
-        subject: `New message from ${name}${practice ? ` — ${practice}` : ''}`,
+  const internalText = [
+    'New website contact form submission',
+    '',
+    `Name: ${name}`,
+    `Email: ${email}`,
+    practice && `Practice: ${practice}`,
+    '',
+    message,
+  ]
+    .filter(Boolean)
+    .join('\n')
+
+  try {
+    await sendWithResend({
+      apiKey: mailConfig.apiKey,
+      from: mailConfig.from,
+      to: [mailConfig.notificationTo],
+      replyTo: email,
+      bcc: mailConfig.notificationBcc,
+      subject: `New message from ${name}${practice ? ` — ${practice}` : ''}`,
+      text: internalText,
+    })
+  } catch (error) {
+    console.error('Contact email delivery failed:', error)
+    return json({ error: 'Could not deliver the message. Please try again later.' }, 502)
+  }
+
+  if (mailConfig.confirmationsEnabled) {
+    try {
+      await sendWithResend({
+        apiKey: mailConfig.apiKey,
+        from: mailConfig.from,
+        to: [email],
+        replyTo: mailConfig.replyTo || undefined,
+        subject: 'Danke fuer deine Nachricht',
         text: [
-          `Name: ${name}`,
-          `Email: ${email}`,
-          practice && `Practice: ${practice}`,
+          `Hallo ${name},`,
           '',
+          'danke fuer deine Nachricht. Nina meldet sich so bald wie moeglich bei dir.',
+          '',
+          practice && `Dein Thema: ${practice}`,
+          '',
+          'Deine Nachricht:',
           message,
+          '',
+          'Nina Pfatischer Yoga',
         ]
           .filter(Boolean)
           .join('\n'),
-      }),
-    })
-
-    if (!res.ok) {
-      console.error('Resend error', res.status, await res.text())
-      return json({ error: 'Could not deliver the message. Please try again later.' }, 502)
+      })
+    } catch (error) {
+      console.error('Customer confirmation email failed:', error)
     }
-  } else {
-    console.log('Contact submission (email delivery not configured):', {
-      name,
-      email,
-      practice,
-      message,
-    })
   }
 
   return json({ ok: true })
