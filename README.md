@@ -76,6 +76,11 @@ still succeeds. Optional overrides: `CONTACT_TO_EMAIL` (recipient) and
 
 ## Still open
 
+- **Bilingual site (confirmed requirement):** the page must be available in
+  **German and English**. Planned approach: a language switcher in the nav,
+  copy extracted into per-language dictionaries (`de`/`en`), `lang` attribute
+  and `hreflang` annotations per language, with German likely the default
+  for the audience. The legal pages already exist in German.
 - Real Instagram/YouTube profile URLs (`SOCIALS` in `Footer.jsx` — hidden
   until provided).
 - Address placeholders in `impressum.html` / `datenschutz.html`.
