@@ -63,16 +63,31 @@ Connect the repo; `netlify.toml` sets the build (`npm run build` → `dist`),
 the functions directory, security headers, and caching. CI
 (`.github/workflows/ci.yml`) runs tests and the build on every PR.
 
-Form submissions are emailed via [Resend](https://resend.com) to
-**nina@ninapfatischer.com**. Setup:
+Form submissions post to `POST /api/contact` and the Netlify Function sends
+outbound mail through Resend's `POST /emails` API only. Resend Receiving is
+not used as the business inbox; `EMAIL_NOTIFICATION_TO` must be a real mailbox
+that can receive mail through normal MX hosting.
 
-1. Verify the `ninapfatischer.com` domain in the Resend dashboard (required to
-   send from `nina@ninapfatischer.com`).
-2. Set `RESEND_API_KEY` in the Netlify environment variables.
+Use `.env.example` as the Netlify environment template:
 
-Without the API key, submissions are logged in the function logs and the form
-still succeeds. Optional overrides: `CONTACT_TO_EMAIL` (recipient) and
-`CONTACT_FROM_EMAIL` (sender).
+```bash
+RESEND_API_KEY=...
+EMAIL_FROM="Nina Pfatischer Yoga <nina@ninapfatischer.com>"
+EMAIL_REPLY_TO=nina@ninapfatischer.com
+EMAIL_NOTIFICATION_TO=<Nina's real receiving inbox>
+EMAIL_NOTIFICATION_BCC=
+EMAIL_CONFIRMATIONS_ENABLED=true
+```
+
+Setup:
+
+1. Verify the sender domain in Resend so `EMAIL_FROM` can send.
+2. Configure normal MX hosting for the mailbox used in `EMAIL_NOTIFICATION_TO`.
+3. Set the env vars above in Netlify with Functions/runtime scope.
+4. Redeploy, then test the live form.
+
+If `RESEND_API_KEY`, `EMAIL_FROM`, or `EMAIL_NOTIFICATION_TO` is missing, the
+function returns a delivery error instead of silently dropping the lead.
 
 ## Still open
 

@@ -1,6 +1,6 @@
 # Handoff — ninapfatischer.com
 
-_Last updated: 2026-06-12. State as of [PR #2](https://github.com/louisclarencepeter/ninapfatischer/pull/2) (branch `development`)._
+_Last updated: 2026-06-12. State as of merged [PR #2](https://github.com/louisclarencepeter/ninapfatischer/pull/2) (branch `development` → `main`)._
 
 ## What this is
 
@@ -32,8 +32,9 @@ Everything below is implemented, tested, and on the PR branch:
   repeat visits/offline fallback.
 - **Contact form** → Netlify Function `POST /api/contact`
   ([netlify/functions/contact.mjs](netlify/functions/contact.mjs)):
-  validation, honeypot, per-IP rate limit (5/10 min, best-effort), Resend
-  email delivery to nina@ninapfatischer.com. 7 passing tests in `tests/`.
+  validation, honeypot, per-IP rate limit (5/10 min, best-effort), outbound
+  Resend `/emails` delivery to `EMAIL_NOTIFICATION_TO`, plus optional customer
+  confirmations. 10 passing tests in `tests/`.
 - **GDPR**: fonts self-hosted (`public/fonts/`, zero Google requests),
   German Impressum + Datenschutzerklärung (`public/*.html`), privacy note on
   the form, no cookies/tracking.
@@ -62,17 +63,59 @@ npm run build      # client build + SSR build + prerender into dist/
 `npm run dev` works for UI-only (form will show its error state — no
 function server).
 
-## Action required before launch (cannot be done in code)
+## Action required before launch
 
 1. **Address placeholders** in `public/impressum.html` and
    `public/datenschutz.html` (highlighted spans) — German law requires a
    complete Impressum. Have the Datenschutzerklärung reviewed.
-2. **Resend**: verify the `ninapfatischer.com` domain in Resend, set
-   `RESEND_API_KEY` env var in Netlify. Until then submissions only land in
-   the function logs (form still shows success).
+2. **Set a real receiving inbox for website leads.** The contact function uses
+   Resend only for outbound sending via `/emails`; it does not use Resend
+   Receiving as the business inbox. `EMAIL_NOTIFICATION_TO` must be Nina's real
+   mailbox at a normal mail host, with MX records configured for that mailbox
+   provider. Keep Resend's sending-domain records in place for `EMAIL_FROM`.
 3. **Social links**: Instagram/YouTube are hidden (see `SOCIALS` in
    `src/components/Footer.jsx`) — add real profile URLs to show them.
-4. **Netlify**: connect the repo; `netlify.toml` handles the rest.
+4. **Final real-device QA**: verify DE/EN navigation, dark/light theme,
+   section anchor alignment, gallery/lightbox, contact form, and PWA install
+   on at least one iOS and one Android/desktop browser.
+
+## Production configuration status
+
+- **GitHub/Netlify**: PR #2 was merged to `main` on 2026-06-12. The Netlify
+  project is `admirable-churros-e13680`, connected to
+  `https://ninapfatischer.com` and this GitHub repo.
+- **Email routing decision**: match the Trockenbau Prima Vista pattern. The
+  site submits to the existing Netlify Function, and the function sends through
+  Resend's outbound `POST /emails` API only. Do not use Resend Receiving as the
+  inbox for `nina@ninapfatischer.com` unless a full inbound webhook/forwarder
+  is intentionally implemented.
+- **Receiving mailbox / MX**: `EMAIL_NOTIFICATION_TO` must point at a real
+  mailbox that can receive email through normal MX hosting. If Nina wants
+  `nina@ninapfatischer.com` to receive leads directly, configure that mailbox
+  at a mail host and set the root-domain MX records to that host, not to Resend
+  Receiving.
+- **Netlify DNS zone**: `ninapfatischer.com` is managed in Netlify DNS; zone
+  ID `6a2bc90e09fbba3ce7d26ad0`. Add the chosen mail provider's root-domain
+  MX records here. The existing `send.ninapfatischer.com` records should stay
+  in place for Resend sending/bounces.
+- **Netlify env vars**: production uses `RESEND_API_KEY`, `EMAIL_FROM`,
+  `EMAIL_REPLY_TO`, `EMAIL_NOTIFICATION_TO`, `EMAIL_NOTIFICATION_BCC`, and
+  `EMAIL_CONFIRMATIONS_ENABLED`. `EMAIL_NOTIFICATION_TO` is set to
+  `ninapfatischer@gmail.com`. The old `CONTACT_FROM_EMAIL` and
+  `CONTACT_TO_EMAIL` variables were removed in Netlify on 2026-06-12.
+  `RESEND_API_KEY` must be available to Functions/runtime scope.
+- **Resend API key**: key `ninapfatischer-contact` was created in Resend with
+  Sending access and restricted to the `ninapfatischer.com` domain.
+- **Latest production redeploy**: triggered on 2026-06-12 after env vars were
+  corrected; deploy `6a2c1c6b10e3c5171c97c52f` reached `ready`.
+- **Latest contact-form test context**: earlier live tests sent notifications
+  to `nina@ninapfatischer.com` before a real receiving mailbox was confirmed,
+  so the form UI returned success while the business notification was not
+  reliably delivered. Retest only after `EMAIL_NOTIFICATION_TO` points to
+  Nina's actual receiving inbox.
+- **Email sender behavior**: the visitor's email is used as `reply_to`; the
+  technical `from` address must remain a verified `ninapfatischer.com` sender
+  because Resend cannot safely send from arbitrary visitor domains.
 
 ## Bilingual implementation notes
 
