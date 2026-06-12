@@ -1,14 +1,25 @@
 import { useEffect, useState } from 'react'
+import { LANGUAGES, pathForLanguage } from '../i18n.js'
 
-const LINKS = [
-  { href: '#about', label: 'Story' },
-  { href: '#classes', label: 'Classes' },
-  { href: '#music', label: 'Music' },
-  { href: '#gallery', label: 'Moments' },
-  { href: '#contact', label: 'Contact' },
-]
+function LanguageSwitcher({ copy, language }) {
+  return (
+    <div className="np-lang-switch" aria-label={copy.language.label}>
+      {LANGUAGES.map((lang) => (
+        <a
+          key={lang}
+          href={pathForLanguage(lang)}
+          className={`np-lang-link${language === lang ? ' is-active' : ''}`}
+          hrefLang={lang}
+          aria-current={language === lang ? 'true' : undefined}
+        >
+          {copy.language[lang]}
+        </a>
+      ))}
+    </div>
+  )
+}
 
-export default function Nav({ onBook }) {
+export default function Nav({ copy, language, onBook }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -21,17 +32,18 @@ export default function Nav({ onBook }) {
 
   return (
     <header className={`np-nav${scrolled ? ' is-scrolled' : ''}`}>
-      <nav className="np-container np-nav-inner" aria-label="Primary">
+      <nav className="np-container np-nav-inner" aria-label={copy.navLabel}>
         <a href="#top" className="np-brand">
           <span className="np-wordmark">Nina Pfatischer</span>
-          <span className="np-sub">Yoga &middot; Mindfulness</span>
+          <span className="np-sub">{copy.brandSub}</span>
         </a>
         <div className="np-nav-links">
-          {LINKS.map((l) => (
+          {copy.nav.map((l) => (
             <a key={l.href} href={l.href} className="np-link">
               {l.label}
             </a>
           ))}
+          <LanguageSwitcher copy={copy} language={language} />
           <button
             type="button"
             className="np-bookbtn"
@@ -40,13 +52,13 @@ export default function Nav({ onBook }) {
               onBook()
             }}
           >
-            Book a class
+            {copy.buttons.book}
           </button>
         </div>
         <button
           type="button"
           className="np-menu-btn"
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-label={menuOpen ? copy.menu.close : copy.menu.open}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((o) => !o)}
         >
@@ -67,11 +79,12 @@ export default function Nav({ onBook }) {
       {menuOpen && (
         <div className="np-menu">
           <div className="np-container np-menu-inner">
-            {LINKS.map((l) => (
+            {copy.nav.map((l) => (
               <a key={l.href} href={l.href} className="np-menu-link" onClick={() => setMenuOpen(false)}>
                 {l.label}
               </a>
             ))}
+            <LanguageSwitcher copy={copy} language={language} />
           </div>
         </div>
       )}

@@ -19,6 +19,10 @@ Everything below is implemented, tested, and on the PR branch:
 - Sections: Nav (frost-on-scroll), Hero, About/story, Classes (4 cards),
   Music interlude, Gallery ("Moments", 12 photos, shuffled per visit,
   lightbox with focus trap), Contact form, Footer.
+- **Bilingual German + English**: German is the default root page (`/`),
+  English is prerendered at `/en/`, with a DE/EN nav switcher, localized
+  section copy, localized alt/ARIA/form text, language-specific canonical
+  URLs, `hreflang`, `lang`, and JSON-LD metadata.
 - **Contact form** → Netlify Function `POST /api/contact`
   ([netlify/functions/contact.mjs](netlify/functions/contact.mjs)):
   validation, honeypot, per-IP rate limit (5/10 min, best-effort), Resend
@@ -63,13 +67,14 @@ function server).
    `src/components/Footer.jsx`) — add real profile URLs to show them.
 4. **Netlify**: connect the repo; `netlify.toml` handles the rest.
 
-## Confirmed next feature: bilingual DE + EN
+## Bilingual implementation notes
 
-Confirmed requirement (Louis, 2026-06-12): the site must ship in **German
-and English**. Not yet implemented. Planned approach: nav language
-switcher, copy extracted to per-language dictionaries (`de`/`en`), `lang` +
-`hreflang` per language, German likely the default. All copy currently
-lives inline in `src/components/*.jsx` and `index.html` meta.
+Implemented requirement (Louis, 2026-06-12): the site ships in **German and
+English**. Copy lives in `src/i18n.js`; component structure/icons/images stay
+local to their sections. `scripts/prerender.mjs` writes both
+`dist/index.html` and `dist/en/index.html` from the same Vite build and
+injects the language-specific metadata. If copy changes, run `npm run build`
+and check both generated pages.
 
 ## Known quirks / gotchas
 

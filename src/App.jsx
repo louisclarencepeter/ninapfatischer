@@ -7,11 +7,20 @@ import Music from './components/Music.jsx'
 import Gallery from './components/Gallery.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
+import { copy, languageFromPath, normalizeLanguage } from './i18n.js'
 
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-export default function App() {
+const initialLanguage = (language) => {
+  if (language) return normalizeLanguage(language)
+  if (typeof window === 'undefined') return 'de'
+  return languageFromPath(window.location.pathname)
+}
+
+export default function App({ language }) {
+  const lang = initialLanguage(language)
+  const t = copy[lang]
   const [toast, setToast] = useState('')
   const toastTimer = useRef(null)
 
@@ -26,27 +35,27 @@ export default function App() {
   const goBook = useCallback(() => {
     const el = document.getElementById('contact')
     if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 64
+      const top = el.getBoundingClientRect().top + window.scrollY
       window.scrollTo({ top, behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
     }
-    showToast('Let’s find your class — a few details below')
-  }, [showToast])
+    showToast(t.toast.book)
+  }, [showToast, t.toast.book])
 
   return (
     <>
       <a href="#main" className="np-skip">
-        Skip to content
+        {t.skip}
       </a>
-      <Nav onBook={goBook} />
+      <Nav language={lang} copy={t} onBook={goBook} />
       <main id="main">
-        <Hero onBook={goBook} />
-        <About />
-        <Classes />
-        <Music />
-        <Gallery />
-        <Contact onSent={() => showToast('Message sent — talk soon ✨')} />
+        <Hero copy={t.hero} buttons={t.buttons} onBook={goBook} />
+        <About copy={t.about} />
+        <Classes copy={t.classes} />
+        <Music copy={t.music} />
+        <Gallery copy={t.gallery} />
+        <Contact copy={t.contact} onSent={() => showToast(t.toast.sent)} />
       </main>
-      <Footer />
+      <Footer copy={t} />
       {/* Persistent live region: mounting text into an existing region is
           what gets screen readers to actually announce the toast. */}
       <div role="status" aria-live="polite">

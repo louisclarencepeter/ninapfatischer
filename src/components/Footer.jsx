@@ -1,11 +1,3 @@
-const FOOTER_LINKS = [
-  { href: '#about', label: 'Story' },
-  { href: '#classes', label: 'Classes' },
-  { href: '#music', label: 'Music' },
-  { href: '#gallery', label: 'Moments' },
-  { href: '#contact', label: 'Contact' },
-]
-
 // Entries without an href are hidden until the real profile URLs are
 // provided — placeholder links pointing nowhere hurt trust and SEO.
 const SOCIALS = [
@@ -42,20 +34,20 @@ const SOCIALS = [
   },
 ].filter((s) => s.href)
 
-export default function Footer() {
+export default function Footer({ copy }) {
   return (
     <footer className="np-footer-section">
       <div className="np-container">
         <div className="np-footer">
           <div className="np-footer-brand">
             <div className="np-footer-wordmark">Nina Pfatischer</div>
-            <p className="np-footer-tagline">Move, soften, and come home to yourself.</p>
+            <p className="np-footer-tagline">{copy.footer.tagline}</p>
           </div>
           <div className="np-footer-cols">
             <div>
-              <span className="np-footer-heading">Explore</span>
+              <span className="np-footer-heading">{copy.footer.explore}</span>
               <div className="np-footer-links">
-                {FOOTER_LINKS.map((l) => (
+                {copy.nav.map((l) => (
                   <a key={l.href} href={l.href} className="np-footer-link">
                     {l.label}
                   </a>
@@ -63,7 +55,7 @@ export default function Footer() {
               </div>
             </div>
             <div>
-              <span className="np-footer-heading">Find me</span>
+              <span className="np-footer-heading">{copy.footer.findMe}</span>
               <div className="np-socials">
                 {SOCIALS.map((s) => (
                   <a key={s.label} href={s.href} aria-label={s.label} className="np-social">
@@ -80,14 +72,14 @@ export default function Footer() {
           </span>
           <span>
             <a href="/impressum.html" className="np-footer-link">
-              Impressum
+              {copy.footer.legal.impressum}
             </a>
             {' · '}
             <a href="/datenschutz.html" className="np-footer-link">
-              Datenschutz
+              {copy.footer.legal.privacy}
             </a>
           </span>
-          <span>Trained in Portugal &middot; Teaching in Germany</span>
+          <span>{copy.footer.location}</span>
         </div>
       </div>
     </footer>

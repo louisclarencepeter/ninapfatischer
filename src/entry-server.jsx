@@ -2,6 +2,6 @@
 import { renderToString } from 'react-dom/server'
 import App from './App.jsx'
 
-export function render() {
-  return renderToString(<App />)
+export function render(language) {
+  return renderToString(<App language={language} />)
 }

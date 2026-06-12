@@ -3,7 +3,7 @@ const jpg = WIDTHS.map((w) => `/images/tree-pose-mountains${w === 2000 ? '' : `-
 const webp = WIDTHS.map((w) => `/images/tree-pose-mountains-w${w}.webp ${w}w`).join(', ')
 const SIZES = '(max-width: 860px) 92vw, 40vw'
 
-export default function About() {
+export default function About({ copy }) {
   return (
     <section id="about" className="np-about">
       <div className="np-container np-split">
@@ -17,37 +17,23 @@ export default function About() {
                 sizes={SIZES}
                 width="2000"
                 height="1995"
-                alt="Nina balancing in tree pose before soft, misty mountains"
+                alt={copy.alt}
                 loading="lazy"
               />
             </picture>
           </div>
           <div className="np-floatstat">
             <div className="np-floatstat-num">5</div>
-            <div className="np-floatstat-label">
-              surgeries, and one long road back to my own strength
-            </div>
+            <div className="np-floatstat-label">{copy.stat}</div>
           </div>
         </div>
         <div>
-          <span className="np-section-eyebrow">My Story</span>
-          <h2 className="np-section-title">Yoga gave me back my ground</h2>
+          <span className="np-section-eyebrow">{copy.eyebrow}</span>
+          <h2 className="np-section-title">{copy.title}</h2>
           <div className="np-about-body">
-            <p className="np-lead">
-              For me, yoga is so much more than movement. After a serious knee injury, five
-              surgeries, and a long recovery, it helped me find stability, strength, and inner
-              peace again &mdash; both physically and mentally.
-            </p>
-            <p>
-              I trained in Portugal and have had the joy of teaching in studios in Morocco and
-              Germany. My classes balance movement and stillness, strength and relaxation &mdash;
-              shaped flexibly to fit the day. Each one is an invitation back to mindfulness,
-              serenity, and gratitude.
-            </p>
-            <p className="np-about-wish">
-              My wish is simple: that you leave lighter, more grounded, and more connected to
-              yourself.
-            </p>
+            <p className="np-lead">{copy.lead}</p>
+            <p>{copy.body}</p>
+            <p className="np-about-wish">{copy.wish}</p>
           </div>
         </div>
       </div>
