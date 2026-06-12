@@ -119,7 +119,13 @@ img {
 .np-nav-links {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: clamp(20px, 2.3vw, 32px);
+}
+
+.np-nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 .np-link {
@@ -189,6 +195,46 @@ img {
 
 .np-nav.is-scrolled .np-lang-link.is-active {
   background: var(--surface-card);
+  color: var(--text-heading);
+}
+
+.np-theme-toggle {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid rgba(251, 247, 240, 0.46);
+  background: rgba(251, 247, 240, 0.08);
+  color: rgba(251, 247, 240, 0.9);
+  cursor: pointer;
+  transition: background-color 0.26s var(--ease-calm), color 0.26s var(--ease-calm),
+    border-color 0.26s var(--ease-calm), transform 0.16s var(--ease-calm);
+}
+
+.np-theme-toggle:hover {
+  background: rgba(251, 247, 240, 0.16);
+  color: var(--np-cream-lightest);
+  transform: translateY(-1px);
+}
+
+.np-theme-icon-sun {
+  display: none;
+}
+
+:root[data-theme='dark'] .np-theme-icon-sun {
+  display: block;
+}
+
+:root[data-theme='dark'] .np-theme-icon-moon {
+  display: none;
+}
+
+.np-nav.is-scrolled .np-theme-toggle {
+  border-color: var(--border-soft);
+  background: rgba(251, 247, 240, 0.56);
   color: var(--text-heading);
 }
 
@@ -287,6 +333,52 @@ img {
 .np-menu .np-lang-link.is-active {
   background: var(--np-sage-soft);
   color: var(--accent-secondary-strong);
+}
+
+.np-menu-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.np-menu-controls .np-lang-switch {
+  margin-top: 0;
+}
+
+.np-menu .np-theme-toggle {
+  border-color: var(--border-soft);
+  background: var(--surface-card);
+  color: var(--text-heading);
+}
+
+:root[data-theme='dark'] .np-nav.is-scrolled {
+  background: rgba(23, 18, 15, 0.86);
+  box-shadow: 0 1px 0 rgba(251, 247, 240, 0.1);
+}
+
+:root[data-theme='dark'] .np-nav.is-scrolled .np-lang-switch,
+:root[data-theme='dark'] .np-nav.is-scrolled .np-theme-toggle {
+  background: rgba(251, 247, 240, 0.08);
+  border-color: rgba(251, 247, 240, 0.14);
+}
+
+:root[data-theme='dark'] .np-nav.is-scrolled .np-lang-link.is-active {
+  background: rgba(251, 247, 240, 0.12);
+}
+
+:root[data-theme='dark'] .np-nav.is-scrolled .np-bookbtn {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+}
+
+:root[data-theme='dark'] .np-nav.is-scrolled .np-menu-btn {
+  background: rgba(251, 247, 240, 0.08);
+  color: var(--text-heading);
+  border-color: rgba(251, 247, 240, 0.14);
+}
+
+:root[data-theme='dark'] .np-menu {
+  background: rgba(23, 18, 15, 0.97);
 }
 
 /* ---- Eyebrow + section headings ---- */
@@ -635,6 +727,21 @@ img {
 .np-tint-ochre {
   background: var(--np-ochre-soft);
   color: #6f4d1e;
+}
+
+:root[data-theme='dark'] .np-tint-clay {
+  background: rgba(208, 138, 99, 0.18);
+  color: #F1B99A;
+}
+
+:root[data-theme='dark'] .np-tint-sage {
+  background: rgba(155, 170, 138, 0.18);
+  color: #D0DBC4;
+}
+
+:root[data-theme='dark'] .np-tint-ochre {
+  background: rgba(224, 179, 111, 0.18);
+  color: #EBCB93;
 }
 
 /* ---- Music interlude ---- */

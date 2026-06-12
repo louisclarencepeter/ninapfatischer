@@ -19,7 +19,49 @@ function LanguageSwitcher({ copy, language }) {
   )
 }
 
-export default function Nav({ copy, language, onBook }) {
+function ThemeToggle({ copy, onToggleTheme }) {
+  return (
+    <button
+      type="button"
+      className="np-theme-toggle"
+      aria-label={copy.theme.label}
+      title={copy.theme.label}
+      onClick={onToggleTheme}
+    >
+      <svg
+        className="np-theme-icon np-theme-icon-sun"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      </svg>
+      <svg
+        className="np-theme-icon np-theme-icon-moon"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </svg>
+    </button>
+  )
+}
+
+export default function Nav({ copy, language, onBook, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -43,17 +85,20 @@ export default function Nav({ copy, language, onBook }) {
               {l.label}
             </a>
           ))}
-          <LanguageSwitcher copy={copy} language={language} />
-          <button
-            type="button"
-            className="np-bookbtn"
-            onClick={() => {
-              setMenuOpen(false)
-              onBook()
-            }}
-          >
-            {copy.buttons.book}
-          </button>
+          <div className="np-nav-controls">
+            <LanguageSwitcher copy={copy} language={language} />
+            <ThemeToggle copy={copy} onToggleTheme={onToggleTheme} />
+            <button
+              type="button"
+              className="np-bookbtn"
+              onClick={() => {
+                setMenuOpen(false)
+                onBook()
+              }}
+            >
+              {copy.buttons.book}
+            </button>
+          </div>
         </div>
         <button
           type="button"
@@ -84,7 +129,10 @@ export default function Nav({ copy, language, onBook }) {
                 {l.label}
               </a>
             ))}
-            <LanguageSwitcher copy={copy} language={language} />
+            <div className="np-menu-controls">
+              <LanguageSwitcher copy={copy} language={language} />
+              <ThemeToggle copy={copy} onToggleTheme={onToggleTheme} />
+            </div>
           </div>
         </div>
       )}

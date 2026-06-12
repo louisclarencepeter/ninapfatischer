@@ -45,6 +45,11 @@ export const copy = {
       de: 'DE',
       en: 'EN',
     },
+    theme: {
+      label: 'Darstellung wechseln',
+      light: 'Helles Design aktivieren',
+      dark: 'Dunkles Design aktivieren',
+    },
     menu: {
       open: 'Menü öffnen',
       close: 'Menü schließen',
@@ -125,7 +130,7 @@ export const copy = {
       viewPhoto: 'Foto ansehen',
       close: 'Foto schließen',
       previous: 'Vorheriges Foto',
-      next: 'Naechstes Foto',
+      next: 'Nächstes Foto',
       photos: [
         'Nina sitzt im Lotus auf sonnenwarmem Wüstenfels',
         'Nina in einer Unterarmbalance vor einer roten Tonklippe',
@@ -219,6 +224,11 @@ export const copy = {
       label: 'Switch language',
       de: 'DE',
       en: 'EN',
+    },
+    theme: {
+      label: 'Switch theme',
+      light: 'Switch to light theme',
+      dark: 'Switch to dark theme',
     },
     menu: {
       open: 'Open menu',

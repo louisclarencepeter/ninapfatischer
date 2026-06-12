@@ -18,9 +18,20 @@ const initialLanguage = (language) => {
   return languageFromPath(window.location.pathname)
 }
 
+const initialTheme = () => {
+  if (typeof document === 'undefined') return 'light'
+  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'
+}
+
+const themeColors = {
+  light: '#F5EDE1',
+  dark: '#17120F',
+}
+
 export default function App({ language }) {
   const lang = initialLanguage(language)
   const t = copy[lang]
+  const [theme, setTheme] = useState(initialTheme)
   const [toast, setToast] = useState('')
   const toastTimer = useRef(null)
 
@@ -31,6 +42,17 @@ export default function App({ language }) {
   }, [])
 
   useEffect(() => () => clearTimeout(toastTimer.current), [])
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    document.documentElement.style.colorScheme = theme
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColors[theme])
+    try {
+      window.localStorage.setItem('np-theme', theme)
+    } catch {
+      // Ignore storage failures; the theme still applies for this visit.
+    }
+  }, [theme])
 
   const goBook = useCallback(() => {
     const el = document.getElementById('contact')
@@ -46,7 +68,12 @@ export default function App({ language }) {
       <a href="#main" className="np-skip">
         {t.skip}
       </a>
-      <Nav language={lang} copy={t} onBook={goBook} />
+      <Nav
+        language={lang}
+        copy={t}
+        onBook={goBook}
+        onToggleTheme={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
+      />
       <main id="main">
         <Hero copy={t.hero} buttons={t.buttons} onBook={goBook} />
         <About copy={t.about} />

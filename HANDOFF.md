@@ -1,6 +1,6 @@
 # Handoff — ninapfatischer.com
 
-_Last updated: 2026-06-12. State as of [PR #1](https://github.com/louisclarencepeter/ninapfatischer/pull/1) (branch `website-implementation`)._
+_Last updated: 2026-06-12. State as of [PR #2](https://github.com/louisclarencepeter/ninapfatischer/pull/2) (branch `development`)._
 
 ## What this is
 
@@ -23,6 +23,10 @@ Everything below is implemented, tested, and on the PR branch:
   English is prerendered at `/en/`, with a DE/EN nav switcher, localized
   section copy, localized alt/ARIA/form text, language-specific canonical
   URLs, `hreflang`, `lang`, and JSON-LD metadata.
+- **Light + dark themes**: visitors get the system-preferred theme on first
+  load and can switch it from the nav; the choice is stored in `localStorage`
+  (`np-theme`). `public/theme.js` applies the theme before hydration to avoid
+  a flash.
 - **Contact form** → Netlify Function `POST /api/contact`
   ([netlify/functions/contact.mjs](netlify/functions/contact.mjs)):
   validation, honeypot, per-IP rate limit (5/10 min, best-effort), Resend
@@ -75,6 +79,14 @@ local to their sections. `scripts/prerender.mjs` writes both
 `dist/index.html` and `dist/en/index.html` from the same Vite build and
 injects the language-specific metadata. If copy changes, run `npm run build`
 and check both generated pages.
+
+## Theme implementation notes
+
+The base palette remains the warm cream/clay brand system. Dark mode is layered
+through semantic tokens in `src/styles/tokens/colors.css` and shadow overrides
+in `src/styles/tokens/spacing.css`; section/component styles should keep using
+semantic tokens where possible. The nav theme toggle is intentionally stable
+between SSR and hydration, with icon visibility handled in CSS.
 
 ## Known quirks / gotchas
 

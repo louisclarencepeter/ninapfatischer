@@ -74,3 +74,56 @@
   /* Focus ring */
   --focus-ring:        rgba(193, 123, 90, 0.45);
 }
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* ---- Night palette: warm charcoal / clay / muted sage ---- */
+  --np-cream-lightest: #FBF7F0;
+  --np-cream:          #F5EDE1;
+  --np-warm-white:     #FCFAF6;
+  --np-sand:           #EFE3D2;
+
+  --np-clay:           #D08A63;
+  --np-clay-deep:      #E0A17C;
+  --np-clay-soft:      #4A2F24;
+
+  --np-sage:           #9BAA8A;
+  --np-olive:          #C4D0B6;
+  --np-sage-soft:      #303929;
+
+  --np-ochre:          #E0B36F;
+  --np-ochre-soft:     #EBD2A8;
+
+  --np-taupe:          #95836E;
+  --np-stone:          #B7A78F;
+
+  --np-ink:            #3A332C;
+  --np-body:           #D7CBBB;
+  --np-muted:          #B8A995;
+
+  --surface-page:      #17120F;
+  --surface-raised:    #211A16;
+  --surface-card:      #251E19;
+  --surface-sunk:      #1D1713;
+  --surface-invert:    #100C0A;
+
+  --text-heading:      #F5EDE1;
+  --text-body:         #D7CBBB;
+  --text-muted:        #B8A995;
+  --text-on-accent:    #1A120E;
+  --text-on-dark:      #F5EDE1;
+  --text-accent:       #E2A57F;
+
+  --accent-primary:        var(--np-clay);
+  --accent-primary-strong: var(--np-clay-deep);
+  --accent-primary-soft:   var(--np-clay-soft);
+  --accent-secondary:      var(--np-sage);
+  --accent-secondary-strong: var(--np-olive);
+  --accent-secondary-soft: var(--np-sage-soft);
+  --accent-highlight:      var(--np-ochre);
+
+  --border-soft:       rgba(251, 247, 240, 0.10);
+  --border-medium:     rgba(251, 247, 240, 0.16);
+  --focus-ring:        rgba(224, 161, 124, 0.42);
+}
