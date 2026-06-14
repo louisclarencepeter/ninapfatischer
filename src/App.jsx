@@ -44,6 +44,59 @@ export default function App({ language }) {
   useEffect(() => () => clearTimeout(toastTimer.current), [])
 
   useEffect(() => {
+    const root = document.documentElement
+    const reduceMotion = prefersReducedMotion()
+    root.dataset.motion = reduceMotion ? 'reduced' : 'ready'
+
+    if (reduceMotion) return undefined
+
+    const revealEls = Array.from(document.querySelectorAll('[data-animate]'))
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          entry.target.classList.add('is-visible')
+          observer.unobserve(entry.target)
+        })
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.12 },
+    )
+
+    revealEls.forEach((el) => observer.observe(el))
+
+    const parallaxEls = Array.from(document.querySelectorAll('[data-parallax]'))
+    let raf = 0
+
+    const updateParallax = () => {
+      raf = 0
+      const viewportHeight = window.innerHeight || 1
+      parallaxEls.forEach((el) => {
+        const rect = el.getBoundingClientRect()
+        const center = rect.top + rect.height / 2
+        const progress = (viewportHeight / 2 - center) / viewportHeight
+        const offset = Math.max(-22, Math.min(22, progress * 34))
+        el.style.setProperty('--np-parallax-y', `${offset.toFixed(2)}px`)
+      })
+    }
+
+    const requestUpdate = () => {
+      if (raf) return
+      raf = window.requestAnimationFrame(updateParallax)
+    }
+
+    updateParallax()
+    window.addEventListener('scroll', requestUpdate, { passive: true })
+    window.addEventListener('resize', requestUpdate)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', requestUpdate)
+      window.removeEventListener('resize', requestUpdate)
+      if (raf) window.cancelAnimationFrame(raf)
+    }
+  }, [])
+
+  useEffect(() => {
     document.documentElement.dataset.theme = theme
     document.documentElement.style.colorScheme = theme
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColors[theme])

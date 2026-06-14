@@ -7,7 +7,7 @@ export default function About({ copy }) {
   return (
     <section id="about" className="np-about">
       <div className="np-container np-split">
-        <div className="np-about-media">
+        <div className="np-about-media" data-animate="lift">
           <div className="np-about-frame">
             <picture>
               <source type="image/webp" srcSet={webp} sizes={SIZES} />
@@ -22,15 +22,19 @@ export default function About({ copy }) {
               />
             </picture>
           </div>
-          <div className="np-floatstat">
+          <div className="np-floatstat" data-animate="float" style={{ '--np-stagger': 2 }}>
             <div className="np-floatstat-num">5</div>
             <div className="np-floatstat-label">{copy.stat}</div>
           </div>
         </div>
         <div>
-          <span className="np-section-eyebrow">{copy.eyebrow}</span>
-          <h2 className="np-section-title">{copy.title}</h2>
-          <div className="np-about-body">
+          <span className="np-section-eyebrow" data-animate="fade">
+            {copy.eyebrow}
+          </span>
+          <h2 className="np-section-title" data-animate="rise" style={{ '--np-stagger': 1 }}>
+            {copy.title}
+          </h2>
+          <div className="np-about-body" data-animate="rise" style={{ '--np-stagger': 2 }}>
             <p className="np-lead">{copy.lead}</p>
             <p>{copy.body}</p>
             <p className="np-about-wish">{copy.wish}</p>

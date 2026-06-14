@@ -15,15 +15,22 @@ export default function Music({ copy }) {
           height="1833"
           alt={copy.alt}
           className="np-music-img"
+          data-parallax
           loading="lazy"
         />
       </picture>
       <div className="np-music-scrim" aria-hidden="true" />
       <div className="np-container np-music-content">
         <div className="np-music-copy">
-          <span className="np-music-eyebrow">{copy.eyebrow}</span>
-          <p className="np-music-quote">{copy.quote}</p>
-          <p className="np-music-note">{copy.note}</p>
+          <span className="np-music-eyebrow" data-animate="fade">
+            {copy.eyebrow}
+          </span>
+          <p className="np-music-quote" data-animate="rise" style={{ '--np-stagger': 1 }}>
+            {copy.quote}
+          </p>
+          <p className="np-music-note" data-animate="rise" style={{ '--np-stagger': 2 }}>
+            {copy.note}
+          </p>
         </div>
       </div>
     </section>

@@ -60,12 +60,18 @@ export default function Contact({ copy, onSent }) {
     <section id="contact" className="np-contact-section">
       <div className="np-container np-contact">
         <div>
-          <span className="np-section-eyebrow">{copy.eyebrow}</span>
-          <h2 className="np-section-title">{copy.title}</h2>
-          <p className="np-contact-lead">{copy.lead}</p>
+          <span className="np-section-eyebrow" data-animate="fade">
+            {copy.eyebrow}
+          </span>
+          <h2 className="np-section-title" data-animate="rise" style={{ '--np-stagger': 1 }}>
+            {copy.title}
+          </h2>
+          <p className="np-contact-lead" data-animate="rise" style={{ '--np-stagger': 2 }}>
+            {copy.lead}
+          </p>
           <div className="np-contact-points">
             {copy.points.map((p, index) => (
-              <div key={p.title} className="np-point">
+              <div key={p.title} className="np-point" data-animate="rise" style={{ '--np-stagger': index + 3 }}>
                 <span aria-hidden="true" className="np-point-icon">
                   {POINT_ICONS[index].icon}
                 </span>
@@ -78,7 +84,7 @@ export default function Contact({ copy, onSent }) {
           </div>
         </div>
 
-        <div className="np-form-card">
+        <div className="np-form-card" data-animate="lift" style={{ '--np-stagger': 3 }}>
           {status === 'sent' ? (
             <div className="np-confirm">
               <span aria-hidden="true" className="np-confirm-icon">
