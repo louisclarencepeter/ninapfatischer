@@ -15,19 +15,24 @@ export default function Hero({ buttons, copy, onBook }) {
           height="2400"
           alt={copy.alt}
           className="np-hero-img"
+          data-parallax
           fetchpriority="high"
         />
       </picture>
       <div className="np-hero-scrim" aria-hidden="true" />
       <div className="np-container np-hero-content">
         <div className="np-hero-copy">
-          <span className="np-hero-eyebrow">{copy.eyebrow}</span>
-          <h1 className="np-hero-title">
+          <span className="np-hero-eyebrow" data-hero-animate style={{ '--np-stagger': 0 }}>
+            {copy.eyebrow}
+          </span>
+          <h1 className="np-hero-title" data-hero-animate style={{ '--np-stagger': 1 }}>
             {copy.titlePrefix}
             <em>{copy.titleEm}</em>
           </h1>
-          <p className="np-hero-lead">{copy.lead}</p>
-          <div className="np-hero-actions">
+          <p className="np-hero-lead" data-hero-animate style={{ '--np-stagger': 2 }}>
+            {copy.lead}
+          </p>
+          <div className="np-hero-actions" data-hero-animate style={{ '--np-stagger': 3 }}>
             <button type="button" className="np-btn np-btn-primary" onClick={onBook}>
               {buttons.book}
             </button>

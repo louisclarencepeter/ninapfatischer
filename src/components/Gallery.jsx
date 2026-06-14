@@ -90,7 +90,7 @@ export default function Gallery({ copy }) {
   return (
     <section id="gallery" className="np-gallery">
       <div className="np-container">
-        <header className="np-classes-header">
+        <header className="np-classes-header" data-animate="rise">
           <span className="np-section-eyebrow">{copy.eyebrow}</span>
           <h2 className="np-section-title">{copy.title}</h2>
           <p className="np-classes-intro">{copy.intro}</p>
@@ -101,6 +101,8 @@ export default function Gallery({ copy }) {
               key={p.base}
               type="button"
               className="np-gallery-item"
+              data-animate="gallery"
+              style={{ '--np-stagger': i % 6 }}
               onClick={() => {
                 // Captured here, not in the effect — by effect time the
                 // dialog's autoFocus has already moved document.activeElement.

@@ -39,11 +39,11 @@ export default function Footer({ copy }) {
     <footer className="np-footer-section">
       <div className="np-container">
         <div className="np-footer">
-          <div className="np-footer-brand">
+          <div className="np-footer-brand" data-animate="rise">
             <div className="np-footer-wordmark">Nina Pfatischer</div>
             <p className="np-footer-tagline">{copy.footer.tagline}</p>
           </div>
-          <div className="np-footer-cols">
+          <div className="np-footer-cols" data-animate="rise" style={{ '--np-stagger': 1 }}>
             <div>
               <span className="np-footer-heading">{copy.footer.explore}</span>
               <div className="np-footer-links">

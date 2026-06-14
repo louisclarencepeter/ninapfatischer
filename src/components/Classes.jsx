@@ -40,7 +40,7 @@ export default function Classes({ copy }) {
   return (
     <section id="classes" className="np-classes">
       <div className="np-container">
-        <header className="np-classes-header">
+        <header className="np-classes-header" data-animate="rise">
           <span className="np-section-eyebrow">{copy.eyebrow}</span>
           <h2 className="np-section-title">{copy.title}</h2>
           <p className="np-classes-intro">{copy.intro}</p>
@@ -49,7 +49,7 @@ export default function Classes({ copy }) {
           {copy.items.map((c, index) => {
             const meta = CLASS_META[index]
             return (
-            <article key={c.title} className="np-class-card">
+            <article key={c.title} className="np-class-card" data-animate="rise" style={{ '--np-stagger': index }}>
               <span aria-hidden="true" className={`np-class-icon ${meta.tint}`}>
                 {meta.icon}
               </span>
