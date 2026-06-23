@@ -11,9 +11,15 @@ Run from the repo root after adding or replacing a master photo:
 """
 
 import json
+import re
 from pathlib import Path
 
 from PIL import Image
+
+# Matches generated derivatives like "name-w480"; used to skip them when
+# scanning for masters. A plain `'-w' in stem` check is too loose — it also
+# matches masters whose name happens to contain "-w" (e.g. "ocean-wave").
+DERIVATIVE_RE = re.compile(r'-w\d+$')
 
 JPEG_QUALITY = 78
 WEBP_QUALITY = 78
@@ -47,7 +53,7 @@ def main() -> None:
     for stem, widths in HERO_WIDTHS.items():
         dims[stem] = variants(ROOT / f'{stem}.jpg', widths)
     for master in sorted((ROOT / 'gallery').glob('*.jpg')):
-        if '-w' in master.stem:
+        if DERIVATIVE_RE.search(master.stem):
             continue
         dims[f'gallery/{master.stem}'] = variants(master, GALLERY_WIDTHS)
     print(json.dumps(dims, indent=2))

@@ -108,14 +108,21 @@ export default function App({ language }) {
     }
   }, [theme])
 
-  const goBook = useCallback(() => {
-    const el = document.getElementById('contact')
-    if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY
-      window.scrollTo({ top, behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
-    }
-    showToast(t.toast.book)
-  }, [showToast, t.toast.book])
+  const goContact = useCallback(
+    (message) => {
+      const el = document.getElementById('contact')
+      if (el) {
+        // Sections carry their own top padding to clear the fixed nav, so no
+        // extra offset is needed here (matches the section scroll-margin-top:0).
+        const top = el.getBoundingClientRect().top + window.scrollY
+        window.scrollTo({ top, behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
+      }
+      showToast(message)
+    },
+    [showToast],
+  )
+  const goBook = useCallback(() => goContact(t.toast.book), [goContact, t.toast.book])
+  const goRetreat = useCallback(() => goContact(t.toast.retreat), [goContact, t.toast.retreat])
 
   return (
     <>
@@ -134,7 +141,7 @@ export default function App({ language }) {
         <Classes copy={t.classes} />
         <Music copy={t.music} />
         <Gallery copy={t.gallery} />
-        <Retreat copy={t.retreat} onBook={goBook} />
+        <Retreat copy={t.retreat} onBook={goRetreat} />
         <Contact copy={t.contact} onSent={() => showToast(t.toast.sent)} />
       </main>
       <Footer copy={t} />

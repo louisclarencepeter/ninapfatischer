@@ -61,6 +61,7 @@ export const copy = {
     },
     toast: {
       book: 'Lass uns deinen Kurs finden - ein paar Details unten',
+      retreat: 'Schön, dass dich das Retreat ruft - erzähl mir unten von dir',
       sent: 'Nachricht gesendet - bis bald',
     },
     hero: {
@@ -123,6 +124,7 @@ export const copy = {
     },
     music: {
       alt: 'Nina öffnet sich in Wild Thing auf sonnenwarmem Tonfels im goldenen Licht',
+      srTitle: 'Musik',
       eyebrow: 'Atmosphäre',
       quote:
         'Musik trägt uns zwischen Kraft und Leichtigkeit – sie schafft Atmosphäre und lässt uns tiefer im Körper ankommen.',
@@ -332,6 +334,7 @@ export const copy = {
     },
     toast: {
       book: "Let's find your class - a few details below",
+      retreat: "So glad the retreat is calling you - tell me below",
       sent: 'Message sent - talk soon',
     },
     hero: {
@@ -394,6 +397,7 @@ export const copy = {
     },
     music: {
       alt: 'Nina arching into wild thing pose on sun-warmed clay rock at golden hour',
+      srTitle: 'Music',
       eyebrow: 'Atmosphere',
       quote:
         'Music carries us between strength and lightness – it creates atmosphere and helps us arrive more deeply in the body.',

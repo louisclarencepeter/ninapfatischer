@@ -22,6 +22,7 @@ export default function Music({ copy }) {
       <div className="np-music-scrim" aria-hidden="true" />
       <div className="np-container np-music-content">
         <div className="np-music-copy">
+          <h2 className="np-sr-only">{copy.srTitle}</h2>
           <span className="np-music-eyebrow" data-animate="fade">
             {copy.eyebrow}
           </span>

@@ -120,12 +120,16 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // While the menu is open: lock background scroll (preserving scroll position)
-  // and wire Escape-to-close.
+  // While the menu is open: lock background scroll (preserving scroll position),
+  // make the page behind inert + trap focus, and wire Escape-to-close.
   useEffect(() => {
     if (!menuOpen) return undefined
     const root = document.documentElement
     const { body } = document
+    const overlay = overlayRef.current
+    const panel = overlay?.querySelector('.np-mm-panel')
+    const appRoot = document.getElementById('root')
+    const previouslyFocused = document.activeElement
     const prev = {
       root: root.style.overflow,
       body: body.style.overflow,
@@ -143,12 +147,23 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
     root.style.overflow = 'hidden'
     body.style.overflow = 'hidden'
     if (scrollbarW > 0) body.style.paddingRight = `${scrollbarW}px`
-    // overflow:hidden alone does not stop touch panning on iOS Safari, so also
-    // block touchmove on the overlay. Safe because nothing inside the
-    // full-screen panel is scrollable; taps don't fire touchmove, so links and
-    // buttons stay interactive. Must be non-passive for preventDefault to work.
-    const overlay = overlayRef.current
-    const blockTouch = (e) => e.preventDefault()
+
+    // Make everything behind the overlay inert: removes it from the tab order
+    // (so focus is trapped in the dialog) and hides it from assistive tech.
+    // The overlay is portaled to <body>, a sibling of #root, so it stays active.
+    if (appRoot) appRoot.inert = true
+    // Move focus into the dialog; restore it to the trigger on close.
+    overlay?.querySelector('.np-mm-close')?.focus({ preventScroll: true })
+
+    // overflow:hidden alone doesn't stop touch panning on iOS Safari, so block
+    // touchmove that would pan the page — but allow it when the panel itself can
+    // scroll (short/landscape screens), so its content stays reachable. Taps
+    // don't fire touchmove, so links/buttons stay interactive. Non-passive so
+    // preventDefault takes effect.
+    const blockTouch = (e) => {
+      if (panel && panel.scrollHeight > panel.clientHeight) return
+      e.preventDefault()
+    }
     overlay?.addEventListener('touchmove', blockTouch, { passive: false })
     const onKeyDown = (e) => {
       if (e.key === 'Escape') setMenuOpen(false)
@@ -158,8 +173,12 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
       root.style.overflow = prev.root
       body.style.overflow = prev.body
       body.style.paddingRight = prev.pad
+      if (appRoot) appRoot.inert = false
       overlay?.removeEventListener('touchmove', blockTouch)
       window.removeEventListener('keydown', onKeyDown)
+      if (previouslyFocused instanceof HTMLElement) {
+        previouslyFocused.focus({ preventScroll: true })
+      }
     }
   }, [menuOpen])
 
