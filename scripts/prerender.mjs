@@ -46,7 +46,7 @@ function withMetadata(source, lang) {
     url,
     email: 'mailto:nina@ninapfatischer.com',
     image: 'https://ninapfatischer.com/images/portrait-garden.jpg',
-    knowsAbout: ['Vinyasa Flow', 'Hatha Yoga', 'Yin Yoga', 'Meditation'],
+    knowsAbout: ['Vinyasa Yoga', 'Yin Yoga', 'Animal Flow', 'Pranayama', 'Meditation', 'Mobility Training', 'Yoga Retreats'],
     description: t.meta.schemaDescription,
     inLanguage: lang,
   }

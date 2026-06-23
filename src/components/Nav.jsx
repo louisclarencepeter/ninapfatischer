@@ -1,6 +1,46 @@
 import { useEffect, useState } from 'react'
 import { LANGUAGES, pathForLanguage } from '../i18n.js'
 
+const ArrowIcon = (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12h14M13 6l6 6-6 6" />
+  </svg>
+)
+
+const SOCIALS = [
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/verenanina/',
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <path d="M17.5 6.5h.01" />
+      </svg>
+    ),
+  },
+  {
+    label: 'YouTube',
+    href: 'https://www.youtube.com/@ninapfatischer3765/shorts',
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 8a5 5 0 0 0-.9-2.8 2.5 2.5 0 0 0-1.8-1C17.6 4 12 4 12 4s-5.6 0-7.3.2a2.5 2.5 0 0 0-1.8 1A5 5 0 0 0 2 8a26 26 0 0 0 0 8 5 5 0 0 0 .9 2.8 2.5 2.5 0 0 0 1.8 1C6.4 20 12 20 12 20s5.6 0 7.3-.2a2.5 2.5 0 0 0 1.8-1A5 5 0 0 0 22 16a26 26 0 0 0 0-8Z" />
+        <path d="m10 15 5-3-5-3z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Email',
+    href: 'mailto:nina@ninapfatischer.com',
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="4" width="20" height="16" rx="2" />
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+      </svg>
+    ),
+  },
+]
+
 function LanguageSwitcher({ copy, language }) {
   return (
     <div className="np-lang-switch" aria-label={copy.language.label}>
@@ -72,6 +112,21 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Lock body scroll and wire Escape-to-close while the slide-in menu is open.
+  useEffect(() => {
+    if (!menuOpen) return undefined
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false)
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [menuOpen])
+
   return (
     <header className={`np-nav${scrolled ? ' is-scrolled' : ''}`}>
       <nav className="np-container np-nav-inner" aria-label={copy.navLabel}>
@@ -104,6 +159,8 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
           type="button"
           className="np-menu-btn"
           aria-label={menuOpen ? copy.menu.close : copy.menu.open}
+          aria-haspopup="dialog"
+          aria-controls="mobileMenu"
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((o) => !o)}
         >
@@ -121,21 +178,81 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
           </svg>
         </button>
       </nav>
-      {menuOpen && (
-        <div className="np-menu">
-          <div className="np-container np-menu-inner">
-            {copy.nav.map((l) => (
-              <a key={l.href} href={l.href} className="np-menu-link" onClick={() => setMenuOpen(false)}>
-                {l.label}
+      <div
+        className={`np-mm${menuOpen ? ' is-open' : ''}`}
+        id="mobileMenu"
+        role="dialog"
+        aria-modal="true"
+        aria-label={copy.navLabel}
+        aria-hidden={!menuOpen}
+      >
+        <div className="np-mm-backdrop" onClick={() => setMenuOpen(false)} />
+        <aside className="np-mm-panel">
+          <div className="np-mm-head">
+            <div className="np-mm-brand">
+              <span className="name">Nina Pfatischer</span>
+              <span className="sub">{copy.brandSub}</span>
+            </div>
+            <button
+              type="button"
+              className="np-mm-close"
+              aria-label={copy.menu.close}
+              onClick={() => setMenuOpen(false)}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <nav className="np-mm-nav" aria-label={copy.navLabel}>
+            {copy.nav.map((l, i) => (
+              <a key={l.href} href={l.href} className="np-mm-item" onClick={() => setMenuOpen(false)}>
+                <span className="label">
+                  <span className="num">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="np-mm-name">{l.label}</span>
+                </span>
+                <span className="np-mm-arrow" aria-hidden="true">
+                  {ArrowIcon}
+                </span>
               </a>
             ))}
-            <div className="np-menu-controls">
+          </nav>
+
+          <div className="np-mm-foot">
+            <button
+              type="button"
+              className="np-mm-book"
+              onClick={() => {
+                setMenuOpen(false)
+                onBook()
+              }}
+            >
+              {copy.buttons.book}
+            </button>
+            <div className="np-mm-controls">
               <LanguageSwitcher copy={copy} language={language} />
               <ThemeToggle copy={copy} onToggleTheme={onToggleTheme} />
             </div>
+            <div className="np-mm-social">
+              <span className="find">{copy.footer.findMe}</span>
+              <div className="icons">
+                {SOCIALS.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    aria-label={s.label}
+                    target={s.href.startsWith('http') ? '_blank' : undefined}
+                    rel={s.href.startsWith('http') ? 'noreferrer' : undefined}
+                  >
+                    {s.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        </aside>
+      </div>
     </header>
   )
 }

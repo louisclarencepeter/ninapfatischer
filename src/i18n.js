@@ -21,23 +21,24 @@ export function absoluteUrlForLanguage(lang) {
 export const copy = {
   de: {
     meta: {
-      title: 'Nina Pfatischer Yoga - Komm zurück zu dir',
+      title: 'Nina Pfatischer Yoga - Free to Flow',
       description:
-        'Yoga, das so viel mehr ist als Bewegung: Achtsamkeit, Gelassenheit und ein leiser Weg zurück zur Dankbarkeit. Vinyasa Flow, Hatha, Yin und Meditation mit Nina Pfatischer.',
+        'Yoga, das so viel mehr ist als Bewegung: Verbinde dich mit deinem natürlichen Rhythmus. Pranayama & Meditation, Animal Flow, Slow Flow, Mobility und Retreats in Marokko mit Nina Pfatischer.',
       ogDescription:
-        'Yoga, das so viel mehr ist als Bewegung: Achtsamkeit, Gelassenheit und ein leiser Weg zurück zur Dankbarkeit.',
+        'Yoga, das so viel mehr ist als Bewegung - verbinde dich mit deinem natürlichen Rhythmus, finde innere Ruhe und Verbundenheit.',
       jobTitle: 'Yogalehrerin',
       schemaDescription:
-        'Yogalehrerin, ausgebildet in Portugal und unterrichtend in Deutschland. Vinyasa Flow, Hatha, Yin und Meditation - Achtsamkeit, Gelassenheit und Dankbarkeit.',
+        'Yogalehrerin, ausgebildet in Portugal und unterrichtend in Deutschland und Marokko. Pranayama & Meditation, Animal Flow, Slow Flow und Mobility - Achtsamkeit, Gelassenheit und Dankbarkeit.',
     },
     skip: 'Zum Inhalt springen',
     brandSub: 'Yoga · Achtsamkeit',
     navLabel: 'Hauptnavigation',
     nav: [
       { href: '#about', label: 'Geschichte' },
-      { href: '#classes', label: 'Kurse' },
+      { href: '#classes', label: 'Praxis' },
       { href: '#music', label: 'Musik' },
       { href: '#gallery', label: 'Momente' },
+      { href: '#retreat', label: 'Retreat' },
       { href: '#contact', label: 'Kontakt' },
     ],
     language: {
@@ -64,23 +65,29 @@ export const copy = {
     },
     hero: {
       alt: 'Nina lächelt auf einem Holzsteg in einem grünen Garten der Sonne entgegen',
-      eyebrow: 'Eine achtsame Praxis',
-      titlePrefix: 'Komm zurück zu ',
-      titleEm: 'dir',
+      eyebrow: 'Free to Flow',
+      titlePrefix: 'Im Einklang mit dem ',
+      titleEm: 'natürlichen Rhythmus leben.',
       lead:
-        'Yoga, das so viel mehr ist als Bewegung - Achtsamkeit, Gelassenheit und ein leiser Weg zurück zur Dankbarkeit. Komm atmen, loslassen und dich wieder geerdet fühlen.',
+        'Verbinde dich mit deinem natürlichen Rhythmus. Lass Bewegungen fließen und Gedanken ziehen. Nimm die Schönheit des Augenblicks wahr, finde innere Ruhe und spüre die Verbundenheit mit dir selbst, der Natur und dem Leben um dich herum.',
     },
     about: {
       alt: 'Nina balanciert in der Baumhaltung vor weichen, nebligen Bergen',
-      stat: 'Operationen und ein langer Weg zurück in meine eigene Kraft',
+      stat: 'Knieoperationen und ein langer Weg zurück in meine eigene Kraft',
       eyebrow: 'Meine Geschichte',
-      title: 'Yoga hat mir meinen Boden zurückgegeben',
+      title: 'Yoga hat mir den Weg zurück zu meinen Wurzeln gezeigt',
       lead:
-        'Für mich ist Yoga so viel mehr als Bewegung. Nach einer schweren Knieverletzung, fünf Operationen und einer langen Reha hat es mir geholfen, wieder Stabilität, Kraft und inneren Frieden zu finden - körperlich und mental.',
-      body:
-        'Ich habe meine Ausbildung in Portugal gemacht und durfte bereits in Studios in Marokko und Deutschland unterrichten. Meine Stunden verbinden Bewegung und Stille, Kraft und Entspannung - flexibel darauf abgestimmt, was der Tag braucht. Jede Stunde ist eine Einladung zurück zu Achtsamkeit, Gelassenheit und Dankbarkeit.',
+        'Lange Zeit habe ich im Stress gelebt, wenig achtsam mit meinem Körper umgegangen und mich ständig mit anderen verglichen. Körperlich hat sich das in fünf Knieoperationen gezeigt.',
+      body: [
+        'Yoga wurde für mich zu einem Wendepunkt. Nach einer aussichtslosen Diagnose hat es mir geholfen, wieder in meine ursprüngliche Kraft zu finden – in Balance, Stabilität, Selbstvertrauen und inneren Frieden, körperlich wie mental.',
+        'Begonnen hat alles mit den Asanas – mit bewusster Bewegung und der Verbindung von Atem und Körper. Diese Praxis begleitet mich bis heute und hilft mir, stabil, schmerzfreier und verbunden mit meinem Körper zu leben.',
+        'Während meiner Ausbildung zur Yogalehrerin in Portugal durfte ich nicht nur die Praxis, sondern auch die Lebensphilosophie und die Wurzeln des Yoga tiefer verstehen. Seitdem begleitet mich Yoga auch abseits der Matte – in den alltäglichen Dingen, durch Meditation, Achtsamkeit, Dankbarkeit und ein bewussteres Wahrnehmen von mir selbst und meiner Umwelt. So gelingt es mir, die Schönheit und Fülle des Lebens klarer zu sehen und erfüllt im Moment zu bleiben.',
+        'Diese Reise und das Gefühl, sie mit anderen Menschen teilen zu dürfen, ist für mich mehr als ein Beruf – es ist eine Herzensangelegenheit.',
+        'Seit 2022 durfte ich in Yoga-Studios, Krankenhäusern, Therapiezentren, Unternehmen und Universitäten unterrichten und Achtsamkeit weitergeben. Mit meiner Liebe zu Marokko habe ich mir dort ein zweites Zuhause aufgebaut, bereits viele Menschen aus aller Welt begleitet und organisiere heute Retreats und Reisen.',
+        'Neben meiner Tätigkeit als Yogalehrerin bin ich ausgebildete Lehrkraft und befinde mich in der Ausbildung zur Heilpraktikerin mit Schwerpunkt Psychotherapie. All meine Erfahrungen, Reisen und Ausbildungen fließen in meine Yogastunden ein – jede Stunde entsteht neu, angepasst an das, was die Gruppe braucht: Bewegung und Stille, Kraft und Entspannung.',
+      ],
       wish:
-        'Mein Wunsch ist einfach: dass du leichter, geerdeter und mehr mit dir selbst verbunden gehst.',
+        'Mein Ziel jeder Stunde ist es, dich einzuladen, dem natürlichen Fluss des Lebens zu folgen, achtsam auf deine eigenen Bedürfnisse zu hören und dich mit Dankbarkeit und Leichtigkeit mit dir selbst zu verbinden.',
     },
     classes: {
       eyebrow: 'Die Praxis',
@@ -89,28 +96,28 @@ export const copy = {
         'Jede Stunde verbindet Bewegung und Stille. Komm genau so, wie du bist - jede Praxis passt sich flexibel dem Tag an.',
       items: [
         {
-          title: 'Vinyasa Flow',
+          title: 'Pranayama & Meditation',
           desc:
-        'Dynamische, kraftvolle Sequenzen, die Atem und Bewegung verbinden - für Wärme, Kraft und einen ruhigen, fließenden Fokus.',
-          tags: ['75 min', 'Dynamisch'],
+            'Bewusste Atemtechniken und Meditation zur Beruhigung des Nervensystems, Förderung der Achtsamkeit und Stärkung der Verbindung zu dir selbst.',
+          tags: ['45–60 min', 'Ruhig'],
         },
         {
-          title: 'Hatha Yoga',
+          title: 'Animal Flow',
           desc:
-        'Innere Ruhe und Stabilität durch achtsame Ausrichtung und bewusste Atmung. Langsamer, klarer, tief erdend.',
-          tags: ['60 min', 'Fundament'],
+            'Kreative, fließende Bewegungsmuster inspiriert von der Tierwelt, Calisthenics und Yoga gemischt – für mehr Kraft, Mobilität, Koordination und Körperbewusstsein.',
+          tags: ['60 min', 'Dynamisch'],
         },
         {
-          title: 'Yin Yoga',
+          title: 'Slow Flow',
           desc:
-            'Ruhig und sanft, mit lange gehaltenen Haltungen, Philosophie und Meditation. Ein stiller Raum zum Weichwerden und Loslassen.',
-          tags: ['75 min', 'Sanft'],
+            'Eine harmonische Verbindung aus Vinyasa und Yin Yoga – fließende Bewegungen kombiniert mit ruhigen, länger gehaltenen Positionen für Balance, Beweglichkeit und Entspannung.',
+          tags: ['75 min', 'Sanft fließend'],
         },
         {
-          title: 'Meditation & lange Dehnungen',
+          title: 'Mobility Training',
           desc:
-        'Geführte Stille, lange gehaltene Dehnungen und bewusster Atem - um den Geist zu beruhigen und zur Dankbarkeit zurückzukehren.',
-          tags: ['30 min', 'Stille'],
+            'Gezielte Übungen zur Verbesserung von Beweglichkeit, Gelenkgesundheit und funktioneller Kraft – für Freiheit und Leichtigkeit in Bewegung und Alltag.',
+          tags: ['60 min', 'Aktiv'],
         },
       ],
     },
@@ -118,9 +125,85 @@ export const copy = {
       alt: 'Nina öffnet sich in Wild Thing auf sonnenwarmem Tonfels im goldenen Licht',
       eyebrow: 'Atmosphäre',
       quote:
-        'Musik trägt uns zwischen Kraft und Leichtigkeit - sie schafft Atmosphäre und lässt den Körper wieder spüren.',
+        'Musik trägt uns zwischen Kraft und Leichtigkeit – sie schafft Atmosphäre und lässt uns tiefer im Körper ankommen.',
       note:
-        'Ein bewusst gewählter Soundtrack begleitet jede Stunde - führt uns in Bewegung, hält uns in der Stille und trägt uns nach Hause.',
+        'Ein bewusst gewählter Soundtrack begleitet jede Stunde – er führt uns in Bewegung, hält uns in der Stille und trägt uns am Ende wieder zurück zu uns selbst.',
+      extra:
+        'Die Praxis kann sich ganz unterschiedlich entfalten: als Morgen- oder Abendritual, in der Natur beim Wandern, in den Bergen oder am Meer, nach dem Tauchen oder vor dem Surfen – oder im geschützten Raum eines ruhigen Yoga Studios. Immer dort, wo du dich am wohlsten fühlst und ankommen kannst.',
+    },
+    retreat: {
+      eyebrow: 'Retreat in Marokko',
+      title: 'Salty Shavasana Retreat',
+      alt: 'Sonnige Dachterrasse mit weitem Blick über das Meer in Imsouane, Marokko',
+      tagline: 'Eine Woche zum Loslassen. Eine Woche, um bei dir anzukommen.',
+      lead:
+        'Yoga am Atlantik, Surfen in den endlosen Wellen von Imsouane und eine Landschaft, die dich einlädt, langsamer zu werden, tiefer zu atmen und dich selbst wieder zu spüren.',
+      includedTitle: 'Eine Woche für dich',
+      includedIntro:
+        'Ein Retreat, das dich aus dem Alltag heraus und zurück in deinen natürlichen Rhythmus führt.',
+      highlights: [
+        'Tägliche Yoga-Sessions (Vinyasa, Hatha & Yin)',
+        'Meditation & Journaling für innere Klarheit & Selbstfürsorge',
+        '3 Surf-Sessions in der Bucht von Imsouane',
+        'Marokkanischer Kochkurs mit lokalen Aromen',
+        'Ausflug nach Essaouira – Medina & Atlantikflair',
+        'Kreativer Art Workshop mit lokalem Künstler',
+        'Wanderung zu einer versteckten Oase',
+        '7 Nächte Unterkunft, Frühstück & Abendessen täglich',
+      ],
+      scheduleTitle: 'Dein Rhythmus vor Ort',
+      scheduleIntro: 'Ein Tag, der dich trägt – ohne Druck, ohne Müssen.',
+      schedule: [
+        { time: '08:00', title: 'Morning Practice', desc: 'Yoga oder Meditation mit Blick auf den Atlantik – sanftes Ankommen im Tag.' },
+        { time: '10:00', title: 'Breakfast', desc: 'Frisch, regional und liebevoll zubereitet – nährend und erdend.' },
+        { time: '11:00', title: 'Free Time', desc: 'Zeit für dich: Meer, Sonne, Ruhe, Lesen oder einfach Sein.' },
+        { time: '16:00', title: 'Afternoon Flow', desc: 'Surf, Workshop oder Ausflug – getragen vom Moment.' },
+        { time: '18:00', title: 'Evening Practice', desc: 'Sanftes Yoga oder Meditation im Licht des Sonnenuntergangs.' },
+        { time: '20:00', title: 'Dinner', desc: 'Gemeinsam, bewusst und voller Geschmack – Ankommen & Teilen.' },
+        { time: '21:00', title: 'Community Time', desc: 'Musik, Gespräche, Stille, Sterne – echte Verbindung.' },
+      ],
+      investmentTitle: 'Dein Investment',
+      priceLabel: 'Early Bird',
+      price: '720 €',
+      investmentNote:
+        'Alles ist für dich vorbereitet, damit du einfach ankommen und dich tragen lassen kannst.',
+      includedLabel: 'Inklusive',
+      included: [
+        '3 Surf-Sessions (inkl. Material & Lehrer)',
+        'Tägliche Yoga-Sessions (Matte & Hilfsmittel)',
+        'Marokkanischer Kochkurs',
+        '7 Übernachtungen, Frühstück & Abendessen',
+        'Ausflug nach Essaouira',
+        'Wanderung zur Oase',
+      ],
+      excludedLabel: 'Nicht inklusive',
+      excluded: [
+        'Flug & Anreise (Taxi kann organisiert & geteilt werden)',
+        'Einzelzimmer (optional auf Anfrage)',
+        'Mittagessen',
+        'Optionale Surffotos',
+        'Reiseversicherung',
+        'Zusätzliche Aktivitäten',
+      ],
+      whyTitle: 'Warum Imsouane',
+      why: [
+        'Imsouane ist kein Ort zum Funktionieren. Es ist ein Ort zum Ankommen.',
+        'Ein kleines Fischerdorf an der marokkanischen Atlantikküste, das dich einlädt, langsamer zu werden, tiefer zu atmen und dich wieder zu spüren. Die Wellen sind weich und lang – sie tragen dich, statt dich zu fordern. Der Ozean bestimmt den Rhythmus, nicht die Uhr.',
+        'Zwischen Meer, Natur und herzlichen Begegnungen entsteht ein Gefühl von Einfachheit und echter Fülle. Yoga wird hier zu einer Rückkehr. Zu deinem Atem. Zu deinem Körper. Zu dir selbst.',
+      ],
+      ctaTitle: 'Bist du dabei?',
+      ctaText:
+        'Wenn du spürst, dass dich dieser Ort ruft, könnte dies deine Woche sein. Spots sind bewusst begrenzt, um eine persönliche und achtsame Erfahrung zu ermöglichen.',
+      ctaButton: 'Jetzt Platz anfragen',
+      testimonialsTitle: 'Stimmen vom Retreat',
+      testimonials: [
+        'Ich bin schon lange nicht mehr mit so viel innerer Ruhe und Gelassenheit aus einem Urlaub wiedergekommen. Selbst meinen Kollegen ist direkt aufgefallen, dass ich so entspannt und erholt wirke – und das, obwohl es nur eine Woche war.',
+        'Es war so viel mehr als nur ein Yoga- und Surf-Retreat – es war eine Reise zu mir selbst.',
+        'Nina ist mit so viel Begeisterung und Liebe bei der Sache, dass einem gar nichts anderes übrig bleibt, als sich in die Yogaeinheiten, das Surfen und die Leute in Imsouane zu verlieben.',
+        'Ich bin so unheimlich dankbar für die Zeit in Imsouane – es war kein 08/15 Urlaub, sondern einer, der noch lange nachgewirkt und Veränderungen angestoßen hat.',
+        'Ein sanfter Yogaflow, eine sonnige Dachterrasse, weiter Meerblick und ein leichter Windhauch auf der Haut und in den Haaren – heaven on earth.',
+        'Im Vergleich zu anderen Gruppen habe ich gemerkt, dass wir keinen Urlaub von der Stange gebucht haben, sondern wirklich Wert auf Individualität und ein tolles Gesamterlebnis gelegt wurde.',
+      ],
     },
     gallery: {
       eyebrow: 'Momente',
@@ -190,8 +273,16 @@ export const copy = {
     },
     footer: {
       tagline: 'Bewegen, weich werden und bei dir ankommen.',
+      photoAlt: 'Nina praktiziert Yoga auf einer sonnigen Dachterrasse',
+      social: 'Social Media',
       explore: 'Entdecken',
       findMe: 'Kontakt',
+      contact: {
+        whatsapp: 'WhatsApp',
+        email: 'E-Mail',
+        form: 'Kontaktformular',
+        formValue: 'Kurs, Retreat oder Privatstunde anfragen',
+      },
       legal: {
         impressum: 'Impressum',
         privacy: 'Datenschutz',
@@ -201,23 +292,24 @@ export const copy = {
   },
   en: {
     meta: {
-      title: 'Nina Pfatischer Yoga - Come back to yourself',
+      title: 'Nina Pfatischer Yoga - Free to Flow',
       description:
-        'Yoga that is so much more than movement: mindfulness, serenity, and a quiet return to gratitude. Vinyasa Flow, Hatha, Yin, and meditation with Nina Pfatischer.',
+        'Yoga that is so much more than movement: connect with your natural rhythm. Pranayama & meditation, Animal Flow, Slow Flow, mobility, and retreats in Morocco with Nina Pfatischer.',
       ogDescription:
-        'Yoga that is so much more than movement: mindfulness, serenity, and a quiet return to gratitude.',
+        'Yoga that is so much more than movement - connect with your natural rhythm, find inner stillness and a sense of belonging.',
       jobTitle: 'Yoga Teacher',
       schemaDescription:
-        'Yoga teacher trained in Portugal, teaching in Germany. Vinyasa Flow, Hatha, Yin, and meditation - mindfulness, serenity, and gratitude.',
+        'Yoga teacher trained in Portugal, teaching in Germany and Morocco. Pranayama & meditation, Animal Flow, Slow Flow, and mobility - mindfulness, serenity, and gratitude.',
     },
     skip: 'Skip to content',
     brandSub: 'Yoga · Mindfulness',
     navLabel: 'Primary',
     nav: [
       { href: '#about', label: 'Story' },
-      { href: '#classes', label: 'Classes' },
+      { href: '#classes', label: 'Practice' },
       { href: '#music', label: 'Music' },
       { href: '#gallery', label: 'Moments' },
+      { href: '#retreat', label: 'Retreat' },
       { href: '#contact', label: 'Contact' },
     ],
     language: {
@@ -244,23 +336,29 @@ export const copy = {
     },
     hero: {
       alt: 'Nina smiling toward the sun on a wooden boardwalk in a green garden',
-      eyebrow: 'A Mindful Practice',
-      titlePrefix: 'Come back to ',
-      titleEm: 'yourself',
+      eyebrow: 'Free to Flow',
+      titlePrefix: 'Live in ',
+      titleEm: 'natural rhythm.',
       lead:
-        'Yoga that is so much more than movement - mindfulness, serenity, and a quiet return to gratitude. Come breathe, soften, and feel grounded again.',
+        'Connect with your natural rhythm. Let movement flow, and thoughts gently drift away. Feel into the beauty of the present moment, find inner stillness, and sense your connection to yourself, to nature, and to the life all around you.',
     },
     about: {
       alt: 'Nina balancing in tree pose before soft, misty mountains',
-      stat: 'surgeries, and one long road back to my own strength',
+      stat: 'knee surgeries, and one long road back to my own strength',
       eyebrow: 'My Story',
-      title: 'Yoga gave me back my ground',
+      title: 'Yoga has shown me the way back to my roots',
       lead:
-        'For me, yoga is so much more than movement. After a serious knee injury, five surgeries, and a long recovery, it helped me find stability, strength, and inner peace again - both physically and mentally.',
-      body:
-        'I trained in Portugal and have had the joy of teaching in studios in Morocco and Germany. My classes balance movement and stillness, strength and relaxation - shaped flexibly to fit the day. Each one is an invitation back to mindfulness, serenity, and gratitude.',
+        'For a long time, I lived in stress, was not mindful with my body, and constantly compared myself to others. This eventually manifested physically in five knee surgeries.',
+      body: [
+        'Yoga became a turning point for me. After a seemingly hopeless diagnosis, it helped me return to my original strength – to balance, stability, self-confidence, and inner peace, both physically and mentally.',
+        'It all began with the asanas – with conscious movement and the connection between breath and body. This practice stays with me to this day and helps me live in a more stable, pain-free, and connected relationship with my body.',
+        'During my yoga teacher training in Portugal, I was able to deepen not only the practice itself, but also the philosophy and roots of yoga. Since then, yoga has accompanied me far beyond the mat – in everyday life, through meditation, mindfulness, gratitude, and a more conscious awareness of myself and my surroundings. This lets me see the beauty and abundance of life more clearly and stay fulfilled in the present moment.',
+        'This journey, and the feeling of being able to share it with others, is more than a profession to me – it is a matter of the heart.',
+        'Since 2022, I have had the privilege of teaching in yoga studios, hospitals, therapy centers, companies, and universities, sharing mindfulness and awareness. With my love for Morocco, I have created a second home there, where I have guided many people from all over the world and today organize retreats and journeys.',
+        'Alongside my work as a yoga teacher, I am a trained educator and currently in training as a naturopath with a focus on psychotherapy. All of my experiences, travels, and qualifications flow into my classes – each one created anew, adapted to what the group needs: movement and stillness, strength and relaxation.',
+      ],
       wish:
-        'My wish is simple: that you leave lighter, more grounded, and more connected to yourself.',
+        'My intention in every class is to invite you to follow the natural flow of life, to listen mindfully to your own needs, and to connect with yourself through gratitude and lightness.',
     },
     classes: {
       eyebrow: 'The Practice',
@@ -269,28 +367,28 @@ export const copy = {
         'Every session balances movement and stillness. Come exactly as you are - each practice is designed flexibly to fit the day.',
       items: [
         {
-          title: 'Vinyasa Flow',
+          title: 'Pranayama & Meditation',
           desc:
-            'Dynamic, powerful sequences that link breath to movement - building heat, strength, and a steady, flowing focus.',
-          tags: ['75 min', 'Dynamic'],
+            'Conscious breathwork and meditation to calm the nervous system, cultivate awareness, and strengthen your connection to yourself.',
+          tags: ['45–60 min', 'Calm'],
         },
         {
-          title: 'Hatha Yoga',
+          title: 'Animal Flow',
           desc:
-            'Inner peace and stability through mindful alignment and conscious breathing. Slower, deliberate, deeply grounding.',
-          tags: ['60 min', 'Foundational'],
+            'Creative, flowing movement patterns inspired by the animal world, calisthenics and yoga combined – for strength, mobility, coordination, and body awareness.',
+          tags: ['60 min', 'Dynamic'],
         },
         {
-          title: 'Yin Yoga',
+          title: 'Slow Flow',
           desc:
-            'Calm and gentle, with long-held poses, philosophy, and meditation. A quiet space to soften and let go.',
-          tags: ['75 min', 'Gentle'],
+            'A harmonious blend of Vinyasa and Yin Yoga – flowing movement combined with slower, longer-held postures for balance, mobility, and relaxation.',
+          tags: ['75 min', 'Gently flowing'],
         },
         {
-          title: 'Meditation & Long Stretches',
+          title: 'Mobility Training',
           desc:
-            'Guided stillness, long held stretches, and conscious breath - settling the mind and returning to gratitude.',
-          tags: ['30 min', 'Stillness'],
+            'Targeted exercises to improve mobility, joint health, and functional strength – for freedom and ease in movement and everyday life.',
+          tags: ['60 min', 'Active'],
         },
       ],
     },
@@ -298,9 +396,85 @@ export const copy = {
       alt: 'Nina arching into wild thing pose on sun-warmed clay rock at golden hour',
       eyebrow: 'Atmosphere',
       quote:
-        'Music carries us between effort and ease - it sets the atmosphere, and lets the body remember how to feel.',
+        'Music carries us between strength and lightness – it creates atmosphere and helps us arrive more deeply in the body.',
       note:
-        'A carefully chosen soundtrack threads through every class - guiding us into movement, holding us in stillness, and carrying us home.',
+        'A consciously chosen soundtrack accompanies every class – guiding us into movement, holding us in stillness, and carrying us back home to ourselves at the end.',
+      extra:
+        'The practice can unfold in many different ways: as a morning or evening ritual, in nature while hiking, in the mountains or by the sea, after diving or before surfing – or in the calm and cozy space of a yoga studio. Always wherever you feel most at ease and at home within yourself.',
+    },
+    retreat: {
+      eyebrow: 'Retreat in Morocco',
+      title: 'Salty Shavasana Retreat',
+      alt: 'Sunny rooftop terrace with a wide sea view in Imsouane, Morocco',
+      tagline: 'A week to let go. A week to arrive within yourself.',
+      lead:
+        'Yoga by the Atlantic, surfing the endless waves of Imsouane, and a landscape that invites you to slow down, breathe more deeply, and feel yourself again.',
+      includedTitle: 'A week for you',
+      includedIntro:
+        'A retreat that leads you out of everyday life and back into your natural rhythm.',
+      highlights: [
+        'Daily yoga sessions (Vinyasa, Hatha & Yin)',
+        'Meditation & journaling for inner clarity & self-care',
+        '3 surf sessions in the bay of Imsouane',
+        'Moroccan cooking class with local flavors',
+        'Excursion to Essaouira – medina & Atlantic flair',
+        'Creative art workshop with a local artist',
+        'Hike to a hidden oasis',
+        '7 nights accommodation, breakfast & dinner daily',
+      ],
+      scheduleTitle: 'Your rhythm on site',
+      scheduleIntro: 'A day that carries you – no pressure, no must.',
+      schedule: [
+        { time: '08:00', title: 'Morning Practice', desc: 'Yoga or meditation overlooking the Atlantic – a gentle arrival into the day.' },
+        { time: '10:00', title: 'Breakfast', desc: 'Fresh, regional, and lovingly prepared – nourishing and grounding.' },
+        { time: '11:00', title: 'Free Time', desc: 'Time for you: sea, sun, rest, reading, or simply being.' },
+        { time: '16:00', title: 'Afternoon Flow', desc: 'Surf, workshop, or excursion – carried by the moment.' },
+        { time: '18:00', title: 'Evening Practice', desc: 'Gentle yoga or meditation in the light of the sunset.' },
+        { time: '20:00', title: 'Dinner', desc: 'Together, mindful, and full of flavor – arriving & sharing.' },
+        { time: '21:00', title: 'Community Time', desc: 'Music, conversation, stillness, stars – real connection.' },
+      ],
+      investmentTitle: 'Your investment',
+      priceLabel: 'Early Bird',
+      price: '€720',
+      investmentNote:
+        'Everything is prepared for you, so you can simply arrive and let yourself be carried.',
+      includedLabel: 'Included',
+      included: [
+        '3 surf sessions (incl. equipment & instructor)',
+        'Daily yoga sessions (mat & props)',
+        'Moroccan cooking class',
+        '7 nights, breakfast & dinner',
+        'Excursion to Essaouira',
+        'Hike to the oasis',
+      ],
+      excludedLabel: 'Not included',
+      excluded: [
+        'Flight & arrival (taxi can be organized & shared)',
+        'Single room (optional on request)',
+        'Lunch',
+        'Optional surf photos',
+        'Travel insurance',
+        'Additional activities',
+      ],
+      whyTitle: 'Why Imsouane',
+      why: [
+        'Imsouane is not a place to function. It is a place to arrive.',
+        'A small fishing village on the Moroccan Atlantic coast that invites you to slow down, breathe more deeply, and feel yourself again. The waves are soft and long – they carry you instead of challenging you. The ocean sets the rhythm, not the clock.',
+        'Between sea, nature, and warm encounters, a feeling of simplicity and true abundance arises. Here, yoga becomes a return. To your breath. To your body. To yourself.',
+      ],
+      ctaTitle: 'Are you in?',
+      ctaText:
+        'If you sense that this place is calling you, this could be your week. Spots are intentionally limited to allow for a personal and mindful experience.',
+      ctaButton: 'Request your spot',
+      testimonialsTitle: 'Voices from the retreat',
+      testimonials: [
+        'I have not come back from a holiday with so much inner calm and serenity in a long time. Even my colleagues noticed right away how relaxed and rested I seemed – and that after only a week.',
+        'It was so much more than just a yoga and surf retreat – it was a journey to myself.',
+        'Nina is so full of enthusiasm and love for what she does that you have no choice but to fall in love with the yoga sessions, the surfing, and the people of Imsouane.',
+        'I am so incredibly grateful for the time in Imsouane – it was no ordinary holiday, but one that kept resonating long after and set real change in motion.',
+        'A gentle yoga flow, a sunny rooftop terrace, a wide sea view, and a light breeze on your skin and in your hair – heaven on earth.',
+        'The retreat, Nina, and Imsouane taught me a lot. Thank you for all the love, the unforgettable experiences, the good conversations, and for helping me relax, find inner peace, and reset.',
+      ],
     },
     gallery: {
       eyebrow: 'Moments',
@@ -370,8 +544,16 @@ export const copy = {
     },
     footer: {
       tagline: 'Move, soften, and come home to yourself.',
+      photoAlt: 'Nina practicing yoga on a sunny rooftop',
+      social: 'Social media',
       explore: 'Explore',
       findMe: 'Find me',
+      contact: {
+        whatsapp: 'WhatsApp',
+        email: 'Email',
+        form: 'Contact form',
+        formValue: 'Ask about classes, retreats, or private sessions',
+      },
       legal: {
         impressum: 'Impressum',
         privacy: 'Datenschutz',

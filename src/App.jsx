@@ -5,6 +5,7 @@ import About from './components/About.jsx'
 import Classes from './components/Classes.jsx'
 import Music from './components/Music.jsx'
 import Gallery from './components/Gallery.jsx'
+import Retreat from './components/Retreat.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 import { copy, languageFromPath, normalizeLanguage } from './i18n.js'
@@ -133,6 +134,7 @@ export default function App({ language }) {
         <Classes copy={t.classes} />
         <Music copy={t.music} />
         <Gallery copy={t.gallery} />
+        <Retreat copy={t.retreat} onBook={goBook} />
         <Contact copy={t.contact} onSent={() => showToast(t.toast.sent)} />
       </main>
       <Footer copy={t} />
