@@ -22,26 +22,6 @@ img {
   }
 }
 
-@keyframes np-hero-reveal {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 22px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes np-scrim-settle {
-  from {
-    opacity: 0.74;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 @keyframes np-toast-in {
   from {
     opacity: 0;
@@ -776,7 +756,6 @@ html[data-motion='ready'] [data-animate].is-visible {
     rgba(58, 51, 44, 0.24) 40%,
     rgba(58, 51, 44, 0) 66%
   );
-  animation: np-scrim-settle 1.2s var(--ease-calm) both;
 }
 
 .np-hero-content {
@@ -833,11 +812,10 @@ html[data-motion='ready'] [data-animate].is-visible {
   flex-wrap: wrap;
 }
 
-html[data-motion='ready'] [data-hero-animate] {
-  opacity: 0;
-  animation: np-hero-reveal 0.78s var(--ease-calm) forwards;
-  animation-delay: calc(180ms + (var(--np-stagger) * 92ms));
-}
+/* Hero above-the-fold content paints at its final state immediately — no
+   entrance fade. This keeps LCP ≈ FCP (the reveal previously re-hid the
+   hero after hydration and gated LCP/Speed Index). Scroll-reveal animations
+   on the lower sections ([data-animate]) are unaffected. */
 
 .np-btn {
   display: inline-flex;
