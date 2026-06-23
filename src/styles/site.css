@@ -397,51 +397,41 @@ html[data-motion='ready'] [data-animate].is-visible {
 }
 
 /* ---- Mobile slide-in menu ---- */
+/* Full-screen mobile menu. Portaled to <body> (see Nav.jsx) so it can never
+   be trapped by a transformed/filtered ancestor — the scrolled nav applies
+   backdrop-filter, which would otherwise become the containing block for this
+   fixed overlay and clip it to the nav bar. z-index sits above the nav (60). */
 .np-mm {
   position: fixed;
   inset: 0;
-  z-index: 90;
+  z-index: 100;
   visibility: hidden;
+  opacity: 0;
   pointer-events: none;
+  transition: opacity 0.32s var(--ease-calm), visibility 0s linear 0.32s;
 }
 
 .np-mm.is-open {
   visibility: visible;
-  pointer-events: auto;
-}
-
-.np-mm-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(42, 37, 31, 0.46);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  opacity: 0;
-  transition: opacity 0.5s var(--ease-calm);
-}
-
-.np-mm.is-open .np-mm-backdrop {
   opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.32s var(--ease-calm);
 }
 
 .np-mm-panel {
   position: absolute;
-  top: 0;
-  right: 0;
+  inset: 0;
+  width: 100%;
   height: 100%;
-  width: min(420px, 88vw);
+  height: 100dvh;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
   background: var(--surface-card);
-  box-shadow: var(--shadow-lg);
-  padding: 20px clamp(24px, 7vw, 36px) calc(20px + env(safe-area-inset-bottom));
+  padding: clamp(20px, 4vh, 32px) clamp(24px, 7vw, 44px)
+    calc(clamp(20px, 4vh, 32px) + env(safe-area-inset-bottom));
   overflow: hidden;
-  transform: translateX(100%);
-  transition: transform 0.58s var(--ease-calm);
-}
-
-.np-mm.is-open .np-mm-panel {
-  transform: translateX(0);
 }
 
 .np-mm-head {
@@ -497,7 +487,6 @@ html[data-motion='ready'] [data-animate].is-visible {
 }
 
 .np-mm-nav {
-  margin-top: clamp(16px, 3vh, 28px);
   display: flex;
   flex-direction: column;
 }
@@ -507,7 +496,7 @@ html[data-motion='ready'] [data-animate].is-visible {
   align-items: baseline;
   justify-content: space-between;
   gap: 14px;
-  padding: clamp(11px, 1.7vh, 15px) 0;
+  padding: clamp(12px, 2vh, 20px) 0;
   text-decoration: none;
   border-bottom: 1px solid var(--border-soft);
   opacity: 0;
@@ -544,7 +533,7 @@ html[data-motion='ready'] [data-animate].is-visible {
 .np-mm-name {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(26px, 6.5vw, 33px);
+  font-size: clamp(30px, 8vw, 40px);
   line-height: 1;
   letter-spacing: 0.01em;
   color: var(--text-heading);
@@ -568,8 +557,6 @@ html[data-motion='ready'] [data-animate].is-visible {
 }
 
 .np-mm-foot {
-  margin-top: auto;
-  padding-top: clamp(18px, 3vh, 28px);
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 0.5s var(--ease-calm) 0.4s, transform 0.5s var(--ease-calm) 0.4s;
@@ -667,9 +654,9 @@ html[data-motion='ready'] [data-animate].is-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .np-mm,
   .np-mm-panel,
   .np-mm-item,
-  .np-mm-backdrop,
   .np-mm-foot,
   .np-mm-close,
   .np-mm-book {
