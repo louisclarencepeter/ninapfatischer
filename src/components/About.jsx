@@ -36,7 +36,9 @@ export default function About({ copy }) {
           </h2>
           <div className="np-about-body" data-animate="rise" style={{ '--np-stagger': 2 }}>
             <p className="np-lead">{copy.lead}</p>
-            <p>{copy.body}</p>
+            {copy.body.map((para) => (
+              <p key={para.slice(0, 32)}>{para}</p>
+            ))}
             <p className="np-about-wish">{copy.wish}</p>
           </div>
         </div>

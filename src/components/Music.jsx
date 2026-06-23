@@ -31,6 +31,11 @@ export default function Music({ copy }) {
           <p className="np-music-note" data-animate="rise" style={{ '--np-stagger': 2 }}>
             {copy.note}
           </p>
+          {copy.extra && (
+            <p className="np-music-note" data-animate="rise" style={{ '--np-stagger': 3 }}>
+              {copy.extra}
+            </p>
+          )}
         </div>
       </div>
     </section>
