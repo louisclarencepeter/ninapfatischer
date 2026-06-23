@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { LANGUAGES, pathForLanguage } from '../i18n.js'
 
@@ -109,6 +109,7 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
   // render and the first client render match (both render nothing), then the
   // portal attaches after hydration.
   const [mounted, setMounted] = useState(false)
+  const overlayRef = useRef(null)
 
   useEffect(() => setMounted(true), [])
 
@@ -123,37 +124,48 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
   // and wire Escape-to-close.
   useEffect(() => {
     if (!menuOpen) return undefined
+    const root = document.documentElement
     const { body } = document
-    const scrollY = window.scrollY
     const prev = {
-      position: body.style.position,
-      top: body.style.top,
-      width: body.style.width,
-      overflow: body.style.overflow,
+      root: root.style.overflow,
+      body: body.style.overflow,
+      pad: body.style.paddingRight,
     }
-    // position:fixed + negative top is the reliable cross-browser lock — it
-    // pins the page (no iOS rubber-band scroll behind the overlay) and keeps
-    // the visual position. We restore the scroll offset on close.
-    body.style.position = 'fixed'
-    body.style.top = `-${scrollY}px`
-    body.style.width = '100%'
+    // Lock background scroll WITHOUT moving the page: overflow:hidden leaves the
+    // scroll position untouched, so opening and closing the menu cause no jump
+    // or visible scroll. (We deliberately avoid the old position:fixed + scrollTo
+    // restore — it pinned the page but forced a visible scroll-back on close.)
+    // Reserve the width of the scrollbar that overflow:hidden removes, so the
+    // page behind the overlay doesn't reflow — otherwise, with the site's global
+    // scroll-behavior:smooth, the reflow reads as a small scroll on close. This
+    // is a no-op on touch/overlay-scrollbar devices (scrollbar width is 0).
+    const scrollbarW = window.innerWidth - root.clientWidth
+    root.style.overflow = 'hidden'
     body.style.overflow = 'hidden'
+    if (scrollbarW > 0) body.style.paddingRight = `${scrollbarW}px`
+    // overflow:hidden alone does not stop touch panning on iOS Safari, so also
+    // block touchmove on the overlay. Safe because nothing inside the
+    // full-screen panel is scrollable; taps don't fire touchmove, so links and
+    // buttons stay interactive. Must be non-passive for preventDefault to work.
+    const overlay = overlayRef.current
+    const blockTouch = (e) => e.preventDefault()
+    overlay?.addEventListener('touchmove', blockTouch, { passive: false })
     const onKeyDown = (e) => {
       if (e.key === 'Escape') setMenuOpen(false)
     }
     window.addEventListener('keydown', onKeyDown)
     return () => {
-      body.style.position = prev.position
-      body.style.top = prev.top
-      body.style.width = prev.width
-      body.style.overflow = prev.overflow
-      window.scrollTo(0, scrollY)
+      root.style.overflow = prev.root
+      body.style.overflow = prev.body
+      body.style.paddingRight = prev.pad
+      overlay?.removeEventListener('touchmove', blockTouch)
       window.removeEventListener('keydown', onKeyDown)
     }
   }, [menuOpen])
 
   const menu = (
     <div
+      ref={overlayRef}
       className={`np-mm${menuOpen ? ' is-open' : ''}`}
       id="mobileMenu"
       role="dialog"
