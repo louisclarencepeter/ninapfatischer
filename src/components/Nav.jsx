@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { LANGUAGES, pathForLanguage } from '../i18n.js'
 
 const ArrowIcon = (
@@ -104,6 +105,12 @@ function ThemeToggle({ copy, onToggleTheme }) {
 export default function Nav({ copy, language, onBook, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  // The menu is portaled to <body> (see below). Gate on mount so the server
+  // render and the first client render match (both render nothing), then the
+  // portal attaches after hydration.
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => setMounted(true), [])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -112,24 +119,120 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Lock body scroll and wire Escape-to-close while the slide-in menu is open.
+  // While the menu is open: lock background scroll (preserving scroll position)
+  // and wire Escape-to-close.
   useEffect(() => {
     if (!menuOpen) return undefined
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+    const { body } = document
+    const scrollY = window.scrollY
+    const prev = {
+      position: body.style.position,
+      top: body.style.top,
+      width: body.style.width,
+      overflow: body.style.overflow,
+    }
+    // position:fixed + negative top is the reliable cross-browser lock — it
+    // pins the page (no iOS rubber-band scroll behind the overlay) and keeps
+    // the visual position. We restore the scroll offset on close.
+    body.style.position = 'fixed'
+    body.style.top = `-${scrollY}px`
+    body.style.width = '100%'
+    body.style.overflow = 'hidden'
     const onKeyDown = (e) => {
       if (e.key === 'Escape') setMenuOpen(false)
     }
     window.addEventListener('keydown', onKeyDown)
     return () => {
-      document.body.style.overflow = previousOverflow
+      body.style.position = prev.position
+      body.style.top = prev.top
+      body.style.width = prev.width
+      body.style.overflow = prev.overflow
+      window.scrollTo(0, scrollY)
       window.removeEventListener('keydown', onKeyDown)
     }
   }, [menuOpen])
 
+  const menu = (
+    <div
+      className={`np-mm${menuOpen ? ' is-open' : ''}`}
+      id="mobileMenu"
+      role="dialog"
+      aria-modal="true"
+      aria-label={copy.navLabel}
+      aria-hidden={!menuOpen}
+    >
+      <div className="np-mm-panel">
+        <div className="np-mm-head">
+          <div className="np-mm-brand">
+            <span className="name">Nina Pfatischer</span>
+            <span className="sub">{copy.brandSub}</span>
+          </div>
+          <button
+            type="button"
+            className="np-mm-close"
+            aria-label={copy.menu.close}
+            onClick={() => setMenuOpen(false)}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <nav className="np-mm-nav" aria-label={copy.navLabel}>
+          {copy.nav.map((l, i) => (
+            <a key={l.href} href={l.href} className="np-mm-item" onClick={() => setMenuOpen(false)}>
+              <span className="label">
+                <span className="num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="np-mm-name">{l.label}</span>
+              </span>
+              <span className="np-mm-arrow" aria-hidden="true">
+                {ArrowIcon}
+              </span>
+            </a>
+          ))}
+        </nav>
+
+        <div className="np-mm-foot">
+          <button
+            type="button"
+            className="np-mm-book"
+            onClick={() => {
+              setMenuOpen(false)
+              onBook()
+            }}
+          >
+            {copy.buttons.book}
+          </button>
+          <div className="np-mm-controls">
+            <LanguageSwitcher copy={copy} language={language} />
+            <ThemeToggle copy={copy} onToggleTheme={onToggleTheme} />
+          </div>
+          <div className="np-mm-social">
+            <span className="find">{copy.footer.findMe}</span>
+            <div className="icons">
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  aria-label={s.label}
+                  target={s.href.startsWith('http') ? '_blank' : undefined}
+                  rel={s.href.startsWith('http') ? 'noreferrer' : undefined}
+                >
+                  {s.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+
   return (
-    <header className={`np-nav${scrolled ? ' is-scrolled' : ''}`}>
-      <nav className="np-container np-nav-inner" aria-label={copy.navLabel}>
+    <>
+      <header className={`np-nav${scrolled ? ' is-scrolled' : ''}`}>
+        <nav className="np-container np-nav-inner" aria-label={copy.navLabel}>
         <a href="#top" className="np-brand">
           <span className="np-wordmark">Nina Pfatischer</span>
           <span className="np-sub">{copy.brandSub}</span>
@@ -178,81 +281,8 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
           </svg>
         </button>
       </nav>
-      <div
-        className={`np-mm${menuOpen ? ' is-open' : ''}`}
-        id="mobileMenu"
-        role="dialog"
-        aria-modal="true"
-        aria-label={copy.navLabel}
-        aria-hidden={!menuOpen}
-      >
-        <div className="np-mm-backdrop" onClick={() => setMenuOpen(false)} />
-        <aside className="np-mm-panel">
-          <div className="np-mm-head">
-            <div className="np-mm-brand">
-              <span className="name">Nina Pfatischer</span>
-              <span className="sub">{copy.brandSub}</span>
-            </div>
-            <button
-              type="button"
-              className="np-mm-close"
-              aria-label={copy.menu.close}
-              onClick={() => setMenuOpen(false)}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
-                <path d="M18 6 6 18M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          <nav className="np-mm-nav" aria-label={copy.navLabel}>
-            {copy.nav.map((l, i) => (
-              <a key={l.href} href={l.href} className="np-mm-item" onClick={() => setMenuOpen(false)}>
-                <span className="label">
-                  <span className="num">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="np-mm-name">{l.label}</span>
-                </span>
-                <span className="np-mm-arrow" aria-hidden="true">
-                  {ArrowIcon}
-                </span>
-              </a>
-            ))}
-          </nav>
-
-          <div className="np-mm-foot">
-            <button
-              type="button"
-              className="np-mm-book"
-              onClick={() => {
-                setMenuOpen(false)
-                onBook()
-              }}
-            >
-              {copy.buttons.book}
-            </button>
-            <div className="np-mm-controls">
-              <LanguageSwitcher copy={copy} language={language} />
-              <ThemeToggle copy={copy} onToggleTheme={onToggleTheme} />
-            </div>
-            <div className="np-mm-social">
-              <span className="find">{copy.footer.findMe}</span>
-              <div className="icons">
-                {SOCIALS.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    aria-label={s.label}
-                    target={s.href.startsWith('http') ? '_blank' : undefined}
-                    rel={s.href.startsWith('http') ? 'noreferrer' : undefined}
-                  >
-                    {s.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </header>
+      </header>
+      {mounted && createPortal(menu, document.body)}
+    </>
   )
 }
