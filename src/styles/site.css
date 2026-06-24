@@ -5,6 +5,11 @@
 
 html {
   scroll-behavior: smooth;
+  /* Always reserve the scrollbar gutter so locking the page (overflow:hidden
+     when the menu opens) doesn't change the layout width. Prevents both the
+     content reflow on open/close and the fixed nav/close-button shifting by
+     the scrollbar width. No-op on overlay-scrollbar devices (phones, macOS). */
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -488,13 +493,21 @@ html[data-motion='ready'] [data-animate].is-visible {
 }
 
 .np-mm-close {
+  /* Pinned to the exact spot/size of the nav hamburger (top:16px,
+     right: container padding, 46x46) so opening/closing swaps the icon in
+     place. Both the nav and this overlay are viewport-fixed, so they stay
+     aligned with or without a scrollbar. */
+  position: fixed;
+  top: 16px;
+  right: clamp(20px, 5vw, 32px);
+  z-index: 1;
   flex: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  margin: -4px -6px 0 0;
+  width: 46px;
+  height: 46px;
+  margin: 0;
   border-radius: var(--radius-pill);
   border: 1.5px solid var(--border-medium);
   background: transparent;
