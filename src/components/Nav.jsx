@@ -303,7 +303,7 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
             strokeLinecap="round"
             aria-hidden="true"
           >
-            <path d="M3 6h18M3 12h18M3 18h18" />
+            <path d="M3 6h18M3 12h12M3 18h16" />
           </svg>
         </button>
       </nav>
