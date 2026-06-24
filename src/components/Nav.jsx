@@ -133,20 +133,16 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
     const prev = {
       root: root.style.overflow,
       body: body.style.overflow,
-      pad: body.style.paddingRight,
     }
     // Lock background scroll WITHOUT moving the page: overflow:hidden leaves the
     // scroll position untouched, so opening and closing the menu cause no jump
     // or visible scroll. (We deliberately avoid the old position:fixed + scrollTo
     // restore — it pinned the page but forced a visible scroll-back on close.)
-    // Reserve the width of the scrollbar that overflow:hidden removes, so the
-    // page behind the overlay doesn't reflow — otherwise, with the site's global
-    // scroll-behavior:smooth, the reflow reads as a small scroll on close. This
-    // is a no-op on touch/overlay-scrollbar devices (scrollbar width is 0).
-    const scrollbarW = window.innerWidth - root.clientWidth
+    // No scrollbar-width compensation is needed here: `html { scrollbar-gutter:
+    // stable }` keeps the layout width constant when the scrollbar is hidden,
+    // so neither the page nor the fixed nav/close button shifts.
     root.style.overflow = 'hidden'
     body.style.overflow = 'hidden'
-    if (scrollbarW > 0) body.style.paddingRight = `${scrollbarW}px`
 
     // Make everything behind the overlay inert: removes it from the tab order
     // (so focus is trapped in the dialog) and hides it from assistive tech.
@@ -172,7 +168,6 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
     return () => {
       root.style.overflow = prev.root
       body.style.overflow = prev.body
-      body.style.paddingRight = prev.pad
       if (appRoot) appRoot.inert = false
       overlay?.removeEventListener('touchmove', blockTouch)
       window.removeEventListener('keydown', onKeyDown)
