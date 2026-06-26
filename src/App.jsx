@@ -8,6 +8,7 @@ import Gallery from './components/Gallery.jsx'
 import Retreat from './components/Retreat.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
+import CookieConsent from './components/CookieConsent.jsx'
 import { copy, languageFromPath, normalizeLanguage } from './i18n.js'
 
 const prefersReducedMotion = () =>
@@ -145,6 +146,7 @@ export default function App({ language }) {
         <Contact copy={t.contact} onSent={() => showToast(t.toast.sent)} />
       </main>
       <Footer copy={t} />
+      <CookieConsent copy={t.cookies} />
       {/* Persistent live region: mounting text into an existing region is
           what gets screen readers to actually announce the toast. */}
       <div role="status" aria-live="polite">

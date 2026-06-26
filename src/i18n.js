@@ -291,6 +291,14 @@ export const copy = {
       },
       location: 'Ausgebildet in Portugal · Unterricht in Deutschland',
     },
+    cookies: {
+      label: 'Cookie-Hinweis',
+      title: 'Cookies & Analyse',
+      text:
+        'Ich speichere deine Auswahl lokal. Wenn du zustimmst, hilft Google Analytics zu verstehen, welche Seiten allgemein genutzt werden.',
+      necessary: 'Nur notwendige',
+      accept: 'Akzeptieren',
+    },
   },
   en: {
     meta: {
@@ -563,6 +571,14 @@ export const copy = {
         privacy: 'Datenschutz',
       },
       location: 'Trained in Portugal · Teaching in Germany',
+    },
+    cookies: {
+      label: 'Cookie notice',
+      title: 'Cookies & analytics',
+      text:
+        'I store your choice locally. If you accept, Google Analytics helps understand aggregate site usage.',
+      necessary: 'Only necessary',
+      accept: 'Accept',
     },
   },
 }
