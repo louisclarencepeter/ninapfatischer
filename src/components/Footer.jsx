@@ -53,7 +53,7 @@ const SOCIALS = [
   },
   {
     label: 'Email',
-    href: 'mailto:nina@ninapfatischer.com',
+    href: 'mailto:info@ninapfatischer.com',
     icon: IconEmail,
   },
 ].filter((s) => s.href)
@@ -67,8 +67,8 @@ const contactLinks = (copy) => [
   },
   {
     label: copy.footer.contact.email,
-    value: 'nina@ninapfatischer.com',
-    href: 'mailto:nina@ninapfatischer.com',
+    value: 'info@ninapfatischer.com',
+    href: 'mailto:info@ninapfatischer.com',
     icon: IconEmail,
   },
   {

@@ -123,7 +123,7 @@ export default function Contact({ copy, onSent }) {
               </div>
               {status === 'error' && (
                 <p className="np-form-error" role="alert">
-                  {copy.errorPrefix} <a href="mailto:nina@ninapfatischer.com">nina@ninapfatischer.com</a>.
+                  {copy.errorPrefix} <a href="mailto:info@ninapfatischer.com">info@ninapfatischer.com</a>.
                 </p>
               )}
               <button type="submit" className="np-btn np-btn-primary np-submit" disabled={status === 'sending'}>
