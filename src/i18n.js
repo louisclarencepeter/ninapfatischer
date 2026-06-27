@@ -97,7 +97,31 @@ export const copy = {
         'Jede Stunde verbindet Bewegung und Stille. Komm genau so, wie du bist - jede Praxis passt sich flexibel dem Tag an.',
       items: [
         {
-          title: 'Pranayama & Meditation',
+          title: 'Hatha Flow',
+          desc:
+            'Erdende, ruhigere Haltungen, bewusst mit dem Atem gehalten – für Kraft, Ausrichtung und Stabilität in Körper und Geist.',
+          tags: ['60 min', 'Erdend'],
+        },
+        {
+          title: 'Vinyasa Flow',
+          desc:
+            'Mit dem Atem verbundene Sequenzen, die Wärme und Fluss aufbauen und kreativ von einer Haltung in die nächste führen.',
+          tags: ['60 min', 'Dynamisch'],
+        },
+        {
+          title: 'Yin Flow',
+          desc:
+            'Lange, sanfte Haltungen, die tiefes Bindegewebe lösen und zu Stille, Geduld und Hingabe einladen.',
+          tags: ['60–75 min', 'Erholsam'],
+        },
+        {
+          title: 'Slow Flow',
+          desc:
+            'Eine harmonische Verbindung aus Vinyasa und Yin Yoga – fließende Bewegungen kombiniert mit ruhigen, länger gehaltenen Positionen für Balance, Beweglichkeit und Entspannung.',
+          tags: ['75 min', 'Sanft fließend'],
+        },
+        {
+          title: 'Meditations',
           desc:
             'Bewusste Atemtechniken und Meditation zur Beruhigung des Nervensystems, Förderung der Achtsamkeit und Stärkung der Verbindung zu dir selbst.',
           tags: ['45–60 min', 'Ruhig'],
@@ -109,13 +133,7 @@ export const copy = {
           tags: ['60 min', 'Dynamisch'],
         },
         {
-          title: 'Slow Flow',
-          desc:
-            'Eine harmonische Verbindung aus Vinyasa und Yin Yoga – fließende Bewegungen kombiniert mit ruhigen, länger gehaltenen Positionen für Balance, Beweglichkeit und Entspannung.',
-          tags: ['75 min', 'Sanft fließend'],
-        },
-        {
-          title: 'Mobility Training',
+          title: 'Mobility',
           desc:
             'Gezielte Übungen zur Verbesserung von Beweglichkeit, Gelenkgesundheit und funktioneller Kraft – für Freiheit und Leichtigkeit in Bewegung und Alltag.',
           tags: ['60 min', 'Aktiv'],
@@ -378,7 +396,31 @@ export const copy = {
         'Every session balances movement and stillness. Come exactly as you are - each practice is designed flexibly to fit the day.',
       items: [
         {
-          title: 'Pranayama & Meditation',
+          title: 'Hatha Flow',
+          desc:
+            'Grounding, slower-paced postures held with conscious breath — building strength, alignment, and steadiness in body and mind.',
+          tags: ['60 min', 'Grounding'],
+        },
+        {
+          title: 'Vinyasa Flow',
+          desc:
+            'Breath-linked sequences that build warmth and fluidity, moving creatively from one posture to the next.',
+          tags: ['60 min', 'Dynamic'],
+        },
+        {
+          title: 'Yin Flow',
+          desc:
+            'Long, gentle holds that release deep connective tissue and invite stillness, patience, and surrender.',
+          tags: ['60–75 min', 'Restorative'],
+        },
+        {
+          title: 'Slow Flow',
+          desc:
+            'A harmonious blend of Vinyasa and Yin Yoga – flowing movement combined with slower, longer-held postures for balance, mobility, and relaxation.',
+          tags: ['75 min', 'Gently flowing'],
+        },
+        {
+          title: 'Meditations',
           desc:
             'Conscious breathwork and meditation to calm the nervous system, cultivate awareness, and strengthen your connection to yourself.',
           tags: ['45–60 min', 'Calm'],
@@ -390,13 +432,7 @@ export const copy = {
           tags: ['60 min', 'Dynamic'],
         },
         {
-          title: 'Slow Flow',
-          desc:
-            'A harmonious blend of Vinyasa and Yin Yoga – flowing movement combined with slower, longer-held postures for balance, mobility, and relaxation.',
-          tags: ['75 min', 'Gently flowing'],
-        },
-        {
-          title: 'Mobility Training',
+          title: 'Mobility',
           desc:
             'Targeted exercises to improve mobility, joint health, and functional strength – for freedom and ease in movement and everyday life.',
           tags: ['60 min', 'Active'],
