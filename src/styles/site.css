@@ -422,7 +422,7 @@ html[data-motion='ready'] [data-animate].is-visible {
 .np-mm {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: 150;
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
@@ -825,6 +825,10 @@ html[data-motion='ready'] [data-animate].is-visible {
   margin: 22px 0 0;
   max-width: 520px;
   text-shadow: 0 1px 20px rgba(58, 51, 44, 0.4);
+}
+
+.np-hero-lead-short {
+  display: none;
 }
 
 .np-hero-actions {
@@ -1435,6 +1439,53 @@ html[data-motion='ready'] [data-animate].is-visible {
   display: flex;
   flex-direction: column;
   gap: clamp(44px, 6vw, 76px);
+}
+
+.np-retreat-summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(22px, 4vw, 44px);
+  align-items: center;
+  padding: clamp(24px, 4vw, 36px);
+  background: var(--surface-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.np-retreat-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px 24px;
+}
+
+.np-retreat-fact {
+  min-width: 0;
+}
+
+.np-retreat-fact-label {
+  display: block;
+  font-family: var(--font-eyebrow);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-accent);
+}
+
+.np-retreat-fact-value {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-heading);
+}
+
+.np-retreat-summary-cta {
+  align-self: stretch;
+  min-width: 190px;
 }
 
 .np-retreat-cols {
@@ -2297,6 +2348,19 @@ html[data-motion='reduced'] [data-parallax] {
     gap: 44px;
   }
 
+  .np-retreat-summary {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .np-retreat-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .np-retreat-summary-cta {
+    width: 100%;
+  }
+
   .np-retreat-invest {
     grid-template-columns: 1fr;
     gap: 28px;
@@ -2350,21 +2414,28 @@ html[data-motion='reduced'] [data-parallax] {
   .np-hero-lead {
     font-size: 1rem;
     line-height: 1.58;
-    max-width: 32ch;
+    max-width: 30ch;
     overflow-wrap: break-word;
+  }
+
+  .np-hero-lead-full {
+    display: none;
+  }
+
+  .np-hero-lead-short {
+    display: inline;
   }
 
   .np-hero-actions {
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
-    margin-top: 28px;
+    margin-top: 22px;
   }
 
   .np-hero-actions .np-btn {
     width: 100%;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding: 15px 24px;
   }
 
   .np-form-two {

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { PUBLIC_CONTACT_EMAIL } from '../constants.js'
 
 const POINT_ICONS = [
   {
@@ -123,7 +124,7 @@ export default function Contact({ copy, onSent }) {
               </div>
               {status === 'error' && (
                 <p className="np-form-error" role="alert">
-                  {copy.errorPrefix} <a href="mailto:info@ninapfatischer.com">info@ninapfatischer.com</a>.
+                  {copy.errorPrefix} <a href={`mailto:${PUBLIC_CONTACT_EMAIL}`}>{PUBLIC_CONTACT_EMAIL}</a>.
                 </p>
               )}
               <button type="submit" className="np-btn np-btn-primary np-submit" disabled={status === 'sending'}>

@@ -71,6 +71,8 @@ export const copy = {
       titleEm: 'natürlichen Rhythmus leben.',
       lead:
         'Verbinde dich mit deinem natürlichen Rhythmus. Lass Bewegungen fließen und Gedanken ziehen. Nimm die Schönheit des Augenblicks wahr, finde innere Ruhe und spüre die Verbundenheit mit dir selbst, der Natur und dem Leben um dich herum.',
+      mobileLead:
+        'Finde Ruhe, Leichtigkeit und Verbindung in Bewegung, Atem und Moment.',
     },
     about: {
       alt: 'Nina balanciert in der Baumhaltung vor weichen, nebligen Bergen',
@@ -78,14 +80,12 @@ export const copy = {
       eyebrow: 'Meine Geschichte',
       title: 'Yoga hat mir den Weg zurück zu meinen Wurzeln gezeigt',
       lead:
-        'Lange Zeit habe ich im Stress gelebt, wenig achtsam mit meinem Körper umgegangen und mich ständig mit anderen verglichen. Körperlich hat sich das in fünf Knieoperationen gezeigt.',
+        'Lange Zeit habe ich im Stress gelebt, wenig achtsam mit meinem Körper umgegangen und mich oft mit anderen verglichen. Körperlich zeigte sich das in fünf Knieoperationen.',
       body: [
-        'Yoga wurde für mich zu einem Wendepunkt. Nach einer aussichtslosen Diagnose hat es mir geholfen, wieder in meine ursprüngliche Kraft zu finden – in Balance, Stabilität, Selbstvertrauen und inneren Frieden, körperlich wie mental.',
-        'Begonnen hat alles mit den Asanas – mit bewusster Bewegung und der Verbindung von Atem und Körper. Diese Praxis begleitet mich bis heute und hilft mir, stabil, schmerzfreier und verbunden mit meinem Körper zu leben.',
-        'Während meiner Ausbildung zur Yogalehrerin in Portugal durfte ich nicht nur die Praxis, sondern auch die Lebensphilosophie und die Wurzeln des Yoga tiefer verstehen. Seitdem begleitet mich Yoga auch abseits der Matte – in den alltäglichen Dingen, durch Meditation, Achtsamkeit, Dankbarkeit und ein bewussteres Wahrnehmen von mir selbst und meiner Umwelt. So gelingt es mir, die Schönheit und Fülle des Lebens klarer zu sehen und erfüllt im Moment zu bleiben.',
-        'Diese Reise und das Gefühl, sie mit anderen Menschen teilen zu dürfen, ist für mich mehr als ein Beruf – es ist eine Herzensangelegenheit.',
-        'Seit 2022 durfte ich in Yoga-Studios, Krankenhäusern, Therapiezentren, Unternehmen und Universitäten unterrichten und Achtsamkeit weitergeben. Mit meiner Liebe zu Marokko habe ich mir dort ein zweites Zuhause aufgebaut, bereits viele Menschen aus aller Welt begleitet und organisiere heute Retreats und Reisen.',
-        'Neben meiner Tätigkeit als Yogalehrerin bin ich ausgebildete Lehrkraft und befinde mich in der Ausbildung zur Heilpraktikerin mit Schwerpunkt Psychotherapie. All meine Erfahrungen, Reisen und Ausbildungen fließen in meine Yogastunden ein – jede Stunde entsteht neu, angepasst an das, was die Gruppe braucht: Bewegung und Stille, Kraft und Entspannung.',
+        'Yoga wurde für mich zu einem Wendepunkt. Nach einer schwierigen Diagnose half mir die Praxis, wieder Vertrauen in meinen Körper zu finden – durch Bewegung, Atem, Stabilität und innere Ruhe.',
+        'Während meiner Ausbildung zur Yogalehrerin in Portugal durfte ich Yoga nicht nur als körperliche Praxis, sondern auch als Lebensphilosophie tiefer verstehen. Seitdem begleitet mich Yoga auch abseits der Matte: in Meditation, Achtsamkeit, Dankbarkeit und einem bewussteren Blick auf mich selbst und meine Umwelt.',
+        'Seit 2022 unterrichte ich in Studios, Therapiezentren, Unternehmen, Universitäten und Retreats. Meine Liebe zu Marokko ist dabei zu einem zweiten Zuhause geworden, wo ich heute Menschen aus aller Welt begleite.',
+        'Als ausgebildete Lehrkraft und angehende Heilpraktikerin mit Schwerpunkt Psychotherapie verbinde ich in meinen Stunden Bewegung und Stille, Kraft und Entspannung. Jede Praxis entsteht neu – angepasst an das, was die Gruppe braucht.',
       ],
       wish:
         'Mein Ziel jeder Stunde ist es, dich einzuladen, dem natürlichen Fluss des Lebens zu folgen, achtsam auf deine eigenen Bedürfnisse zu hören und dich mit Dankbarkeit und Leichtigkeit mit dir selbst zu verbinden.',
@@ -158,6 +158,15 @@ export const copy = {
       tagline: 'Eine Woche zum Loslassen. Eine Woche, um bei dir anzukommen.',
       lead:
         'Yoga am Atlantik, Surfen in den endlosen Wellen von Imsouane und eine Landschaft, die dich einlädt, langsamer zu werden, tiefer zu atmen und dich selbst wieder zu spüren.',
+      summaryLabel: 'Retreat Eckdaten',
+      summary: [
+        { label: 'Ort', value: 'Imsouane, Marokko' },
+        { label: 'Dauer', value: '7 Nächte' },
+        { label: 'Preis', value: 'Early Bird 720 €' },
+        { label: 'Termin', value: 'Auf Anfrage' },
+        { label: 'Inklusive', value: 'Yoga, Surf, Frühstück & Abendessen' },
+        { label: 'Gruppe', value: 'Bewusst begrenzte Plätze' },
+      ],
       includedTitle: 'Eine Woche für dich',
       includedIntro:
         'Ein Retreat, das dich aus dem Alltag heraus und zurück in deinen natürlichen Rhythmus führt.',
@@ -370,6 +379,8 @@ export const copy = {
       titleEm: 'natural rhythm.',
       lead:
         'Connect with your natural rhythm. Let movement flow, and thoughts gently drift away. Feel into the beauty of the present moment, find inner stillness, and sense your connection to yourself, to nature, and to the life all around you.',
+      mobileLead:
+        'Find stillness, ease, and connection through movement, breath, and the present moment.',
     },
     about: {
       alt: 'Nina balancing in tree pose before soft, misty mountains',
@@ -377,14 +388,12 @@ export const copy = {
       eyebrow: 'My Story',
       title: 'Yoga has shown me the way back to my roots',
       lead:
-        'For a long time, I lived in stress, was not mindful with my body, and constantly compared myself to others. This eventually manifested physically in five knee surgeries.',
+        'For a long time, I lived in stress, was not very mindful with my body, and often compared myself to others. Physically, this showed up in five knee surgeries.',
       body: [
-        'Yoga became a turning point for me. After a seemingly hopeless diagnosis, it helped me return to my original strength – to balance, stability, self-confidence, and inner peace, both physically and mentally.',
-        'It all began with the asanas – with conscious movement and the connection between breath and body. This practice stays with me to this day and helps me live in a more stable, pain-free, and connected relationship with my body.',
-        'During my yoga teacher training in Portugal, I was able to deepen not only the practice itself, but also the philosophy and roots of yoga. Since then, yoga has accompanied me far beyond the mat – in everyday life, through meditation, mindfulness, gratitude, and a more conscious awareness of myself and my surroundings. This lets me see the beauty and abundance of life more clearly and stay fulfilled in the present moment.',
-        'This journey, and the feeling of being able to share it with others, is more than a profession to me – it is a matter of the heart.',
-        'Since 2022, I have had the privilege of teaching in yoga studios, hospitals, therapy centers, companies, and universities, sharing mindfulness and awareness. With my love for Morocco, I have created a second home there, where I have guided many people from all over the world and today organize retreats and journeys.',
-        'Alongside my work as a yoga teacher, I am a trained educator and currently in training as a naturopath with a focus on psychotherapy. All of my experiences, travels, and qualifications flow into my classes – each one created anew, adapted to what the group needs: movement and stillness, strength and relaxation.',
+        'Yoga became a turning point for me. After a difficult diagnosis, the practice helped me find trust in my body again – through movement, breath, stability, and inner calm.',
+        'During my yoga teacher training in Portugal, I came to understand yoga not only as a physical practice, but also as a life philosophy. Since then, yoga has accompanied me beyond the mat: in meditation, mindfulness, gratitude, and a more conscious way of seeing myself and the world around me.',
+        'Since 2022, I have taught in studios, therapy centers, companies, universities, and retreats. My love for Morocco has become a second home, where I now guide people from all over the world.',
+        'As a trained educator and a psychotherapy-focused Heilpraktikerin in training, I bring movement and stillness, strength and relaxation into my classes. Each practice is created anew, shaped by what the group needs.',
       ],
       wish:
         'My intention in every class is to invite you to follow the natural flow of life, to listen mindfully to your own needs, and to connect with yourself through gratitude and lightness.',
@@ -457,6 +466,15 @@ export const copy = {
       tagline: 'A week to let go. A week to arrive within yourself.',
       lead:
         'Yoga by the Atlantic, surfing the endless waves of Imsouane, and a landscape that invites you to slow down, breathe more deeply, and feel yourself again.',
+      summaryLabel: 'Retreat quick facts',
+      summary: [
+        { label: 'Place', value: 'Imsouane, Morocco' },
+        { label: 'Length', value: '7 nights' },
+        { label: 'Price', value: 'Early Bird €720' },
+        { label: 'Dates', value: 'On request' },
+        { label: 'Included', value: 'Yoga, surf, breakfast & dinner' },
+        { label: 'Group', value: 'Intentionally limited spots' },
+      ],
       includedTitle: 'A week for you',
       includedIntro:
         'A retreat that leads you out of everyday life and back into your natural rhythm.',

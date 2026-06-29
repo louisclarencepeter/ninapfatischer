@@ -38,6 +38,20 @@ export default function Retreat({ copy, onBook }) {
       </div>
 
       <div className="np-container np-retreat-body">
+        <div className="np-retreat-summary" data-animate="rise">
+          <div className="np-retreat-facts" aria-label={copy.summaryLabel}>
+            {copy.summary.map((item) => (
+              <div key={item.label} className="np-retreat-fact">
+                <span className="np-retreat-fact-label">{item.label}</span>
+                <span className="np-retreat-fact-value">{item.value}</span>
+              </div>
+            ))}
+          </div>
+          <button type="button" className="np-btn np-btn-primary np-retreat-summary-cta" onClick={onBook}>
+            {copy.ctaButton}
+          </button>
+        </div>
+
         <div className="np-retreat-cols">
           <div className="np-retreat-block" data-animate="rise">
             <h3 className="np-retreat-heading">{copy.includedTitle}</h3>
@@ -69,29 +83,29 @@ export default function Retreat({ copy, onBook }) {
         <div className="np-retreat-invest-block" data-animate="rise">
           <h3 className="np-retreat-heading">{copy.investmentTitle}</h3>
           <div className="np-retreat-invest">
-          <div className="np-retreat-price-card">
-            <span className="np-retreat-price-label">{copy.priceLabel}</span>
-            <span className="np-retreat-price">{copy.price}</span>
-            <p className="np-retreat-price-note">{copy.investmentNote}</p>
-          </div>
-          <div className="np-retreat-incexc">
-            <div>
-              <span className="np-retreat-inc-label">{copy.includedLabel}</span>
-              <ul className="np-retreat-list np-retreat-list-inc">
-                {copy.included.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+            <div className="np-retreat-price-card">
+              <span className="np-retreat-price-label">{copy.priceLabel}</span>
+              <span className="np-retreat-price">{copy.price}</span>
+              <p className="np-retreat-price-note">{copy.investmentNote}</p>
             </div>
-            <div>
-              <span className="np-retreat-inc-label">{copy.excludedLabel}</span>
-              <ul className="np-retreat-list np-retreat-list-exc">
-                {copy.excluded.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+            <div className="np-retreat-incexc">
+              <div>
+                <span className="np-retreat-inc-label">{copy.includedLabel}</span>
+                <ul className="np-retreat-list np-retreat-list-inc">
+                  {copy.included.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <span className="np-retreat-inc-label">{copy.excludedLabel}</span>
+                <ul className="np-retreat-list np-retreat-list-exc">
+                  {copy.excluded.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
           </div>
         </div>
 

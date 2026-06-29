@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { LANGUAGES, pathForLanguage } from '../i18n.js'
+import { PUBLIC_CONTACT_EMAIL } from '../constants.js'
 
 const ArrowIcon = (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -32,7 +33,7 @@ const SOCIALS = [
   },
   {
     label: 'Email',
-    href: 'mailto:info@ninapfatischer.com',
+    href: `mailto:${PUBLIC_CONTACT_EMAIL}`,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -42,13 +43,13 @@ const SOCIALS = [
   },
 ]
 
-function LanguageSwitcher({ copy, language }) {
+function LanguageSwitcher({ copy, currentHash = '', language }) {
   return (
     <div className="np-lang-switch" aria-label={copy.language.label}>
       {LANGUAGES.map((lang) => (
         <a
           key={lang}
-          href={pathForLanguage(lang)}
+          href={`${pathForLanguage(lang)}${currentHash}`}
           className={`np-lang-link${language === lang ? ' is-active' : ''}`}
           hrefLang={lang}
           aria-current={language === lang ? 'true' : undefined}
@@ -105,6 +106,7 @@ function ThemeToggle({ copy, onToggleTheme }) {
 export default function Nav({ copy, language, onBook, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [currentHash, setCurrentHash] = useState('')
   // The menu is portaled to <body> (see below). Gate on mount so the server
   // render and the first client render match (both render nothing), then the
   // portal attaches after hydration.
@@ -118,6 +120,13 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const syncHash = () => setCurrentHash(window.location.hash)
+    syncHash()
+    window.addEventListener('hashchange', syncHash)
+    return () => window.removeEventListener('hashchange', syncHash)
   }, [])
 
   // While the menu is open: lock background scroll (preserving scroll position),
@@ -231,7 +240,7 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
             {copy.buttons.book}
           </button>
           <div className="np-mm-controls">
-            <LanguageSwitcher copy={copy} language={language} />
+            <LanguageSwitcher copy={copy} currentHash={currentHash} language={language} />
             <ThemeToggle copy={copy} onToggleTheme={onToggleTheme} />
           </div>
           <div className="np-mm-social">
@@ -259,54 +268,54 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
     <>
       <header className={`np-nav${scrolled ? ' is-scrolled' : ''}`}>
         <nav className="np-container np-nav-inner" aria-label={copy.navLabel}>
-        <a href="#top" className="np-brand">
-          <span className="np-wordmark">Nina Pfatischer</span>
-          <span className="np-sub">{copy.brandSub}</span>
-        </a>
-        <div className="np-nav-links">
-          {copy.nav.map((l) => (
-            <a key={l.href} href={l.href} className="np-link">
-              {l.label}
-            </a>
-          ))}
-          <div className="np-nav-controls">
-            <LanguageSwitcher copy={copy} language={language} />
-            <ThemeToggle copy={copy} onToggleTheme={onToggleTheme} />
-            <button
-              type="button"
-              className="np-bookbtn"
-              onClick={() => {
-                setMenuOpen(false)
-                onBook()
-              }}
-            >
-              {copy.buttons.book}
-            </button>
+          <a href="#top" className="np-brand">
+            <span className="np-wordmark">Nina Pfatischer</span>
+            <span className="np-sub">{copy.brandSub}</span>
+          </a>
+          <div className="np-nav-links">
+            {copy.nav.map((l) => (
+              <a key={l.href} href={l.href} className="np-link">
+                {l.label}
+              </a>
+            ))}
+            <div className="np-nav-controls">
+              <LanguageSwitcher copy={copy} currentHash={currentHash} language={language} />
+              <ThemeToggle copy={copy} onToggleTheme={onToggleTheme} />
+              <button
+                type="button"
+                className="np-bookbtn"
+                onClick={() => {
+                  setMenuOpen(false)
+                  onBook()
+                }}
+              >
+                {copy.buttons.book}
+              </button>
+            </div>
           </div>
-        </div>
-        <button
-          type="button"
-          className="np-menu-btn"
-          aria-label={menuOpen ? copy.menu.close : copy.menu.open}
-          aria-haspopup="dialog"
-          aria-controls="mobileMenu"
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((o) => !o)}
-        >
-          <svg
-            width="22"
-            height="22"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            aria-hidden="true"
+          <button
+            type="button"
+            className="np-menu-btn"
+            aria-label={menuOpen ? copy.menu.close : copy.menu.open}
+            aria-haspopup="dialog"
+            aria-controls="mobileMenu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((o) => !o)}
           >
-            <path d="M3 6h18M3 12h12M3 18h16" />
-          </svg>
-        </button>
-      </nav>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              <path d="M3 6h18M3 12h12M3 18h16" />
+            </svg>
+          </button>
+        </nav>
       </header>
       {mounted && createPortal(menu, document.body)}
     </>

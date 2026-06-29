@@ -24,7 +24,7 @@ photography, Cormorant Garamond headings and Nunito Sans body text.
 | `Nav.jsx` | Fixed nav — transparent over hero, frosted once scrolled, mobile menu under 860px |
 | `Hero.jsx` | Full-bleed garden portrait, "Come back to yourself" |
 | `About.jsx` | Nina's story — knee injury, five surgeries, training in Portugal, teaching in Morocco & Germany |
-| `Classes.jsx` | Vinyasa Flow, Hatha, Yin, Meditation & Long Stretches |
+| `Classes.jsx` | Hatha, Vinyasa, Yin, Slow Flow, Meditation, Animal Flow & Mobility |
 | `Music.jsx` | Full-bleed golden-hour interlude on the role of music |
 | `Gallery.jsx` | "Moments" photo gallery — shuffled on every load, with a lightbox |
 | `Contact.jsx` | Booking/contact form → Netlify Function, calm confirmation state |
@@ -73,8 +73,8 @@ Use `.env.example` as the Netlify environment template:
 ```bash
 RESEND_API_KEY=...
 EMAIL_FROM="Nina Pfatischer Yoga <nina@ninapfatischer.com>"
-EMAIL_REPLY_TO=nina@ninapfatischer.com
-EMAIL_NOTIFICATION_TO=<Nina's real receiving inbox>
+EMAIL_REPLY_TO=ninapfatischer@gmail.com
+EMAIL_NOTIFICATION_TO=ninapfatischer@gmail.com
 EMAIL_NOTIFICATION_BCC=
 EMAIL_CONFIRMATIONS_ENABLED=true
 ```
@@ -91,12 +91,6 @@ function returns a delivery error instead of silently dropping the lead.
 
 ## Still open
 
-- **Bilingual site (confirmed requirement):** the page must be available in
-  **German and English**. Planned approach: a language switcher in the nav,
-  copy extracted into per-language dictionaries (`de`/`en`), `lang` attribute
-  and `hreflang` annotations per language, with German likely the default
-  for the audience. The legal pages already exist in German.
-- Real Instagram/YouTube profile URLs (`SOCIALS` in `Footer.jsx` — hidden
-  until provided).
 - Address placeholders in `impressum.html` / `datenschutz.html`.
+- WhatsApp contact, if Nina wants it shown (`WHATSAPP_NUMBER` in `Footer.jsx`).
 - Licensed brand fonts, if any, to replace the Google Fonts substitutes.

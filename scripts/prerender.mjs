@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const { render } = await import(resolve(root, 'dist-ssr/entry-server.js'))
 const { absoluteUrlForLanguage, copy } = await import(resolve(root, 'src/i18n.js'))
+const { PUBLIC_CONTACT_EMAIL } = await import(resolve(root, 'src/constants.js'))
 
 const file = resolve(root, 'dist/index.html')
 const html = readFileSync(file, 'utf8')
@@ -44,7 +45,7 @@ function withMetadata(source, lang) {
     name: 'Nina Pfatischer',
     jobTitle: t.meta.jobTitle,
     url,
-    email: 'mailto:nina@ninapfatischer.com',
+    email: `mailto:${PUBLIC_CONTACT_EMAIL}`,
     image: 'https://ninapfatischer.com/images/portrait-garden.jpg',
     knowsAbout: ['Vinyasa Yoga', 'Yin Yoga', 'Animal Flow', 'Pranayama', 'Meditation', 'Mobility Training', 'Yoga Retreats'],
     description: t.meta.schemaDescription,

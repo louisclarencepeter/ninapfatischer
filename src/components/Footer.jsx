@@ -1,3 +1,5 @@
+import { PUBLIC_CONTACT_EMAIL } from '../constants.js'
+
 const FOOTER_IMG = '/images/gallery/rooftop-practice'
 const footerWebp = `${FOOTER_IMG}-w480.webp 480w, ${FOOTER_IMG}-w854.webp 854w`
 const footerJpg = `${FOOTER_IMG}-w480.jpg 480w, ${FOOTER_IMG}.jpg 854w`
@@ -53,7 +55,7 @@ const SOCIALS = [
   },
   {
     label: 'Email',
-    href: 'mailto:info@ninapfatischer.com',
+    href: `mailto:${PUBLIC_CONTACT_EMAIL}`,
     icon: IconEmail,
   },
 ].filter((s) => s.href)
@@ -67,8 +69,8 @@ const contactLinks = (copy) => [
   },
   {
     label: copy.footer.contact.email,
-    value: 'info@ninapfatischer.com',
-    href: 'mailto:info@ninapfatischer.com',
+    value: PUBLIC_CONTACT_EMAIL,
+    href: `mailto:${PUBLIC_CONTACT_EMAIL}`,
     icon: IconEmail,
   },
   {
