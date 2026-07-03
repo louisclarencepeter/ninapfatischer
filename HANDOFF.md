@@ -67,8 +67,9 @@ function server).
 
 1. **Receiving inbox for website leads**: production now uses
    `info@ninapfatischer.com` for `EMAIL_FROM`, `EMAIL_REPLY_TO`, and
-   `EMAIL_NOTIFICATION_TO`. Submit the live form and confirm the notification
-   reaches the `info@` mailbox outside spam.
+   `EMAIL_NOTIFICATION_TO`. The live form send path passed on 2026-07-04;
+   confirm the exact test marker below is visible in the actual `info@`
+   mailbox outside spam.
 2. **Search/indexing admin mailbox**: use `info@ninapfatischer.com` for Search
    Console or related site-owner communication once the mailbox is confirmed.
 3. **Final real-device QA**: verify DE/EN navigation, dark/light theme,
@@ -116,6 +117,18 @@ function server).
   confirmed Google Analytics stays unloaded before consent, then loads after
   clicking "Akzeptieren" (`np-cookie-consent=accepted`, GA4 ID
   `G-ZKB4JPM2LK`, `page_view` POST returned `204`).
+- **Latest contact-form send-path test (2026-07-04, PASSED)**: a production
+  `POST https://ninapfatischer.com/api/contact` with practice marker
+  `2026-07-04 Codex info inbox routing test 220029` returned `{"ok":true}`
+  and HTTP 200. Because the function returns success only after the internal
+  notification send succeeds, this verifies the deployed function accepted and
+  sent the lead notification to configured `EMAIL_NOTIFICATION_TO`
+  (`info@ninapfatischer.com`). The customer confirmation from
+  `Nina Pfatischer Yoga <info@ninapfatischer.com>` reached the connected Gmail
+  inbox at `louisclarencepeters@gmail.com` with the same marker. The connected
+  Gmail account did not contain a `to:info@ninapfatischer.com` copy, so the
+  remaining human check is to open the real `info@` mailbox and confirm that
+  exact marker is in Inbox, not Spam.
 - **Previous contact-form test (2026-06-13, PASSED)**: after pointing
   `EMAIL_NOTIFICATION_TO` at `ninapfatischer@gmail.com` and redeploying, a live
   submission through `https://ninapfatischer.com/#contact` succeeded. Resend
@@ -124,9 +137,7 @@ function server).
   `Delivered`, and the visitor auto-confirmation to
   `louisclarencepeters@gmail.com` as `Delivered`. Also removed
   `nina@ninapfatischer.com` from Resend's account-level suppression list
-  (left over from the earlier bounced inbound experiments). Next human check:
-  confirm a new notification lands in the `info@ninapfatischer.com` inbox (not
-  spam).
+  (left over from the earlier bounced inbound experiments).
 - **Email sender behavior**: the visitor's email is used as `reply_to`; the
   technical `from` address must remain a verified `ninapfatischer.com` sender
   because Resend cannot safely send from arbitrary visitor domains.
