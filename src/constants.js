@@ -1,1 +1,1 @@
-export const PUBLIC_CONTACT_EMAIL = 'ninapfatischer@gmail.com'
+export const PUBLIC_CONTACT_EMAIL = 'info@ninapfatischer.com'

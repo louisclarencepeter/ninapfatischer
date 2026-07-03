@@ -31,8 +31,8 @@ photography, Cormorant Garamond headings and Nunito Sans body text.
 | `Footer.jsx` | Charcoal-brown close with wordmark, socials, and legal links |
 
 Legal pages (`public/impressum.html`, `public/datenschutz.html`) are static
-German-language pages. **Before launch:** fill in the highlighted address
-placeholders in both files, and have the privacy policy reviewed.
+German-language pages using the public contact inbox `info@ninapfatischer.com`.
+Have the privacy policy reviewed after legal or provider changes.
 
 ## Develop
 
@@ -72,9 +72,9 @@ Use `.env.example` as the Netlify environment template:
 
 ```bash
 RESEND_API_KEY=...
-EMAIL_FROM="Nina Pfatischer Yoga <nina@ninapfatischer.com>"
-EMAIL_REPLY_TO=ninapfatischer@gmail.com
-EMAIL_NOTIFICATION_TO=ninapfatischer@gmail.com
+EMAIL_FROM="Nina Pfatischer Yoga <info@ninapfatischer.com>"
+EMAIL_REPLY_TO=info@ninapfatischer.com
+EMAIL_NOTIFICATION_TO=info@ninapfatischer.com
 EMAIL_NOTIFICATION_BCC=
 EMAIL_CONFIRMATIONS_ENABLED=true
 ```
@@ -82,7 +82,8 @@ EMAIL_CONFIRMATIONS_ENABLED=true
 Setup:
 
 1. Verify the sender domain in Resend so `EMAIL_FROM` can send.
-2. Configure normal MX hosting for the mailbox used in `EMAIL_NOTIFICATION_TO`.
+2. Configure normal MX hosting for the mailbox used in `EMAIL_NOTIFICATION_TO`
+   (`info@ninapfatischer.com`).
 3. Set the env vars above in Netlify with Functions/runtime scope.
 4. Redeploy, then test the live form.
 
@@ -91,6 +92,7 @@ function returns a delivery error instead of silently dropping the lead.
 
 ## Still open
 
-- Address placeholders in `impressum.html` / `datenschutz.html`.
+- Confirm `info@ninapfatischer.com` receives a live contact-form submission
+  outside spam.
 - WhatsApp contact, if Nina wants it shown (`WHATSAPP_NUMBER` in `Footer.jsx`).
 - Licensed brand fonts, if any, to replace the Google Fonts substitutes.

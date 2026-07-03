@@ -35,9 +35,9 @@ Everything below is implemented, tested, and on the PR branch:
   validation, honeypot, per-IP rate limit (5/10 min, best-effort), outbound
   Resend `/emails` delivery to `EMAIL_NOTIFICATION_TO`, plus optional customer
   confirmations. 10 passing tests in `tests/`.
-- **GDPR**: fonts self-hosted (`public/fonts/`, zero Google requests),
-  German Impressum + Datenschutzerklärung (`public/*.html`), privacy note on
-  the form, no cookies/tracking.
+- **GDPR/privacy**: fonts self-hosted (`public/fonts/`, zero Google Fonts
+  requests), German Impressum + Datenschutzerklärung (`public/*.html`), privacy
+  note on the form, and consent-gated Google Analytics 4.
 - **Performance**: JPEG+WebP `srcset` variants for every photo
   (regenerate with `python3 scripts/generate-images.py`), width/height
   attributes (no CLS), prerendered first paint, immutable caching for
@@ -65,23 +65,18 @@ function server).
 
 ## Action required before launch
 
-1. **Address placeholders** in `public/impressum.html` and
-   `public/datenschutz.html` (highlighted spans) — German law requires a
-   complete Impressum. Have the Datenschutzerklärung reviewed.
-2. **Receiving inbox for website leads — DONE (2026-06-13).**
-   `EMAIL_NOTIFICATION_TO` is set to `ninapfatischer@gmail.com` and a live form
-   test confirmed delivery (Resend status `Delivered`; see Production
-   configuration status). The contact function uses Resend only for outbound
-   sending via `/emails`; it does not use Resend Receiving as the business
-   inbox. Resend's sending-domain records stay in place for `EMAIL_FROM`.
-   `EMAIL_REPLY_TO` was also pointed at `ninapfatischer@gmail.com` (2026-06-13)
-   so replies to the auto-confirmation email reach Nina instead of dead-ending
-   in Resend inbound.
-3. **Social links**: Instagram/YouTube are hidden (see `SOCIALS` in
-   `src/components/Footer.jsx`) — add real profile URLs to show them.
-4. **Final real-device QA**: verify DE/EN navigation, dark/light theme,
+1. **Receiving inbox for website leads**: production now uses
+   `info@ninapfatischer.com` for `EMAIL_FROM`, `EMAIL_REPLY_TO`, and
+   `EMAIL_NOTIFICATION_TO`. Submit the live form and confirm the notification
+   reaches the `info@` mailbox outside spam.
+2. **Search/indexing admin mailbox**: use `info@ninapfatischer.com` for Search
+   Console or related site-owner communication once the mailbox is confirmed.
+3. **Final real-device QA**: verify DE/EN navigation, dark/light theme,
    section anchor alignment, gallery/lightbox, contact form, and PWA install
    on at least one iOS and one Android/desktop browser.
+4. **Optional contact/brand polish**: add WhatsApp only if Nina wants it shown
+   (`WHATSAPP_NUMBER` in `Footer.jsx`), and swap in licensed brand fonts only
+   if provided.
 
 ## Production configuration status
 
@@ -93,30 +88,35 @@ function server).
   Resend's outbound `POST /emails` API only. Do not use Resend Receiving as the
   inbox for `nina@ninapfatischer.com` unless a full inbound webhook/forwarder
   is intentionally implemented.
-- **Receiving mailbox / MX**: `EMAIL_NOTIFICATION_TO` must point at a real
-  mailbox that can receive email through normal MX hosting. If Nina wants
-  `nina@ninapfatischer.com` to receive leads directly, configure that mailbox
-  at a mail host and set the root-domain MX records to that host, not to Resend
-  Receiving.
+- **Receiving mailbox / MX**: `EMAIL_NOTIFICATION_TO` now targets
+  `info@ninapfatischer.com`, which must be a real mailbox that can receive
+  email through normal MX hosting. Keep root-domain MX records pointed at the
+  chosen mail host, not at Resend Receiving.
 - **Netlify DNS zone**: `ninapfatischer.com` is managed in Netlify DNS; zone
   ID `6a2bc90e09fbba3ce7d26ad0`. Add the chosen mail provider's root-domain
   MX records here. The existing `send.ninapfatischer.com` records should stay
   in place for Resend sending/bounces.
 - **Netlify env vars**: production uses `RESEND_API_KEY`, `EMAIL_FROM`,
   `EMAIL_REPLY_TO`, `EMAIL_NOTIFICATION_TO`, `EMAIL_NOTIFICATION_BCC`, and
-  `EMAIL_CONFIRMATIONS_ENABLED`. `EMAIL_NOTIFICATION_TO` and `EMAIL_REPLY_TO`
-  are both set to `ninapfatischer@gmail.com` (the latter as of 2026-06-13).
-  The old `CONTACT_FROM_EMAIL` and `CONTACT_TO_EMAIL` variables were removed in
-  Netlify on 2026-06-12. `RESEND_API_KEY` must be available to
-  Functions/runtime scope.
+  `EMAIL_CONFIRMATIONS_ENABLED`. As of 2026-07-03, `EMAIL_FROM`,
+  `EMAIL_REPLY_TO`, and `EMAIL_NOTIFICATION_TO` are set to
+  `info@ninapfatischer.com` in Netlify and were picked up by the 2026-07-03
+  production redeploy. The old `CONTACT_FROM_EMAIL` and `CONTACT_TO_EMAIL`
+  variables were removed in Netlify on 2026-06-12. `RESEND_API_KEY` must be
+  available to Functions/runtime scope.
 - **Resend API key**: key `ninapfatischer-contact` was created in Resend with
   Sending access and restricted to the `ninapfatischer.com` domain.
-- **Latest production redeploy**: triggered 2026-06-13 after `EMAIL_REPLY_TO`
-  was set to `ninapfatischer@gmail.com` (deploy `6a2d7637c967219463db711f`).
-  The prior 2026-06-13 redeploy (for `EMAIL_NOTIFICATION_TO`) was
-  `6a2d737bd242d75984531624`; the 2026-06-12 redeploy was
-  `6a2c1c6b10e3c5171c97c52f`.
-- **Latest contact-form test (2026-06-13, PASSED)**: after pointing
+- **Latest production redeploy**: triggered 2026-07-03 after switching the
+  public/contact mailbox to `info@ninapfatischer.com` (deploy
+  `6a4823b17c5c2f5c0f6d8df9`; unique URL
+  `https://6a4823b17c5c2f5c0f6d8df9--ninayoga.netlify.app`).
+- **Latest live smoke (2026-07-03, PASSED)**: `https://ninapfatischer.com`,
+  `/en/`, `/impressum.html`, and `/datenschutz.html` all returned the new
+  public `info@ninapfatischer.com` contact address. Browser automation
+  confirmed Google Analytics stays unloaded before consent, then loads after
+  clicking "Akzeptieren" (`np-cookie-consent=accepted`, GA4 ID
+  `G-ZKB4JPM2LK`, `page_view` POST returned `204`).
+- **Previous contact-form test (2026-06-13, PASSED)**: after pointing
   `EMAIL_NOTIFICATION_TO` at `ninapfatischer@gmail.com` and redeploying, a live
   submission through `https://ninapfatischer.com/#contact` succeeded. Resend
   shows the internal notification to `ninapfatischer@gmail.com` (subject "New
@@ -124,8 +124,9 @@ function server).
   `Delivered`, and the visitor auto-confirmation to
   `louisclarencepeters@gmail.com` as `Delivered`. Also removed
   `nina@ninapfatischer.com` from Resend's account-level suppression list
-  (left over from the earlier bounced inbound experiments). Final human check:
-  confirm the notification lands in Nina's Gmail inbox (not spam).
+  (left over from the earlier bounced inbound experiments). Next human check:
+  confirm a new notification lands in the `info@ninapfatischer.com` inbox (not
+  spam).
 - **Email sender behavior**: the visitor's email is used as `reply_to`; the
   technical `from` address must remain a verified `ninapfatischer.com` sender
   because Resend cannot safely send from arbitrary visitor domains.
