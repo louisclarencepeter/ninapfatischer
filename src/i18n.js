@@ -21,11 +21,12 @@ export function absoluteUrlForLanguage(lang) {
 export const copy = {
   de: {
     meta: {
-      title: 'Nina Pfatischer Yoga - Free to Flow',
+      title: 'Nina Pfatischer Yoga – Kurse & Retreats in Marokko',
       description:
-        'Yoga, das so viel mehr ist als Bewegung: Verbinde dich mit deinem natürlichen Rhythmus. Pranayama & Meditation, Animal Flow, Slow Flow, Mobility und Retreats in Marokko mit Nina Pfatischer.',
+        'Yoga & Retreats in Marokko mit Nina Pfatischer: Vinyasa, Yin, Animal Flow, Mobility, Pranayama & Meditation. Finde deinen natürlichen Rhythmus.',
       ogDescription:
         'Yoga, das so viel mehr ist als Bewegung - verbinde dich mit deinem natürlichen Rhythmus, finde innere Ruhe und Verbundenheit.',
+      ogImageAlt: 'Nina lächelt der Sonne entgegen in einem grünen Garten',
       jobTitle: 'Yogalehrerin',
       schemaDescription:
         'Yogalehrerin, ausgebildet in Portugal und unterrichtend in Deutschland und Marokko. Pranayama & Meditation, Animal Flow, Slow Flow und Mobility - Achtsamkeit, Gelassenheit und Dankbarkeit.',
@@ -52,6 +53,7 @@ export const copy = {
       dark: 'Dunkles Design aktivieren',
     },
     menu: {
+      label: 'Menü',
       open: 'Menü öffnen',
       close: 'Menü schließen',
     },
@@ -243,6 +245,7 @@ export const copy = {
       close: 'Foto schließen',
       previous: 'Vorheriges Foto',
       next: 'Nächstes Foto',
+      position: 'Foto {current} von {total}',
       photos: [
         'Nina sitzt im Lotus auf sonnenwarmem Wüstenfels',
         'Nina in einer Unterarmbalance vor einer roten Tonklippe',
@@ -315,6 +318,7 @@ export const copy = {
       legal: {
         impressum: 'Impressum',
         privacy: 'Datenschutz',
+        cookieSettings: 'Cookie-Einstellungen',
       },
       location: 'Ausgebildet in Portugal · Unterricht in Deutschland',
     },
@@ -323,17 +327,20 @@ export const copy = {
       title: 'Cookies & Analyse',
       text:
         'Ich speichere deine Auswahl lokal. Wenn du zustimmst, hilft Google Analytics zu verstehen, welche Seiten allgemein genutzt werden.',
+      privacyPrefix: 'Mehr dazu in der',
+      privacyLink: 'Datenschutzerklärung',
       necessary: 'Nur notwendige',
       accept: 'Akzeptieren',
     },
   },
   en: {
     meta: {
-      title: 'Nina Pfatischer Yoga - Free to Flow',
+      title: 'Nina Pfatischer Yoga – Classes & Morocco Retreats',
       description:
-        'Yoga that is so much more than movement: connect with your natural rhythm. Pranayama & meditation, Animal Flow, Slow Flow, mobility, and retreats in Morocco with Nina Pfatischer.',
+        'Yoga classes & Morocco retreats with Nina Pfatischer: Vinyasa, Yin, Animal Flow, mobility, pranayama & meditation. Find your natural rhythm.',
       ogDescription:
         'Yoga that is so much more than movement - connect with your natural rhythm, find inner stillness and a sense of belonging.',
+      ogImageAlt: 'Nina smiling toward the sun in a green garden',
       jobTitle: 'Yoga Teacher',
       schemaDescription:
         'Yoga teacher trained in Portugal, teaching in Germany and Morocco. Pranayama & meditation, Animal Flow, Slow Flow, and mobility - mindfulness, serenity, and gratitude.',
@@ -360,6 +367,7 @@ export const copy = {
       dark: 'Switch to dark theme',
     },
     menu: {
+      label: 'Menu',
       open: 'Open menu',
       close: 'Close menu',
     },
@@ -551,6 +559,7 @@ export const copy = {
       close: 'Close photo',
       previous: 'Previous photo',
       next: 'Next photo',
+      position: 'Photo {current} of {total}',
       photos: [
         'Nina seated in lotus on sun-warmed desert rock',
         'Nina in a forearm balance against a red clay cliff',
@@ -623,6 +632,7 @@ export const copy = {
       legal: {
         impressum: 'Impressum',
         privacy: 'Datenschutz',
+        cookieSettings: 'Cookie settings',
       },
       location: 'Trained in Portugal · Teaching in Germany',
     },
@@ -631,6 +641,8 @@ export const copy = {
       title: 'Cookies & analytics',
       text:
         'I store your choice locally. If you accept, Google Analytics helps understand aggregate site usage.',
+      privacyPrefix: 'More in the',
+      privacyLink: 'privacy policy',
       necessary: 'Only necessary',
       accept: 'Accept',
     },

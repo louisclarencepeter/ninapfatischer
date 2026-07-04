@@ -9,7 +9,9 @@ const ArrowIcon = (
   </svg>
 )
 
-const SOCIALS = [
+// The email entry's label comes from copy (aria-label must be localized);
+// Instagram/YouTube are brand names and stay as-is.
+const socials = (emailLabel) => [
   {
     label: 'Instagram',
     href: 'https://www.instagram.com/verenanina/',
@@ -32,7 +34,7 @@ const SOCIALS = [
     ),
   },
   {
-    label: 'Email',
+    label: emailLabel,
     href: `mailto:${PUBLIC_CONTACT_EMAIL}`,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -45,7 +47,7 @@ const SOCIALS = [
 
 function LanguageSwitcher({ copy, currentHash = '', language }) {
   return (
-    <div className="np-lang-switch" aria-label={copy.language.label}>
+    <div className="np-lang-switch" role="group" aria-label={copy.language.label}>
       {LANGUAGES.map((lang) => (
         <a
           key={lang}
@@ -61,13 +63,17 @@ function LanguageSwitcher({ copy, currentHash = '', language }) {
   )
 }
 
-function ThemeToggle({ copy, onToggleTheme }) {
+function ThemeToggle({ copy, theme, onToggleTheme }) {
+  // The label names the action (what pressing will switch to); aria-pressed
+  // carries the current state for assistive tech.
+  const label = theme === 'dark' ? copy.theme.light : copy.theme.dark
   return (
     <button
       type="button"
       className="np-theme-toggle"
-      aria-label={copy.theme.label}
-      title={copy.theme.label}
+      aria-label={label}
+      aria-pressed={theme === 'dark'}
+      title={label}
       onClick={onToggleTheme}
     >
       <svg
@@ -103,7 +109,7 @@ function ThemeToggle({ copy, onToggleTheme }) {
   )
 }
 
-export default function Nav({ copy, language, onBook, onToggleTheme }) {
+export default function Nav({ copy, language, theme, onBook, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [currentHash, setCurrentHash] = useState('')
@@ -193,7 +199,7 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
       id="mobileMenu"
       role="dialog"
       aria-modal="true"
-      aria-label={copy.navLabel}
+      aria-label={copy.menu.label}
       aria-hidden={!menuOpen}
     >
       <div className="np-mm-panel">
@@ -241,12 +247,12 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
           </button>
           <div className="np-mm-controls">
             <LanguageSwitcher copy={copy} currentHash={currentHash} language={language} />
-            <ThemeToggle copy={copy} onToggleTheme={onToggleTheme} />
+            <ThemeToggle copy={copy} theme={theme} onToggleTheme={onToggleTheme} />
           </div>
           <div className="np-mm-social">
             <span className="find">{copy.footer.findMe}</span>
             <div className="icons">
-              {SOCIALS.map((s) => (
+              {socials(copy.footer.contact.email).map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
@@ -280,7 +286,7 @@ export default function Nav({ copy, language, onBook, onToggleTheme }) {
             ))}
             <div className="np-nav-controls">
               <LanguageSwitcher copy={copy} currentHash={currentHash} language={language} />
-              <ThemeToggle copy={copy} onToggleTheme={onToggleTheme} />
+              <ThemeToggle copy={copy} theme={theme} onToggleTheme={onToggleTheme} />
               <button
                 type="button"
                 className="np-bookbtn"

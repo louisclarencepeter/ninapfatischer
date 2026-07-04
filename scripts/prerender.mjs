@@ -47,6 +47,10 @@ function withMetadata(source, lang) {
     url,
     email: `mailto:${PUBLIC_CONTACT_EMAIL}`,
     image: 'https://ninapfatischer.com/images/portrait-garden.jpg',
+    sameAs: [
+      'https://www.instagram.com/verenanina/',
+      'https://www.youtube.com/@ninapfatischer3765',
+    ],
     knowsAbout: ['Vinyasa Yoga', 'Yin Yoga', 'Animal Flow', 'Pranayama', 'Meditation', 'Mobility Training', 'Yoga Retreats'],
     description: t.meta.schemaDescription,
     inLanguage: lang,
@@ -65,10 +69,16 @@ function withMetadata(source, lang) {
   page = replaceMeta(page, 'description', t.meta.description)
   page = replaceMeta(page, 'og:title', t.meta.title)
   page = replaceMeta(page, 'og:description', t.meta.ogDescription)
+  page = replaceMeta(page, 'og:image:alt', t.meta.ogImageAlt)
   page = replaceMeta(page, 'og:url', url)
   page = replaceMeta(page, 'twitter:title', t.meta.title)
   page = replaceMeta(page, 'twitter:description', t.meta.ogDescription)
+  page = replaceMeta(page, 'twitter:image:alt', t.meta.ogImageAlt)
   page = replaceLink(page, 'canonical', url)
+
+  if (lang === 'en') {
+    page = page.replace('href="/manifest.webmanifest"', 'href="/en/manifest.webmanifest"')
+  }
 
   const alternates = [
     '<link rel="alternate" hreflang="de" href="https://ninapfatischer.com/" />',
@@ -93,6 +103,14 @@ for (const page of pages) {
   )
   writeFileSync(page.output, rendered)
 }
+
+// Stamp the service worker cache per build so activate() evicts caches from
+// previous deploys. sw.js is served with no-cache, so clients pick it up on
+// the next visit; without this the hand-dated name never rotated and old
+// hashed bundles accumulated in Cache Storage indefinitely.
+const swFile = resolve(root, 'dist/sw.js')
+const buildStamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')
+writeFileSync(swFile, readFileSync(swFile, 'utf8').replaceAll('__BUILD_VERSION__', buildStamp))
 
 rmSync(resolve(root, 'dist-ssr'), { recursive: true, force: true })
 console.log('Prerendered dist/index.html and dist/en/index.html')

@@ -32,10 +32,10 @@ const line = (value, max) =>
     .trim()
     .slice(0, max)
 
-const json = (body, status = 200) =>
+const json = (body, status = 200, headers = {}) =>
   new Response(JSON.stringify(body), {
     status,
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...headers },
   })
 
 const getEnv = (key) => String(process.env[key] ?? '').trim()
@@ -58,6 +58,8 @@ const sendWithResend = async ({ apiKey, from, to, subject, text, replyTo, bcc })
     bcc: bcc?.length ? bcc : undefined,
   }
 
+  // Bounded so a hung Resend request cannot ride into the platform's
+  // function timeout and report a delivered lead as failed.
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -65,6 +67,7 @@ const sendWithResend = async ({ apiKey, from, to, subject, text, replyTo, bcc })
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
+    signal: AbortSignal.timeout(8000),
   })
 
   if (!res.ok) {
@@ -91,20 +94,59 @@ const getMailConfig = () => {
   return { ok: true, reason: '', ...config }
 }
 
+// The customer confirmation deliberately does not echo the submitted message
+// or practice: anyone can POST here, and echoing free text in mail sent from
+// the verified domain would make the form a spam relay.
+const CONFIRMATION_COPY = {
+  de: {
+    subject: 'Danke für deine Nachricht',
+    body: (name) =>
+      [
+        `Hallo ${name},`,
+        '',
+        'danke für deine Nachricht über ninapfatischer.com. Nina meldet sich so bald wie möglich persönlich bei dir.',
+        '',
+        'Falls du diese Anfrage nicht selbst gestellt hast, kannst du diese E-Mail einfach ignorieren.',
+        '',
+        'Nina Pfatischer Yoga',
+      ].join('\n'),
+  },
+  en: {
+    subject: 'Thanks for your message',
+    body: (name) =>
+      [
+        `Hi ${name},`,
+        '',
+        'thank you for your message via ninapfatischer.com. Nina will get back to you personally as soon as possible.',
+        '',
+        'If you did not submit this request, you can simply ignore this email.',
+        '',
+        'Nina Pfatischer Yoga',
+      ].join('\n'),
+  },
+}
+
 export default async (req, context) => {
   if (req.method !== 'POST') {
-    return json({ error: 'Method not allowed' }, 405)
+    return json({ error: 'Method not allowed' }, 405, { Allow: 'POST' })
   }
 
   const ip = context?.ip ?? req.headers.get('x-nf-client-connection-ip') ?? 'unknown'
   if (rateLimited(ip)) {
-    return json({ error: 'Too many messages — please try again a little later.' }, 429)
+    return json({ error: 'Too many messages — please try again a little later.' }, 429, {
+      'Retry-After': String(WINDOW_MS / 1000),
+    })
   }
 
   let data
   try {
     data = await req.json()
   } catch {
+    return json({ error: 'Invalid JSON body' }, 400)
+  }
+
+  // req.json() accepts any JSON value, including null and arrays.
+  if (data === null || typeof data !== 'object' || Array.isArray(data)) {
     return json({ error: 'Invalid JSON body' }, 400)
   }
 
@@ -116,6 +158,7 @@ export default async (req, context) => {
   const name = line(data.name, 200)
   const email = line(data.email, 200)
   const practice = line(data.practice, 200)
+  const lang = data.lang === 'en' ? 'en' : 'de'
   const message = String(data.message ?? '')
     .replace(/\r/g, '')
     .trim()
@@ -160,26 +203,14 @@ export default async (req, context) => {
 
   if (mailConfig.confirmationsEnabled) {
     try {
+      const confirmation = CONFIRMATION_COPY[lang]
       await sendWithResend({
         apiKey: mailConfig.apiKey,
         from: mailConfig.from,
         to: [email],
         replyTo: mailConfig.replyTo || undefined,
-        subject: 'Danke fuer deine Nachricht',
-        text: [
-          `Hallo ${name},`,
-          '',
-          'danke fuer deine Nachricht. Nina meldet sich so bald wie moeglich bei dir.',
-          '',
-          practice && `Dein Thema: ${practice}`,
-          '',
-          'Deine Nachricht:',
-          message,
-          '',
-          'Nina Pfatischer Yoga',
-        ]
-          .filter(Boolean)
-          .join('\n'),
+        subject: confirmation.subject,
+        text: confirmation.body(name),
       })
     } catch (error) {
       console.error('Customer confirmation email failed:', error)

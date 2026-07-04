@@ -1,6 +1,6 @@
 # Handoff — ninapfatischer.com
 
-_Last updated: 2026-06-13. State as of merged [PR #2](https://github.com/louisclarencepeter/ninapfatischer/pull/2) (branch `development` → `main`)._
+_Last updated: 2026-07-04 (consent withdrawal, EN legal pages, contact-function hardening on `development`)._
 
 ## What this is
 
@@ -16,9 +16,10 @@ Everything below is implemented, tested, and on the PR branch:
 
 - **React 18 + Vite**, prerendered to static HTML at build time
   (`src/entry-server.jsx` + `scripts/prerender.mjs`), hydrated on load.
-- Sections: Nav (frost-on-scroll), Hero, About/story, Classes (4 cards),
+- Sections: Nav (frost-on-scroll), Hero, About/story, Classes (7 cards),
   Music interlude, Gallery ("Moments", 12 photos, shuffled per visit,
-  lightbox with focus trap), Contact form, Footer.
+  lightbox with focus trap), Retreat ("Salty Shavasana", Imsouane/Morocco),
+  Contact form, Footer.
 - **Bilingual German + English**: German is the default root page (`/`),
   English is prerendered at `/en/`, with a DE/EN nav switcher, localized
   section copy, localized alt/ARIA/form text, language-specific canonical
@@ -32,21 +33,35 @@ Everything below is implemented, tested, and on the PR branch:
   repeat visits/offline fallback.
 - **Contact form** → Netlify Function `POST /api/contact`
   ([netlify/functions/contact.mjs](netlify/functions/contact.mjs)):
-  validation, honeypot, per-IP rate limit (5/10 min, best-effort), outbound
-  Resend `/emails` delivery to `EMAIL_NOTIFICATION_TO`, plus optional customer
-  confirmations. 10 passing tests in `tests/`.
+  validation, honeypot, per-IP rate limit (5/10 min, best-effort, 429 with
+  `Retry-After`), outbound Resend `/emails` delivery to
+  `EMAIL_NOTIFICATION_TO` with an 8s timeout, plus optional customer
+  confirmations localized DE/EN (the form submits `lang`; the confirmation
+  deliberately does not echo the visitor's message, so the endpoint cannot be
+  used as a spam relay). 15 passing tests in `tests/`.
 - **GDPR/privacy**: fonts self-hosted (`public/fonts/`, zero Google Fonts
-  requests), German Impressum + Datenschutzerklärung (`public/*.html`), privacy
-  note on the form, and consent-gated Google Analytics 4.
+  requests), Impressum + Datenschutzerklärung in German (`public/*.html`) and
+  English (`public/en/*.html`, linked language-aware from footer/form), privacy
+  note on the form, and consent-gated Google Analytics 4. Consent is stored
+  versioned with a timestamp (`np-cookie-consent` JSON); the banner links to
+  the Datenschutzerklärung and can be reopened via the footer
+  "Cookie-Einstellungen" button — choosing "Nur notwendige" after a prior
+  accept deletes the `_ga*` cookies and sets `ga-disable-G-ZKB4JPM2LK`.
 - **Performance**: JPEG+WebP `srcset` variants for every photo
   (regenerate with `python3 scripts/generate-images.py`), width/height
   attributes (no CLS), prerendered first paint, immutable caching for
-  fonts/assets (see `netlify.toml`).
+  fonts/assets (see `netlify.toml`). The service-worker cache name is
+  stamped per build by `scripts/prerender.mjs` (placeholder
+  `__BUILD_VERSION__` in `public/sw.js`), so each deploy evicts the previous
+  cache; image precache entries tolerate individual failures.
 - **A11y**: WCAG AA contrast fixes (see `--text-accent` token and chip
   colors in `site.css`), live-region toast, focus management on the form
   confirmation and lightbox, reduced-motion respected.
-- **SEO/meta**: canonical, OG/Twitter cards with absolute URLs, JSON-LD
-  Person, favicon set, robots.txt.
+- **SEO/meta**: canonical, OG/Twitter cards with absolute URLs (dedicated
+  1200×630 share image `public/images/og-share.jpg`, ~94 KB — regenerate from
+  `portrait-garden.jpg` if the hero photo changes), JSON-LD Person with
+  `sameAs` socials, per-language keyword titles, favicon set, robots.txt +
+  sitemap.xml (both language URLs), branded 404 page.
 - Security headers + CSP in `netlify.toml`. CI workflow in
   `.github/workflows/ci.yml` (`npm test` + `npm run build`).
 
@@ -168,12 +183,11 @@ to refresh cached shell assets immediately, bump `CACHE_NAME` in `sw.js`.
 
 ## Known quirks / gotchas
 
-- **CI on the PR**: GitHub Actions didn't trigger on the PR pushes (zero
-  runs despite valid YAML, Actions enabled, public repo). An empty commit
-  was pushed to retrigger; if it still shows no runs, expect the workflow
-  to register and run normally once the PR merges to `main` (the `push`
-  trigger targets `main`). Verify after merge. `npm test` + `npm run build`
-  pass locally either way.
+- **CI scope**: the early "Actions didn't trigger on PR pushes" quirk resolved
+  itself once the workflow registered on `main` (2026-06-23; runs appear for
+  both `pull_request` and `main` pushes since). Note the `push` trigger still
+  targets `main` only, so direct pushes to `development` get no CI until a PR
+  is opened.
 - **Photo consent**: the original gallery included a studio-class photo
   with recognizable students; it was replaced (KunstUrhG §22). If Nina
   wants it back, get written consent from the people pictured first.

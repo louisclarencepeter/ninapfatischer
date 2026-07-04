@@ -27,12 +27,15 @@ photography, Cormorant Garamond headings and Nunito Sans body text.
 | `Classes.jsx` | Hatha, Vinyasa, Yin, Slow Flow, Meditation, Animal Flow & Mobility |
 | `Music.jsx` | Full-bleed golden-hour interlude on the role of music |
 | `Gallery.jsx` | "Moments" photo gallery — shuffled on every load, with a lightbox |
+| `Retreat.jsx` | "Salty Shavasana" retreat in Imsouane, Morocco — highlights, schedule, pricing |
 | `Contact.jsx` | Booking/contact form → Netlify Function, calm confirmation state |
-| `Footer.jsx` | Charcoal-brown close with wordmark, socials, and legal links |
+| `Footer.jsx` | Charcoal-brown close with wordmark, socials, legal links, and cookie settings |
 
-Legal pages (`public/impressum.html`, `public/datenschutz.html`) are static
-German-language pages using the public contact inbox `info@ninapfatischer.com`.
-Have the privacy policy reviewed after legal or provider changes.
+Legal pages are static HTML in German (`public/impressum.html`,
+`public/datenschutz.html`) and English (`public/en/impressum.html`,
+`public/en/datenschutz.html`), using the public contact inbox
+`info@ninapfatischer.com`. Have the privacy policy reviewed after legal or
+provider changes.
 
 ## Develop
 

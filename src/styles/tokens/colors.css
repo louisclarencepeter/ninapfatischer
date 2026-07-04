@@ -50,15 +50,19 @@
   --text-heading:      var(--np-ink);
   --text-body:         var(--np-body);
   --text-muted:        var(--np-muted);
-  --text-on-accent:    var(--np-cream-lightest);
+  /* Pure white: on the clay-deep button background it reaches 4.8:1
+     (AA normal text); the old #FBF7F0 landed at 4.49:1. */
+  --text-on-accent:    #FFFFFF;
   --text-on-dark:      var(--np-cream);
   /* Deep clay for small accent text (eyebrows, labels) — brand clay
-     #C17B5A only reaches ~2.9:1 on cream, below WCAG AA 4.5:1. */
-  --text-accent:       #9C5536;
+     #C17B5A only reaches ~2.9:1 on cream. #944F31 clears 4.5:1 on every
+     light surface incl. sand (#EFE3D2, 4.85:1). */
+  --text-accent:       #944F31;
 
   /* Accents */
   --accent-primary:        var(--np-clay);
   --accent-primary-strong: var(--np-clay-deep);
+  --accent-primary-stronger: #8F4F35;
   --accent-primary-soft:   var(--np-clay-soft);
   --accent-secondary:      var(--np-sage);
   --accent-secondary-strong: var(--np-olive);
@@ -71,8 +75,10 @@
   --border-accent:     var(--np-clay);
   --border-sage:       var(--np-sage);
 
-  /* Focus ring */
+  /* Focus indicators: the ring is a soft decorative halo; the outline must
+     clear the 3:1 non-text minimum against light surfaces on its own. */
   --focus-ring:        rgba(193, 123, 90, 0.45);
+  --focus-outline:     var(--text-accent);
 }
 
 :root[data-theme='dark'] {
@@ -117,6 +123,7 @@
 
   --accent-primary:        var(--np-clay);
   --accent-primary-strong: var(--np-clay-deep);
+  --accent-primary-stronger: #EBB48F;
   --accent-primary-soft:   var(--np-clay-soft);
   --accent-secondary:      var(--np-sage);
   --accent-secondary-strong: var(--np-olive);
@@ -126,4 +133,5 @@
   --border-soft:       rgba(251, 247, 240, 0.10);
   --border-medium:     rgba(251, 247, 240, 0.16);
   --focus-ring:        rgba(224, 161, 124, 0.42);
+  --focus-outline:     var(--text-accent);
 }

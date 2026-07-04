@@ -387,7 +387,7 @@ html[data-motion='ready'] [data-animate].is-visible {
 }
 
 .np-nav.is-scrolled .np-bookbtn {
-  background: var(--accent-primary);
+  background: var(--accent-primary-strong);
   color: var(--text-on-accent);
   border-color: transparent;
 }
@@ -614,14 +614,14 @@ html[data-motion='ready'] [data-animate].is-visible {
   padding: 15px 32px;
   border-radius: var(--radius-pill);
   border: 1.5px solid transparent;
-  background: var(--accent-primary);
+  background: var(--accent-primary-strong);
   color: var(--text-on-accent);
   cursor: pointer;
   transition: background-color 0.26s var(--ease-calm), transform 0.16s var(--ease-calm);
 }
 
 .np-mm-book:hover {
-  background: var(--accent-primary-strong);
+  background: var(--accent-primary-stronger);
   transform: translateY(-1px);
 }
 
@@ -882,13 +882,15 @@ html[data-motion='ready'] [data-animate].is-visible {
     box-shadow 0.26s var(--ease-calm), color 0.26s var(--ease-calm), transform 0.16s var(--ease-calm);
 }
 
+/* Clay-deep, not brand clay: white on #C17B5A is only 3.15:1, below AA for
+   the button label size. Deep clay reaches 4.8:1. */
 .np-btn-primary {
-  background: var(--accent-primary);
+  background: var(--accent-primary-strong);
   color: var(--text-on-accent);
 }
 
 .np-btn-primary:hover {
-  background: var(--accent-primary-strong);
+  background: var(--accent-primary-stronger);
   color: var(--text-on-accent);
   box-shadow: 0 12px 26px rgba(168, 95, 64, 0.24);
   transform: translateY(-1px);
@@ -1896,7 +1898,7 @@ html[data-motion='ready'] [data-animate].is-visible {
 
 .np-field input:focus,
 .np-field textarea:focus {
-  border-color: var(--accent-primary);
+  border-color: var(--focus-outline);
   box-shadow: 0 0 0 4px var(--focus-ring);
   transform: translateY(-1px);
 }
@@ -2078,6 +2080,13 @@ html[data-motion='ready'] [data-animate].is-visible {
   transition: color 0.22s var(--ease-calm), transform 0.22s var(--ease-calm);
 }
 
+.np-footer-link-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
 .np-footer-link:hover {
   color: var(--np-cream-lightest);
   transform: translateX(2px);
@@ -2205,7 +2214,7 @@ html[data-motion='ready'] [data-animate].is-visible {
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-lg);
   background: var(--surface-raised);
-  color: var(--text-primary);
+  color: var(--text-body);
   box-shadow: var(--shadow-lg);
 }
 
@@ -2216,6 +2225,12 @@ html[data-motion='ready'] [data-animate].is-visible {
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.45;
+}
+
+.np-cookie-consent a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .np-cookie-consent strong {
@@ -2313,6 +2328,13 @@ html[data-motion='reduced'] [data-hero-animate] {
 
 html[data-motion='reduced'] [data-parallax] {
   transform: none;
+}
+
+html[data-motion='reduced'] .np-lightbox,
+html[data-motion='reduced'] .np-lightbox-img,
+html[data-motion='reduced'] .np-toast,
+html[data-motion='reduced'] .np-confirm-icon {
+  animation: none;
 }
 
 /* ---- Responsive ---- */

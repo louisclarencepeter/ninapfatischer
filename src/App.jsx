@@ -57,9 +57,16 @@ const currentHashId = () => {
 export default function App({ language }) {
   const lang = initialLanguage(language)
   const t = copy[lang]
+  const legalHrefs = {
+    impressum: lang === 'en' ? '/en/impressum.html' : '/impressum.html',
+    privacy: lang === 'en' ? '/en/datenschutz.html' : '/datenschutz.html',
+  }
   const [theme, setTheme] = useState(initialTheme)
   const [toast, setToast] = useState('')
+  const [cookieSettingsRequest, setCookieSettingsRequest] = useState(0)
   const toastTimer = useRef(null)
+
+  const openCookieSettings = useCallback(() => setCookieSettingsRequest((n) => n + 1), [])
 
   const showToast = useCallback((msg) => {
     setToast(msg)
@@ -68,6 +75,12 @@ export default function App({ language }) {
   }, [])
 
   useEffect(() => () => clearTimeout(toastTimer.current), [])
+
+  // Prerender sets <html lang> per page; this keeps dev and any
+  // non-prerendered path honest as well.
+  useEffect(() => {
+    document.documentElement.lang = lang
+  }, [lang])
 
   useEffect(() => {
     const root = document.documentElement
@@ -172,6 +185,7 @@ export default function App({ language }) {
       <Nav
         language={lang}
         copy={t}
+        theme={theme}
         onBook={goBook}
         onToggleTheme={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
       />
@@ -182,10 +196,19 @@ export default function App({ language }) {
         <Music copy={t.music} />
         <Gallery copy={t.gallery} />
         <Retreat copy={t.retreat} onBook={goRetreat} />
-        <Contact copy={t.contact} onSent={() => showToast(t.toast.sent)} />
+        <Contact
+          copy={t.contact}
+          language={lang}
+          privacyHref={legalHrefs.privacy}
+          onSent={() => showToast(t.toast.sent)}
+        />
       </main>
-      <Footer copy={t} />
-      <CookieConsent copy={t.cookies} />
+      <Footer copy={t} legalHrefs={legalHrefs} onOpenCookieSettings={openCookieSettings} />
+      <CookieConsent
+        copy={t.cookies}
+        privacyHref={legalHrefs.privacy}
+        openRequest={cookieSettingsRequest}
+      />
       {/* Persistent live region: mounting text into an existing region is
           what gets screen readers to actually announce the toast. */}
       <div role="status" aria-live="polite">

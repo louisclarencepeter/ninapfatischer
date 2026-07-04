@@ -42,23 +42,26 @@ const IconArrow = (
   </svg>
 )
 
-const SOCIALS = [
-  {
-    label: 'Instagram',
-    href: 'https://www.instagram.com/verenanina/',
-    icon: IconInstagram,
-  },
-  {
-    label: 'YouTube',
-    href: 'https://www.youtube.com/@ninapfatischer3765/shorts',
-    icon: IconYoutube,
-  },
-  {
-    label: 'Email',
-    href: `mailto:${PUBLIC_CONTACT_EMAIL}`,
-    icon: IconEmail,
-  },
-].filter((s) => s.href)
+// The email entry's label comes from copy (aria-label must be localized);
+// Instagram/YouTube are brand names and stay as-is.
+const socials = (emailLabel) =>
+  [
+    {
+      label: 'Instagram',
+      href: 'https://www.instagram.com/verenanina/',
+      icon: IconInstagram,
+    },
+    {
+      label: 'YouTube',
+      href: 'https://www.youtube.com/@ninapfatischer3765/shorts',
+      icon: IconYoutube,
+    },
+    {
+      label: emailLabel,
+      href: `mailto:${PUBLIC_CONTACT_EMAIL}`,
+      icon: IconEmail,
+    },
+  ].filter((s) => s.href)
 
 const contactLinks = (copy) => [
   {
@@ -81,7 +84,7 @@ const contactLinks = (copy) => [
   },
 ].filter((item) => item.href)
 
-export default function Footer({ copy }) {
+export default function Footer({ copy, legalHrefs, onOpenCookieSettings }) {
   return (
     <footer className="np-footer-section">
       <div className="np-container">
@@ -104,7 +107,7 @@ export default function Footer({ copy }) {
               <p className="np-footer-tagline">{copy.footer.tagline}</p>
               <span className="np-footer-social-label">{copy.footer.social}</span>
               <div className="np-socials">
-                {SOCIALS.map((s) => {
+                {socials(copy.footer.contact.email).map((s) => {
                   const external = s.href.startsWith('http')
                   return (
                     <a
@@ -161,13 +164,21 @@ export default function Footer({ copy }) {
             &copy; {new Date().getFullYear()} Nina Pfatischer Yoga
           </span>
           <span>
-            <a href="/impressum.html" className="np-footer-link">
+            <a href={legalHrefs.impressum} className="np-footer-link">
               {copy.footer.legal.impressum}
             </a>
             {' · '}
-            <a href="/datenschutz.html" className="np-footer-link">
+            <a href={legalHrefs.privacy} className="np-footer-link">
               {copy.footer.legal.privacy}
             </a>
+            {' · '}
+            <button
+              type="button"
+              className="np-footer-link np-footer-link-btn"
+              onClick={onOpenCookieSettings}
+            >
+              {copy.footer.legal.cookieSettings}
+            </button>
           </span>
           <span>{copy.footer.location}</span>
         </div>

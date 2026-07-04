@@ -30,7 +30,7 @@ const POINT_ICONS = [
   },
 ]
 
-export default function Contact({ copy, onSent }) {
+export default function Contact({ copy, language, privacyHref, onSent }) {
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
   const confirmRef = useRef(null)
 
@@ -47,7 +47,7 @@ export default function Contact({ copy, onSent }) {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, lang: language }),
       })
       if (!res.ok) throw new Error(`Request failed (${res.status})`)
       setStatus('sent')
@@ -131,7 +131,7 @@ export default function Contact({ copy, onSent }) {
                 {status === 'sending' ? copy.sending : copy.submit}
               </button>
               <p className="np-form-privacy">
-                {copy.privacyPrefix} <a href="/datenschutz.html">{copy.privacyLink}</a>.
+                {copy.privacyPrefix} <a href={privacyHref}>{copy.privacyLink}</a>.
               </p>
             </form>
           )}

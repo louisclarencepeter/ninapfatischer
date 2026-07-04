@@ -39,7 +39,7 @@ export default function Retreat({ copy, onBook }) {
 
       <div className="np-container np-retreat-body">
         <div className="np-retreat-summary" data-animate="rise">
-          <div className="np-retreat-facts" aria-label={copy.summaryLabel}>
+          <div className="np-retreat-facts" role="group" aria-label={copy.summaryLabel}>
             {copy.summary.map((item) => (
               <div key={item.label} className="np-retreat-fact">
                 <span className="np-retreat-fact-label">{item.label}</span>
