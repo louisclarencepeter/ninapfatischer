@@ -1,6 +1,10 @@
+import { ZANZIBAR_RETREAT_URL } from '../constants.js'
+
 const IMG = '/images/gallery/half-moon-terrace'
 const webp = [480, 960, 1280].map((w) => `${IMG}-w${w}.webp ${w}w`).join(', ')
 const jpg = `${IMG}-w480.jpg 480w, ${IMG}-w960.jpg 960w, ${IMG}.jpg 1280w`
+
+const FACT_TINTS = ['np-tint-clay', 'np-tint-sage', 'np-tint-ochre']
 
 export default function Retreat({ copy, onBook }) {
   return (
@@ -136,6 +140,29 @@ export default function Retreat({ copy, onBook }) {
             {copy.ctaButton}
           </button>
         </div>
+
+        <aside className="np-retreat-second" data-animate="rise" aria-label={copy.second.title}>
+          <span className="np-section-eyebrow">{copy.second.eyebrow}</span>
+          <h3 className="np-retreat-second-title">{copy.second.title}</h3>
+          <p className="np-retreat-second-tagline">{copy.second.tagline}</p>
+          <p className="np-retreat-second-lead">{copy.second.lead}</p>
+          <ul className="np-retreat-second-facts">
+            {copy.second.facts.map((fact, i) => (
+              <li key={fact} className={`np-tag ${FACT_TINTS[i % FACT_TINTS.length]}`}>
+                {fact}
+              </li>
+            ))}
+          </ul>
+          <a
+            className="np-btn np-btn-primary"
+            href={ZANZIBAR_RETREAT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {copy.second.ctaButton}
+          </a>
+          <p className="np-retreat-second-note">{copy.second.ctaNote}</p>
+        </aside>
       </div>
     </section>
   )

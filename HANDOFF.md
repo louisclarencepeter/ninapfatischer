@@ -18,8 +18,10 @@ Everything below is implemented, tested, and on the PR branch:
   (`src/entry-server.jsx` + `scripts/prerender.mjs`), hydrated on load.
 - Sections: Nav (frost-on-scroll), Hero, About/story, Classes (7 cards),
   Music interlude, Gallery ("Moments", 12 photos, shuffled per visit,
-  lightbox with focus trap), Retreat ("Salty Shavasana", Imsouane/Morocco),
-  Contact form, Footer.
+  lightbox with focus trap), Retreat ("Salty Shavasana", Imsouane/Morocco,
+  plus a feature card for the 14-day Zanzibar Yoga & Safari retreat linking
+  out to yournexttriptoparadise.com/retreats — copy sourced from that repo's
+  DE/EN locales), Contact form, Footer.
 - **Bilingual German + English**: German is the default root page (`/`),
   English is prerendered at `/en/`, with a DE/EN nav switcher, localized
   section copy, localized alt/ARIA/form text, language-specific canonical

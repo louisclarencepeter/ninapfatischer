@@ -1751,6 +1751,64 @@ html[data-motion='ready'] [data-animate].is-visible {
   margin: 0 auto;
 }
 
+/* ---- Second retreat feature card (Zanzibar, hosted on Destination
+   Paradise — the CTA links out for details and booking) ---- */
+.np-retreat-second {
+  margin-top: 88px;
+  padding: clamp(32px, 5vw, 48px);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+  text-align: center;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.np-retreat-second-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.7rem, 3.4vw, 2.2rem);
+  line-height: 1.2;
+  color: var(--text-heading);
+  margin: 0;
+}
+
+.np-retreat-second-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-md);
+  color: var(--text-accent);
+  margin: 0;
+}
+
+.np-retreat-second-lead {
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--text-body);
+  margin: 0;
+  max-width: 580px;
+}
+
+.np-retreat-second-facts {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 0;
+  margin: 6px 0 10px;
+}
+
+.np-retreat-second-note {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin: 0;
+}
+
 .np-retreat-cta-title {
   font-family: var(--font-display);
   font-weight: 300;

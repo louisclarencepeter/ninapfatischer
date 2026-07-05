@@ -226,6 +226,16 @@ export const copy = {
       ctaText:
         'Wenn du spürst, dass dich dieser Ort ruft, könnte dies deine Woche sein. Spots sind bewusst begrenzt, um eine persönliche und achtsame Erfahrung zu ermöglichen.',
       ctaButton: 'Jetzt Platz anfragen',
+      second: {
+        eyebrow: 'Neues Retreat · Sansibar & Tansania',
+        title: '14 Tage Yoga & Safari Retreat',
+        tagline: 'Mehr als nur Bewegung. Vierzehn Tage Yoga, Atem, Stille und Safari.',
+        lead:
+          'Eine einzige, intime Reise mit Nina – Vinyasa bei Sonnenaufgang, ruhige Yin-Abende, lange, entschleunigte Tage an der Gewürzküste Sansibars und eine fünftägige Tansania-Safari als fester Teil des Erlebnisses.',
+        facts: ['14 Tage', '5 Safari-Tage', 'Max. 12 Gäste', 'Ab $4.890 pro Person', 'Erste Reise: Anfang Dezember 2026'],
+        ctaButton: 'Zum Retreat bei Destination Paradise',
+        ctaNote: 'Alle Details & Buchung auf yournexttriptoparadise.com',
+      },
       testimonialsTitle: 'Stimmen vom Retreat',
       testimonials: [
         'Ich bin schon lange nicht mehr mit so viel innerer Ruhe und Gelassenheit aus einem Urlaub wiedergekommen. Selbst meinen Kollegen ist direkt aufgefallen, dass ich so entspannt und erholt wirke – und das, obwohl es nur eine Woche war.',
@@ -540,6 +550,16 @@ export const copy = {
       ctaText:
         'If you sense that this place is calling you, this could be your week. Spots are intentionally limited to allow for a personal and mindful experience.',
       ctaButton: 'Request your spot',
+      second: {
+        eyebrow: 'New retreat · Zanzibar & Tanzania',
+        title: '14-Day Yoga & Safari Retreat',
+        tagline: 'More than just movement. Fourteen days of yoga, breath, stillness, and safari.',
+        lead:
+          'A single, intimate journey with Nina – sunrise vinyasa, slow yin evenings, long unhurried days on the Zanzibar spice coast, and a five-day Tanzania safari woven into the experience.',
+        facts: ['14 days', '5 safari days', 'Max 12 guests', 'From $4,890 per person', 'First departure: early December 2026'],
+        ctaButton: 'View the retreat at Destination Paradise',
+        ctaNote: 'Full details & booking on yournexttriptoparadise.com',
+      },
       testimonialsTitle: 'Voices from the retreat',
       testimonials: [
         'I have not come back from a holiday with so much inner calm and serenity in a long time. Even my colleagues noticed right away how relaxed and rested I seemed – and that after only a week.',
