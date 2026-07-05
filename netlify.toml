@@ -34,6 +34,13 @@
   [headers.values]
     Cache-Control = "no-cache"
 
+# Small render-blocking theme script; without a rule Netlify serves it
+# max-age=0 and every page view pays a blocking revalidation round-trip.
+[[headers]]
+  for = "/theme.js"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
 [[headers]]
   for = "/manifest.webmanifest"
   [headers.values]

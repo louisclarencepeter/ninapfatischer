@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { PUBLIC_CONTACT_EMAIL } from '../constants.js'
 
 const POINT_ICONS = [
   {
@@ -29,7 +30,7 @@ const POINT_ICONS = [
   },
 ]
 
-export default function Contact({ copy, onSent }) {
+export default function Contact({ copy, language, privacyHref, onSent }) {
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
   const confirmRef = useRef(null)
 
@@ -46,7 +47,7 @@ export default function Contact({ copy, onSent }) {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, lang: language }),
       })
       if (!res.ok) throw new Error(`Request failed (${res.status})`)
       setStatus('sent')
@@ -123,14 +124,14 @@ export default function Contact({ copy, onSent }) {
               </div>
               {status === 'error' && (
                 <p className="np-form-error" role="alert">
-                  {copy.errorPrefix} <a href="mailto:info@ninapfatischer.com">info@ninapfatischer.com</a>.
+                  {copy.errorPrefix} <a href={`mailto:${PUBLIC_CONTACT_EMAIL}`}>{PUBLIC_CONTACT_EMAIL}</a>.
                 </p>
               )}
               <button type="submit" className="np-btn np-btn-primary np-submit" disabled={status === 'sending'}>
                 {status === 'sending' ? copy.sending : copy.submit}
               </button>
               <p className="np-form-privacy">
-                {copy.privacyPrefix} <a href="/datenschutz.html">{copy.privacyLink}</a>.
+                {copy.privacyPrefix} <a href={privacyHref}>{copy.privacyLink}</a>.
               </p>
             </form>
           )}

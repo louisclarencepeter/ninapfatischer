@@ -49,7 +49,7 @@ a:hover { color: var(--accent-primary); }
 ::selection { background: var(--np-ochre-soft); color: var(--np-ink); }
 
 :focus-visible {
-  outline: 2px solid var(--accent-primary);
+  outline: 2px solid var(--focus-outline);
   outline-offset: 2px;
   border-radius: var(--radius-xs);
 }

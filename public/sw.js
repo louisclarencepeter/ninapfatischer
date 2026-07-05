@@ -1,8 +1,13 @@
-const CACHE_NAME = 'nina-pfatischer-pwa-2026-06-12-v1'
+// __BUILD_VERSION__ is stamped by scripts/prerender.mjs at build time so each
+// deploy activates a fresh cache and evicts the previous one.
+const CACHE_NAME = 'nina-pfatischer-pwa-__BUILD_VERSION__'
+
+// Must all succeed for the SW to install (cache.addAll is atomic).
 const APP_SHELL = [
   '/',
   '/en/',
   '/manifest.webmanifest',
+  '/en/manifest.webmanifest',
   '/theme.js',
   '/favicon.svg',
   '/favicon.ico',
@@ -12,6 +17,11 @@ const APP_SHELL = [
   '/fonts/cormorant-garamond.woff2',
   '/fonts/cormorant-garamond-italic.woff2',
   '/fonts/nunito-sans.woff2',
+]
+
+// Nice-to-have offline warmth; a renamed or missing file must not brick the
+// install, so these are fetched with a per-item catch.
+const OPTIONAL_SHELL = [
   '/images/portrait-garden-w1440.webp',
   '/images/tree-pose-mountains-w1024.webp',
   '/images/wildthing-clay-w1280.webp',
@@ -33,6 +43,7 @@ self.addEventListener('activate', (event) => {
 async function cacheAppShell() {
   const cache = await caches.open(CACHE_NAME)
   await cache.addAll(APP_SHELL)
+  await Promise.all(OPTIONAL_SHELL.map((asset) => cache.add(asset).catch(() => undefined)))
 
   const html = await Promise.all(
     ['/', '/en/'].map(async (path) => {

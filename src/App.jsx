@@ -30,12 +30,43 @@ const themeColors = {
   dark: '#17120F',
 }
 
+const revealSectionAnimations = (el) => {
+  if (el.matches('[data-animate]')) el.classList.add('is-visible')
+  el.querySelectorAll('[data-animate]').forEach((child) => child.classList.add('is-visible'))
+}
+
+const scrollToSection = (id, behavior = 'smooth') => {
+  if (typeof window === 'undefined') return false
+  const el = document.getElementById(id)
+  if (!el) return false
+  const top = el.getBoundingClientRect().top + window.scrollY
+  window.scrollTo({ top, behavior: prefersReducedMotion() ? 'auto' : behavior })
+  revealSectionAnimations(el)
+  return true
+}
+
+const currentHashId = () => {
+  if (typeof window === 'undefined') return ''
+  try {
+    return decodeURIComponent(window.location.hash.slice(1))
+  } catch {
+    return window.location.hash.slice(1)
+  }
+}
+
 export default function App({ language }) {
   const lang = initialLanguage(language)
   const t = copy[lang]
+  const legalHrefs = {
+    impressum: lang === 'en' ? '/en/impressum.html' : '/impressum.html',
+    privacy: lang === 'en' ? '/en/datenschutz.html' : '/datenschutz.html',
+  }
   const [theme, setTheme] = useState(initialTheme)
   const [toast, setToast] = useState('')
+  const [cookieSettingsRequest, setCookieSettingsRequest] = useState(0)
   const toastTimer = useRef(null)
+
+  const openCookieSettings = useCallback(() => setCookieSettingsRequest((n) => n + 1), [])
 
   const showToast = useCallback((msg) => {
     setToast(msg)
@@ -44,6 +75,12 @@ export default function App({ language }) {
   }, [])
 
   useEffect(() => () => clearTimeout(toastTimer.current), [])
+
+  // Prerender sets <html lang> per page; this keeps dev and any
+  // non-prerendered path honest as well.
+  useEffect(() => {
+    document.documentElement.lang = lang
+  }, [lang])
 
   useEffect(() => {
     const root = document.documentElement
@@ -109,15 +146,30 @@ export default function App({ language }) {
     }
   }, [theme])
 
+  useEffect(() => {
+    const scrollHashTarget = (behavior = 'auto') => {
+      const id = currentHashId()
+      if (!id) return
+      scrollToSection(id, behavior)
+    }
+
+    const timers = [0, 320, 900].map((delay) =>
+      window.setTimeout(() => scrollHashTarget('auto'), delay),
+    )
+    const onHashChange = () => {
+      window.setTimeout(() => scrollHashTarget('smooth'), 0)
+    }
+
+    window.addEventListener('hashchange', onHashChange)
+    return () => {
+      timers.forEach((timer) => window.clearTimeout(timer))
+      window.removeEventListener('hashchange', onHashChange)
+    }
+  }, [])
+
   const goContact = useCallback(
     (message) => {
-      const el = document.getElementById('contact')
-      if (el) {
-        // Sections carry their own top padding to clear the fixed nav, so no
-        // extra offset is needed here (matches the section scroll-margin-top:0).
-        const top = el.getBoundingClientRect().top + window.scrollY
-        window.scrollTo({ top, behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
-      }
+      scrollToSection('contact')
       showToast(message)
     },
     [showToast],
@@ -133,6 +185,7 @@ export default function App({ language }) {
       <Nav
         language={lang}
         copy={t}
+        theme={theme}
         onBook={goBook}
         onToggleTheme={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
       />
@@ -143,10 +196,19 @@ export default function App({ language }) {
         <Music copy={t.music} />
         <Gallery copy={t.gallery} />
         <Retreat copy={t.retreat} onBook={goRetreat} />
-        <Contact copy={t.contact} onSent={() => showToast(t.toast.sent)} />
+        <Contact
+          copy={t.contact}
+          language={lang}
+          privacyHref={legalHrefs.privacy}
+          onSent={() => showToast(t.toast.sent)}
+        />
       </main>
-      <Footer copy={t} />
-      <CookieConsent copy={t.cookies} />
+      <Footer copy={t} legalHrefs={legalHrefs} onOpenCookieSettings={openCookieSettings} />
+      <CookieConsent
+        copy={t.cookies}
+        privacyHref={legalHrefs.privacy}
+        openRequest={cookieSettingsRequest}
+      />
       {/* Persistent live region: mounting text into an existing region is
           what gets screen readers to actually announce the toast. */}
       <div role="status" aria-live="polite">

@@ -15,7 +15,10 @@ const PHOTOS = [
   { base: '/images/gallery/dancer-dusk', w: 854, h: 1280 },
 ]
 
-const SIZES = '(max-width: 560px) 92vw, (max-width: 900px) 46vw, 30vw'
+// The masonry lives in the 1200px container, so a column never exceeds
+// ~380px — without the cap, 30vw on wide/retina screens requests the next
+// variant up for nothing.
+const SIZES = '(max-width: 560px) 92vw, (max-width: 900px) 46vw, (min-width: 1240px) 380px, 30vw'
 
 const srcset = (p, ext) => {
   const widths = [480, 960].filter((w) => w < p.w)
@@ -146,11 +149,31 @@ export default function Gallery({ copy }) {
               <path d="m15 18-6-6 6-6" />
             </svg>
           </button>
-          <img
-            src={`${photos[selected].base}.jpg`}
-            alt={photos[selected].alt}
-            className="np-lightbox-img"
-          />
+          {/* Changing the dialog's aria-label alone is not re-announced by
+              screen readers when stepping through photos. */}
+          <span className="np-sr-only" aria-live="polite">
+            {copy.position
+              .replace('{current}', String(selected + 1))
+              .replace('{total}', String(photos.length))}
+            {': '}
+            {photos[selected].alt}
+          </span>
+          <picture>
+            <source
+              type="image/webp"
+              srcSet={srcset(photos[selected], 'webp')}
+              sizes="(min-width: 1200px) 1100px, 92vw"
+            />
+            <img
+              src={`${photos[selected].base}.jpg`}
+              srcSet={srcset(photos[selected], 'jpg')}
+              sizes="(min-width: 1200px) 1100px, 92vw"
+              width={photos[selected].w}
+              height={photos[selected].h}
+              alt={photos[selected].alt}
+              className="np-lightbox-img"
+            />
+          </picture>
           <button type="button" className="np-lightbox-btn np-lightbox-next" onClick={() => step(1)} aria-label={copy.next}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="m9 18 6-6-6-6" />

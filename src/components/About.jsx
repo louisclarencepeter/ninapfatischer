@@ -1,7 +1,8 @@
 const WIDTHS = [640, 1024, 1600, 2000]
 const jpg = WIDTHS.map((w) => `/images/tree-pose-mountains${w === 2000 ? '' : `-w${w}`}.jpg ${w}w`).join(', ')
 const webp = WIDTHS.map((w) => `/images/tree-pose-mountains-w${w}.webp ${w}w`).join(', ')
-const SIZES = '(max-width: 860px) 92vw, 40vw'
+// Capped: the media column inside the 1200px container tops out near 500px.
+const SIZES = '(max-width: 860px) 92vw, (min-width: 1240px) 500px, 40vw'
 
 export default function About({ copy }) {
   return (

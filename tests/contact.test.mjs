@@ -50,12 +50,14 @@ const mockResend = ({ status = 200, body = { id: 'email_test' } } = {}) => {
 
 afterEach(resetEmailEnv)
 
-const post = (body, ip) =>
+const post = (body, ip) => rawPost(JSON.stringify(body), ip)
+
+const rawPost = (body, ip) =>
   handler(
     new Request('http://localhost/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      body,
     }),
     { ip },
   )
@@ -77,13 +79,16 @@ test('valid submission succeeds', async () => {
   resetEmailEnv()
 })
 
-test('honeypot submissions are silently accepted', async () => {
-  resetEmailEnv()
+test('honeypot submissions are silently accepted without sending email', async () => {
+  configureMail()
+  const calls = mockResend()
   const res = await post(
     { name: 'Bot', email: 'bot@spam.com', message: 'spam', website: 'spam.com' },
     '10.0.0.2',
   )
   assert.equal(res.status, 200)
+  assert.equal(calls.length, 0)
+  resetEmailEnv()
 })
 
 test('invalid email is rejected', async () => {
@@ -98,12 +103,31 @@ test('missing message is rejected', async () => {
   assert.equal(res.status, 400)
 })
 
-test('non-POST methods are rejected', async () => {
+test('missing name is rejected', async () => {
+  resetEmailEnv()
+  const res = await post({ email: 'test@example.com', message: 'Hello' }, '10.0.0.14')
+  assert.equal(res.status, 400)
+})
+
+test('malformed JSON body is rejected', async () => {
+  resetEmailEnv()
+  const res = await rawPost('not json', '10.0.0.15')
+  assert.equal(res.status, 400)
+})
+
+test('JSON literal null body is rejected instead of crashing', async () => {
+  resetEmailEnv()
+  const res = await rawPost('null', '10.0.0.16')
+  assert.equal(res.status, 400)
+})
+
+test('non-POST methods are rejected with an Allow header', async () => {
   resetEmailEnv()
   const res = await handler(new Request('http://localhost/api/contact', { method: 'GET' }), {
     ip: '10.0.0.5',
   })
   assert.equal(res.status, 405)
+  assert.equal(res.headers.get('allow'), 'POST')
 })
 
 test('control characters are stripped from single-line fields', async () => {
@@ -174,6 +198,43 @@ test('customer confirmation failure does not fail an already delivered lead', as
   }
 })
 
+test('internal notification failure returns 502 without attempting a confirmation', async () => {
+  configureMail()
+  const calls = mockResend({ status: 500, body: { error: 'boom' } })
+  const originalConsoleError = console.error
+  console.error = () => {}
+  try {
+    const res = await post({ name: 'Test', email: 'test@example.com', message: 'Hello' }, '10.0.0.17')
+    assert.equal(res.status, 502)
+    assert.equal(calls.length, 1)
+  } finally {
+    console.error = originalConsoleError
+    resetEmailEnv()
+  }
+})
+
+test('confirmation email is localized and does not echo the message', async () => {
+  configureMail()
+  let calls = mockResend()
+  let res = await post(
+    { name: 'Test', email: 'test@example.com', message: 'Secret text', lang: 'en' },
+    '10.0.0.18',
+  )
+  assert.equal(res.status, 200)
+  assert.equal(calls[1].body.subject, 'Thanks for your message')
+  assert.ok(!calls[1].body.text.includes('Secret text'))
+
+  calls = mockResend()
+  res = await post(
+    { name: 'Test', email: 'test@example.com', message: 'Geheimer Text', lang: 'nonsense' },
+    '10.0.0.19',
+  )
+  assert.equal(res.status, 200)
+  assert.equal(calls[1].body.subject, 'Danke für deine Nachricht')
+  assert.ok(!calls[1].body.text.includes('Geheimer Text'))
+  resetEmailEnv()
+})
+
 test('rate limit kicks in after 5 submissions from one IP', async () => {
   configureMail({ EMAIL_CONFIRMATIONS_ENABLED: 'false' })
   mockResend()
@@ -184,5 +245,6 @@ test('rate limit kicks in after 5 submissions from one IP', async () => {
   }
   const res = await post(body, '10.0.0.99')
   assert.equal(res.status, 429)
+  assert.equal(res.headers.get('retry-after'), '600')
   resetEmailEnv()
 })

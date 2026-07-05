@@ -30,7 +30,8 @@ export default function Hero({ buttons, copy, onBook }) {
             <em>{copy.titleEm}</em>
           </h1>
           <p className="np-hero-lead" data-hero-animate style={{ '--np-stagger': 2 }}>
-            {copy.lead}
+            <span className="np-hero-lead-full">{copy.lead}</span>
+            <span className="np-hero-lead-short">{copy.mobileLead ?? copy.lead}</span>
           </p>
           <div className="np-hero-actions" data-hero-animate style={{ '--np-stagger': 3 }}>
             <button type="button" className="np-btn np-btn-primary" onClick={onBook}>
