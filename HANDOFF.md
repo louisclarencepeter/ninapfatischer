@@ -85,8 +85,13 @@ function server).
    `EMAIL_NOTIFICATION_TO`. The live form send path passed on 2026-07-04;
    confirm the exact test marker below is visible in the actual `info@`
    mailbox outside spam.
-2. **Search/indexing admin mailbox**: use `info@ninapfatischer.com` for Search
-   Console or related site-owner communication once the mailbox is confirmed.
+2. **Search Console**: DONE 2026-07-05 — domain property
+   `ninapfatischer.com` verified under `louisclarencepeters@gmail.com` via a
+   DNS TXT record in Netlify DNS (record id `6a4a28425c851d06bbd98226`, zone
+   `6a2bc90e09fbba3ce7d26ad0`; do not delete it or verification is lost).
+   `sitemap.xml` submitted, status Success, 2 pages discovered. If ownership
+   should move to `info@ninapfatischer.com` later, add it as an owner under
+   Settings → Users and permissions.
 3. **Final real-device QA**: verify DE/EN navigation, dark/light theme,
    section anchor alignment, gallery/lightbox, contact form, and PWA install
    on at least one iOS and one Android/desktop browser.
