@@ -182,6 +182,28 @@ function RetreatSection({ id, copy, banner, ctaHref, onBook }) {
   )
 }
 
+// Rendered separately in App so the gallery can sit between the retreat
+// sections and the quotes; the quotes stay directly above the contact form.
+export function RetreatVoices({ copy }) {
+  if (!copy.testimonials?.length) return null
+  return (
+    <section className="np-retreat" aria-label={copy.testimonialsTitle}>
+      <div className="np-container np-retreat-body">
+        <div className="np-retreat-quotes" data-animate="rise">
+          <h2 className="np-retreat-heading">{copy.testimonialsTitle}</h2>
+          <div className="np-retreat-quote-grid">
+            {copy.testimonials.map((q) => (
+              <figure key={q.slice(0, 32)} className="np-retreat-quote">
+                <blockquote>{q}</blockquote>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function Retreat({ copy, onBook }) {
   return (
     <>
@@ -192,22 +214,6 @@ export default function Retreat({ copy, onBook }) {
         banner={BANNERS.zanzibar}
         ctaHref={ZANZIBAR_RETREAT_URL}
       />
-      {copy.testimonials?.length > 0 && (
-        <section className="np-retreat" aria-label={copy.testimonialsTitle}>
-          <div className="np-container np-retreat-body">
-            <div className="np-retreat-quotes" data-animate="rise">
-              <h2 className="np-retreat-heading">{copy.testimonialsTitle}</h2>
-              <div className="np-retreat-quote-grid">
-                {copy.testimonials.map((q) => (
-                  <figure key={q.slice(0, 32)} className="np-retreat-quote">
-                    <blockquote>{q}</blockquote>
-                  </figure>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
     </>
   )
 }

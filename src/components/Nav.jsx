@@ -46,7 +46,8 @@ const socials = (emailLabel) => [
 ]
 
 // A single toggle: the button names the language it switches TO, so the
-// German page shows "EN" and vice versa.
+// German page shows "EN" and vice versa. A tooltip on hover/focus spells
+// out that the site exists in the other language.
 function LanguageSwitcher({ copy, currentHash = '', language }) {
   const target = language === 'de' ? 'en' : 'de'
   return (
@@ -54,10 +55,12 @@ function LanguageSwitcher({ copy, currentHash = '', language }) {
       href={`${pathForLanguage(target)}${currentHash}`}
       className="np-lang-switch"
       hrefLang={target}
-      aria-label={copy.language.switch}
-      title={copy.language.switch}
+      aria-label={`${copy.language[target]} – ${copy.language.tooltip}`}
     >
       {copy.language[target]}
+      <span className="np-lang-tip" aria-hidden="true">
+        {copy.language.tooltip}
+      </span>
     </a>
   )
 }

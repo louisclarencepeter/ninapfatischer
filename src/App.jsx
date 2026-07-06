@@ -5,7 +5,7 @@ import About from './components/About.jsx'
 import Classes from './components/Classes.jsx'
 import Music from './components/Music.jsx'
 import Gallery from './components/Gallery.jsx'
-import Retreat from './components/Retreat.jsx'
+import Retreat, { RetreatVoices } from './components/Retreat.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 import CookieConsent from './components/CookieConsent.jsx'
@@ -194,8 +194,9 @@ export default function App({ language }) {
         <About copy={t.about} />
         <Classes copy={t.classes} />
         <Music copy={t.music} />
-        <Gallery copy={t.gallery} />
         <Retreat copy={t.retreat} onBook={goRetreat} />
+        <Gallery copy={t.gallery} />
+        <RetreatVoices copy={t.retreat} />
         <Contact
           copy={t.contact}
           language={lang}
