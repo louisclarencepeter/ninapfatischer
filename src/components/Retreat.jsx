@@ -1,25 +1,59 @@
 import { ZANZIBAR_RETREAT_URL } from '../constants.js'
 
-const IMG = '/images/gallery/half-moon-terrace'
-const webp = [480, 960, 1280].map((w) => `${IMG}-w${w}.webp ${w}w`).join(', ')
-const jpg = `${IMG}-w480.jpg 480w, ${IMG}-w960.jpg 960w, ${IMG}.jpg 1280w`
+const BANNERS = {
+  morocco: {
+    base: '/images/gallery/half-moon-terrace',
+    widths: [480, 960],
+    masterW: 1280,
+    masterH: 960,
+  },
+  zanzibar: {
+    base: '/images/zanzibar-tree-pose',
+    widths: [480, 960],
+    masterW: 1200,
+    masterH: 1800,
+    // Portrait master: keep Nina and the bays in frame when cover-cropped.
+    position: 'center 55%',
+  },
+}
 
-const FACT_TINTS = ['np-tint-clay', 'np-tint-sage', 'np-tint-ochre']
+function bannerSources({ base, widths, masterW }) {
+  const webp = [...widths, masterW].map((w) => `${base}-w${w}.webp ${w}w`).join(', ')
+  const jpg = [...widths.map((w) => `${base}-w${w}.jpg ${w}w`), `${base}.jpg ${masterW}w`].join(', ')
+  return { webp, jpg }
+}
 
-export default function Retreat({ copy, onBook }) {
+function Cta({ href, onClick, className, children }) {
+  if (href) {
+    return (
+      <a className={className} href={href} target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    )
+  }
   return (
-    <section id="retreat" className="np-retreat">
+    <button type="button" className={className} onClick={onClick}>
+      {children}
+    </button>
+  )
+}
+
+function RetreatSection({ id, copy, banner, ctaHref, onBook }) {
+  const { webp, jpg } = bannerSources(banner)
+  return (
+    <section id={id} className="np-retreat">
       <div className="np-retreat-banner">
         <picture>
           <source type="image/webp" srcSet={webp} sizes="100vw" />
           <img
-            src={`${IMG}.jpg`}
+            src={`${banner.base}.jpg`}
             srcSet={jpg}
             sizes="100vw"
-            width="1280"
-            height="960"
+            width={banner.masterW}
+            height={banner.masterH}
             alt={copy.alt}
             className="np-retreat-img"
+            style={banner.position ? { objectPosition: banner.position } : undefined}
             data-parallax
             loading="lazy"
           />
@@ -51,9 +85,9 @@ export default function Retreat({ copy, onBook }) {
               </div>
             ))}
           </div>
-          <button type="button" className="np-btn np-btn-primary np-retreat-summary-cta" onClick={onBook}>
+          <Cta href={ctaHref} onClick={onBook} className="np-btn np-btn-primary np-retreat-summary-cta">
             {copy.ctaButton}
-          </button>
+          </Cta>
         </div>
 
         <div className="np-retreat-cols">
@@ -87,11 +121,24 @@ export default function Retreat({ copy, onBook }) {
         <div className="np-retreat-invest-block" data-animate="rise">
           <h3 className="np-retreat-heading">{copy.investmentTitle}</h3>
           <div className="np-retreat-invest">
-            <div className="np-retreat-price-card">
-              <span className="np-retreat-price-label">{copy.priceLabel}</span>
-              <span className="np-retreat-price">{copy.price}</span>
-              <p className="np-retreat-price-note">{copy.investmentNote}</p>
-            </div>
+            {copy.options ? (
+              <div className="np-retreat-options">
+                {copy.options.map((option) => (
+                  <div key={option.label} className="np-retreat-price-card np-retreat-option">
+                    <span className="np-retreat-price-label">{option.label}</span>
+                    <span className="np-retreat-price">{option.price}</span>
+                    <p className="np-retreat-price-note">{option.note}</p>
+                  </div>
+                ))}
+                <p className="np-retreat-price-note">{copy.investmentNote}</p>
+              </div>
+            ) : (
+              <div className="np-retreat-price-card">
+                <span className="np-retreat-price-label">{copy.priceLabel}</span>
+                <span className="np-retreat-price">{copy.price}</span>
+                <p className="np-retreat-price-note">{copy.investmentNote}</p>
+              </div>
+            )}
             <div className="np-retreat-incexc">
               <div>
                 <span className="np-retreat-inc-label">{copy.includedLabel}</span>
@@ -122,48 +169,45 @@ export default function Retreat({ copy, onBook }) {
           ))}
         </div>
 
-        <div className="np-retreat-quotes" data-animate="rise">
-          <h3 className="np-retreat-heading">{copy.testimonialsTitle}</h3>
-          <div className="np-retreat-quote-grid">
-            {copy.testimonials.map((q) => (
-              <figure key={q.slice(0, 32)} className="np-retreat-quote">
-                <blockquote>{q}</blockquote>
-              </figure>
-            ))}
-          </div>
-        </div>
-
         <div className="np-retreat-cta" data-animate="rise">
           <h3 className="np-retreat-cta-title">{copy.ctaTitle}</h3>
           <p className="np-retreat-cta-text">{copy.ctaText}</p>
-          <button type="button" className="np-btn np-btn-primary" onClick={onBook}>
+          <Cta href={ctaHref} onClick={onBook} className="np-btn np-btn-primary">
             {copy.ctaButton}
-          </button>
+          </Cta>
+          {copy.ctaNote && <p className="np-retreat-cta-note">{copy.ctaNote}</p>}
         </div>
-
-        <aside className="np-retreat-second" data-animate="rise" aria-label={copy.second.title}>
-          <span className="np-section-eyebrow">{copy.second.eyebrow}</span>
-          <h3 className="np-retreat-second-title">{copy.second.title}</h3>
-          <p className="np-retreat-second-tagline">{copy.second.tagline}</p>
-          <p className="np-retreat-second-lead">{copy.second.lead}</p>
-          <ul className="np-retreat-second-facts">
-            {copy.second.facts.map((fact, i) => (
-              <li key={fact} className={`np-tag ${FACT_TINTS[i % FACT_TINTS.length]}`}>
-                {fact}
-              </li>
-            ))}
-          </ul>
-          <a
-            className="np-btn np-btn-primary"
-            href={ZANZIBAR_RETREAT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {copy.second.ctaButton}
-          </a>
-          <p className="np-retreat-second-note">{copy.second.ctaNote}</p>
-        </aside>
       </div>
     </section>
+  )
+}
+
+export default function Retreat({ copy, onBook }) {
+  return (
+    <>
+      <RetreatSection id="retreat" copy={copy} banner={BANNERS.morocco} onBook={onBook} />
+      <RetreatSection
+        id="retreat-zanzibar"
+        copy={copy.zanzibar}
+        banner={BANNERS.zanzibar}
+        ctaHref={ZANZIBAR_RETREAT_URL}
+      />
+      {copy.testimonials?.length > 0 && (
+        <section className="np-retreat" aria-label={copy.testimonialsTitle}>
+          <div className="np-container np-retreat-body">
+            <div className="np-retreat-quotes" data-animate="rise">
+              <h2 className="np-retreat-heading">{copy.testimonialsTitle}</h2>
+              <div className="np-retreat-quote-grid">
+                {copy.testimonials.map((q) => (
+                  <figure key={q.slice(0, 32)} className="np-retreat-quote">
+                    <blockquote>{q}</blockquote>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+    </>
   )
 }

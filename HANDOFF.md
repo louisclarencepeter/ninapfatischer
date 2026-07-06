@@ -1,6 +1,6 @@
 # Handoff — ninapfatischer.com
 
-_Last updated: 2026-07-04 (consent withdrawal, EN legal pages, contact-function hardening on `development`)._
+_Last updated: 2026-07-06 (Zanzibar retreat promoted from feature card to a full section matching the Morocco layout, on `development`)._
 
 ## What this is
 
@@ -18,10 +18,19 @@ Everything below is implemented, tested, and on the PR branch:
   (`src/entry-server.jsx` + `scripts/prerender.mjs`), hydrated on load.
 - Sections: Nav (frost-on-scroll), Hero, About/story, Classes (7 cards),
   Music interlude, Gallery ("Moments", 12 photos, shuffled per visit,
-  lightbox with focus trap), Retreat ("Salty Shavasana", Imsouane/Morocco,
-  plus a feature card for the 14-day Zanzibar Yoga & Safari retreat linking
-  out to yournexttriptoparadise.com/retreats — copy sourced from that repo's
-  DE/EN locales), Contact form, Footer.
+  lightbox with focus trap), two full Retreat sections sharing one layout
+  in `Retreat.jsx` ("Salty Shavasana", Imsouane/Morocco, booking via the
+  contact form; and the 14-day Zanzibar Yoga & Safari retreat at
+  `#retreat-zanzibar`, whose CTAs link out to
+  yournexttriptoparadise.com/retreats — copy sourced from that repo's
+  DE/EN locales and `retreatProducts.js`; no testimonials yet, block is
+  conditional. Its investment block lists the three booking options from
+  that repo (full retreat $4,890 · 14d, Zanzibar-only $2,490 · 9d,
+  safari-only $2,400 · 5d) via `copy.options`; without `options` the
+  layout falls back to the single price card the Morocco retreat uses. Its banner master `public/images/zanzibar-tree-pose.jpg`
+  was taken from that repo's 1200×1800
+  `assets/images/retreats/zanzibar-tree-pose-view.webp` — same photo as
+  the gallery's `tree-pose-islands`, bigger master), Contact form, Footer.
 - **Bilingual German + English**: German is the default root page (`/`),
   English is prerendered at `/en/`, with a DE/EN nav switcher, localized
   section copy, localized alt/ARIA/form text, language-specific canonical

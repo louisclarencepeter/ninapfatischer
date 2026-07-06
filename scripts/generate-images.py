@@ -28,6 +28,7 @@ HERO_WIDTHS = {
     'portrait-garden': [640, 960, 1440],
     'tree-pose-mountains': [640, 1024, 1600],
     'wildthing-clay': [768, 1280, 1920],
+    'zanzibar-tree-pose': [480, 960],
 }
 GALLERY_WIDTHS = [480, 960]
 
