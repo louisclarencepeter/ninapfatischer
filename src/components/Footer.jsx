@@ -105,23 +105,11 @@ export default function Footer({ copy, legalHrefs, onOpenCookieSettings }) {
             <div className="np-footer-brand-copy">
               <div className="np-footer-wordmark">Nina Pfatischer</div>
               <p className="np-footer-tagline">{copy.footer.tagline}</p>
-              <span className="np-footer-social-label">{copy.footer.social}</span>
-              <div className="np-socials">
-                {socials(copy.footer.contact.email).map((s) => {
-                  const external = s.href.startsWith('http')
-                  return (
-                    <a
-                      key={s.label}
-                      href={s.href}
-                      aria-label={s.label}
-                      className="np-social"
-                      {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    >
-                      {s.icon}
-                    </a>
-                  )
-                })}
-              </div>
+              <ul className="np-footer-details">
+                {copy.footer.details.map((detail) => (
+                  <li key={detail}>{detail}</li>
+                ))}
+              </ul>
             </div>
           </div>
           <div className="np-footer-cols" data-animate="rise" style={{ '--np-stagger': 1 }}>
@@ -152,6 +140,23 @@ export default function Footer({ copy, legalHrefs, onOpenCookieSettings }) {
                         <span className="np-footer-contact-label">{item.label}</span>
                         <span className="np-footer-contact-value">{item.value}</span>
                       </span>
+                    </a>
+                  )
+                })}
+              </div>
+              <span className="np-footer-social-label">{copy.footer.social}</span>
+              <div className="np-socials">
+                {socials(copy.footer.contact.email).map((s) => {
+                  const external = s.href.startsWith('http')
+                  return (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      aria-label={s.label}
+                      className="np-social"
+                      {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    >
+                      {s.icon}
                     </a>
                   )
                 })}

@@ -1,6 +1,6 @@
 # Handoff — ninapfatischer.com
 
-_Last updated: 2026-07-04 (consent withdrawal, EN legal pages, contact-function hardening on `development`)._
+_Last updated: 2026-07-06 (Zanzibar retreat promoted from feature card to a full section matching the Morocco layout, on `development`)._
 
 ## What this is
 
@@ -18,8 +18,19 @@ Everything below is implemented, tested, and on the PR branch:
   (`src/entry-server.jsx` + `scripts/prerender.mjs`), hydrated on load.
 - Sections: Nav (frost-on-scroll), Hero, About/story, Classes (7 cards),
   Music interlude, Gallery ("Moments", 12 photos, shuffled per visit,
-  lightbox with focus trap), Retreat ("Salty Shavasana", Imsouane/Morocco),
-  Contact form, Footer.
+  lightbox with focus trap), two full Retreat sections sharing one layout
+  in `Retreat.jsx` ("Salty Shavasana", Imsouane/Morocco, booking via the
+  contact form; and the 14-day Zanzibar Yoga & Safari retreat at
+  `#retreat-zanzibar`, whose CTAs link out to
+  yournexttriptoparadise.com/retreats — copy sourced from that repo's
+  DE/EN locales and `retreatProducts.js`; no testimonials yet, block is
+  conditional. Its investment block lists the three booking options from
+  that repo (full retreat $4,890 · 14d, Zanzibar-only $2,490 · 9d,
+  safari-only $2,400 · 5d) via `copy.options`; without `options` the
+  layout falls back to the single price card the Morocco retreat uses. Its banner master `public/images/zanzibar-tree-pose.jpg`
+  was taken from that repo's 1200×1800
+  `assets/images/retreats/zanzibar-tree-pose-view.webp` — same photo as
+  the gallery's `tree-pose-islands`, bigger master), Contact form, Footer.
 - **Bilingual German + English**: German is the default root page (`/`),
   English is prerendered at `/en/`, with a DE/EN nav switcher, localized
   section copy, localized alt/ARIA/form text, language-specific canonical
@@ -85,8 +96,13 @@ function server).
    `EMAIL_NOTIFICATION_TO`. The live form send path passed on 2026-07-04;
    confirm the exact test marker below is visible in the actual `info@`
    mailbox outside spam.
-2. **Search/indexing admin mailbox**: use `info@ninapfatischer.com` for Search
-   Console or related site-owner communication once the mailbox is confirmed.
+2. **Search Console**: DONE 2026-07-05 — domain property
+   `ninapfatischer.com` verified under `louisclarencepeters@gmail.com` via a
+   DNS TXT record in Netlify DNS (record id `6a4a28425c851d06bbd98226`, zone
+   `6a2bc90e09fbba3ce7d26ad0`; do not delete it or verification is lost).
+   `sitemap.xml` submitted, status Success, 2 pages discovered. If ownership
+   should move to `info@ninapfatischer.com` later, add it as an owner under
+   Settings → Users and permissions.
 3. **Final real-device QA**: verify DE/EN navigation, dark/light theme,
    section anchor alignment, gallery/lightbox, contact form, and PWA install
    on at least one iOS and one Android/desktop browser.

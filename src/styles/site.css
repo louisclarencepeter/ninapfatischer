@@ -265,21 +265,15 @@ html[data-motion='ready'] [data-animate].is-visible {
   color: var(--text-body);
 }
 
+/* Single language toggle: one pill labeled with the target language. */
 .np-lang-switch {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  padding: 3px;
-  border: 1.5px solid rgba(251, 247, 240, 0.46);
-  border-radius: var(--radius-pill);
-}
-
-.np-lang-link {
-  min-width: 36px;
-  min-height: 30px;
-  display: inline-flex;
-  align-items: center;
   justify-content: center;
+  min-width: 52px;
+  min-height: 36px;
+  padding: 0 16px;
+  border: 1.5px solid rgba(251, 247, 240, 0.46);
   border-radius: var(--radius-pill);
   font-family: var(--font-body);
   font-size: 12px;
@@ -291,28 +285,15 @@ html[data-motion='ready'] [data-animate].is-visible {
     transform 0.16s var(--ease-calm);
 }
 
-.np-lang-link:hover {
+.np-lang-switch:hover {
   color: var(--np-cream-lightest);
   transform: translateY(-1px);
-}
-
-.np-lang-link.is-active {
-  background: rgba(251, 247, 240, 0.2);
-  color: var(--np-cream-lightest);
 }
 
 .np-nav.is-scrolled .np-lang-switch {
   border-color: var(--border-soft);
   background: rgba(251, 247, 240, 0.56);
-}
-
-.np-nav.is-scrolled .np-lang-link {
   color: var(--text-body);
-}
-
-.np-nav.is-scrolled .np-lang-link.is-active {
-  background: var(--surface-card);
-  color: var(--text-heading);
 }
 
 .np-theme-toggle {
@@ -381,7 +362,7 @@ html[data-motion='ready'] [data-animate].is-visible {
 .np-bookbtn:active,
 .np-btn:active,
 .np-theme-toggle:active,
-.np-lang-link:active,
+.np-lang-switch:active,
 .np-social:active {
   transform: translateY(0) scale(0.98);
 }
@@ -639,14 +620,6 @@ html[data-motion='ready'] [data-animate].is-visible {
   color: var(--text-heading);
 }
 
-.np-mm-controls .np-lang-link {
-  color: var(--text-body);
-}
-
-.np-mm-controls .np-lang-link.is-active {
-  color: var(--accent-primary-strong);
-}
-
 .np-mm-social {
   margin-top: 18px;
   display: flex;
@@ -709,10 +682,7 @@ html[data-motion='ready'] [data-animate].is-visible {
 :root[data-theme='dark'] .np-nav.is-scrolled .np-theme-toggle {
   background: rgba(251, 247, 240, 0.08);
   border-color: rgba(251, 247, 240, 0.14);
-}
-
-:root[data-theme='dark'] .np-nav.is-scrolled .np-lang-link.is-active {
-  background: rgba(251, 247, 240, 0.12);
+  color: rgba(251, 247, 240, 0.86);
 }
 
 :root[data-theme='dark'] .np-nav.is-scrolled .np-bookbtn {
@@ -1637,6 +1607,21 @@ html[data-motion='ready'] [data-animate].is-visible {
   margin: 8px 0 0;
 }
 
+/* Booking options (e.g. the Zanzibar retreat's full / Zanzibar-only /
+   safari-only variants) stack in the price column with smaller figures. */
+.np-retreat-options {
+  display: grid;
+  gap: 22px;
+}
+
+.np-retreat-option .np-retreat-price {
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+}
+
+.np-retreat-option .np-retreat-price-note {
+  margin-top: 2px;
+}
+
 .np-retreat-incexc {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1749,6 +1734,20 @@ html[data-motion='ready'] [data-animate].is-visible {
   text-align: center;
   max-width: 620px;
   margin: 0 auto;
+}
+
+/* Long localized labels (e.g. the Destination Paradise link) must wrap on
+   narrow screens instead of widening the page. */
+.np-retreat-cta .np-btn {
+  max-width: 100%;
+  white-space: normal;
+  line-height: 1.35;
+}
+
+.np-retreat-cta-note {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin: 14px 0 0;
 }
 
 .np-retreat-cta-title {
@@ -1999,7 +1998,7 @@ html[data-motion='ready'] [data-animate].is-visible {
   display: grid;
   grid-template-columns: minmax(170px, 250px) minmax(0, 1fr);
   gap: clamp(24px, 4vw, 42px);
-  align-items: end;
+  align-items: center;
 }
 
 .np-footer-photo {
@@ -2092,15 +2091,30 @@ html[data-motion='ready'] [data-animate].is-visible {
   transform: translateX(2px);
 }
 
+.np-footer-details {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 7px;
+}
+
+.np-footer-details li {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: rgba(251, 247, 240, 0.72);
+}
+
 .np-footer-social-label {
   display: block;
-  margin-top: 28px;
+  margin-top: 30px;
   font-family: var(--font-eyebrow);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(251, 247, 240, 0.58);
+  color: rgba(251, 247, 240, 0.6);
 }
 
 .np-socials {

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { LANGUAGES, pathForLanguage } from '../i18n.js'
+import { pathForLanguage } from '../i18n.js'
 import { PUBLIC_CONTACT_EMAIL } from '../constants.js'
 
 const ArrowIcon = (
@@ -45,21 +45,20 @@ const socials = (emailLabel) => [
   },
 ]
 
+// A single toggle: the button names the language it switches TO, so the
+// German page shows "EN" and vice versa.
 function LanguageSwitcher({ copy, currentHash = '', language }) {
+  const target = language === 'de' ? 'en' : 'de'
   return (
-    <div className="np-lang-switch" role="group" aria-label={copy.language.label}>
-      {LANGUAGES.map((lang) => (
-        <a
-          key={lang}
-          href={`${pathForLanguage(lang)}${currentHash}`}
-          className={`np-lang-link${language === lang ? ' is-active' : ''}`}
-          hrefLang={lang}
-          aria-current={language === lang ? 'true' : undefined}
-        >
-          {copy.language[lang]}
-        </a>
-      ))}
-    </div>
+    <a
+      href={`${pathForLanguage(target)}${currentHash}`}
+      className="np-lang-switch"
+      hrefLang={target}
+      aria-label={copy.language.switch}
+      title={copy.language.switch}
+    >
+      {copy.language[target]}
+    </a>
   )
 }
 
