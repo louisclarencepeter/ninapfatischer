@@ -43,9 +43,10 @@ export const copy = {
       { href: '#contact', label: 'Kontakt' },
     ],
     language: {
-      tooltip: 'Zur englischen Version wechseln',
+      label: 'Sprache wählen',
       de: 'DE',
       en: 'EN',
+      names: { de: 'Deutsch', en: 'English' },
     },
     theme: {
       label: 'Darstellung wechseln',
@@ -437,9 +438,10 @@ export const copy = {
       { href: '#contact', label: 'Contact' },
     ],
     language: {
-      tooltip: 'Switch to the German version',
+      label: 'Choose language',
       de: 'DE',
       en: 'EN',
+      names: { de: 'Deutsch', en: 'English' },
     },
     theme: {
       label: 'Switch theme',

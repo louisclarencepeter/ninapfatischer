@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { pathForLanguage } from '../i18n.js'
+import { LANGUAGES, pathForLanguage } from '../i18n.js'
 import { PUBLIC_CONTACT_EMAIL } from '../constants.js'
 
 const ArrowIcon = (
@@ -45,23 +45,72 @@ const socials = (emailLabel) => [
   },
 ]
 
-// A single toggle: the button names the language it switches TO, so the
-// German page shows "EN" and vice versa. A tooltip on hover/focus spells
-// out that the site exists in the other language.
+// Language picker: a pill showing the current language code with a caret;
+// clicking opens a small menu naming both language versions. The option
+// links stay in the DOM (hidden via CSS) so crawlers always see them.
 function LanguageSwitcher({ copy, currentHash = '', language }) {
-  const target = language === 'de' ? 'en' : 'de'
+  const [open, setOpen] = useState(false)
+  const wrapRef = useRef(null)
+  const menuId = useId()
+
+  useEffect(() => {
+    if (!open) return undefined
+    const onPointerDown = (e) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false)
+    }
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [open])
+
   return (
-    <a
-      href={`${pathForLanguage(target)}${currentHash}`}
-      className="np-lang-switch"
-      hrefLang={target}
-      aria-label={`${copy.language[target]} – ${copy.language.tooltip}`}
-    >
-      {copy.language[target]}
-      <span className="np-lang-tip" aria-hidden="true">
-        {copy.language.tooltip}
-      </span>
-    </a>
+    <div className="np-lang-wrap" ref={wrapRef}>
+      <button
+        type="button"
+        className="np-lang-switch"
+        aria-expanded={open}
+        aria-controls={menuId}
+        aria-label={`${copy.language[language]} – ${copy.language.label}`}
+        onClick={() => setOpen((v) => !v)}
+      >
+        {copy.language[language]}
+        <svg
+          className="np-lang-caret"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div className={`np-lang-menu${open ? '' : ' is-hidden'}`} id={menuId}>
+        {LANGUAGES.map((lang) => (
+          <a
+            key={lang}
+            href={`${pathForLanguage(lang)}${currentHash}`}
+            hrefLang={lang}
+            className={`np-lang-option${lang === language ? ' is-active' : ''}`}
+            aria-current={lang === language ? 'true' : undefined}
+            onClick={() => setOpen(false)}
+          >
+            <span className="np-lang-option-code">{copy.language[lang]}</span>
+            {copy.language.names[lang]}
+          </a>
+        ))}
+      </div>
+    </div>
   )
 }
 
