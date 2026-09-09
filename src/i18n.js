@@ -238,7 +238,7 @@ export const copy = {
         summary: [
           { label: 'Ort', value: 'Sansibar & Tansania' },
           { label: 'Dauer', value: '14 Tage' },
-          { label: 'Preis', value: 'Ab $4.890 p. P.' },
+          { label: 'Preis', value: 'Ab $2.400 p. P.' },
           { label: 'Termin', value: 'Erste Reise Anfang Dezember 2026' },
           { label: 'Optionen', value: 'Volles Retreat, nur Sansibar oder nur Safari' },
           { label: 'Gruppe', value: 'Max. 12 Gäste' },
@@ -633,7 +633,7 @@ export const copy = {
         summary: [
           { label: 'Place', value: 'Zanzibar & Tanzania' },
           { label: 'Length', value: '14 days' },
-          { label: 'Price', value: 'From $4,890 p.p.' },
+          { label: 'Price', value: 'From $2,400 p.p.' },
           { label: 'Dates', value: 'First departure early December 2026' },
           { label: 'Options', value: 'Full retreat, Zanzibar-only, or safari-only' },
           { label: 'Group', value: 'Max 12 guests' },
