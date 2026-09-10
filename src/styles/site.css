@@ -1551,6 +1551,9 @@ html[data-motion='ready'] [data-animate].is-visible {
 .np-retreat-summary-cta {
   align-self: stretch;
   min-width: 190px;
+  max-width: 100%;
+  white-space: normal;
+  line-height: 1.35;
 }
 
 .np-retreat-cols {
