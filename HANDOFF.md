@@ -1,6 +1,22 @@
 # Handoff — ninapfatischer.com
 
-_Last updated: 2026-07-06 (Zanzibar retreat promoted from feature card to a full section matching the Morocco layout, on `development`)._
+_Last updated: 2026-09-15 (Salty Shavasana website branding)._
+
+## Salty Shavasana logo — 2026-09-15
+
+- Supplied artwork: `docs/Salty-Shavasana-logo-cropped.png`; exact source copy
+  tracked in `assets/branding/salty-shavasana-source.png`.
+- Shared `BrandLogo` appears in the header, mobile menu, and footer. Legal
+  pages and the 404 page also show the logo. CSS keeps the transparent white
+  artwork visible on light and dark surfaces.
+- Versioned exports under `public/brand/` cover favicons, Apple touch icons,
+  both language manifests/shortcuts, and Open Graph/Twitter share images.
+  The original root icon URLs remain available with the new artwork.
+- Regenerate with `bash scripts/generate-brand-assets.sh` (ImageMagick).
+  The full artwork fits inside the app icons' maskable safe area. Keep asset
+  URLs versioned when changing artwork to avoid stale installed-app icons.
+- Validation: 15 tests pass, production build passes, dependency audit reports
+  zero vulnerabilities; desktop and mobile logo/theme checks completed.
 
 ## What this is
 
