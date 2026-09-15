@@ -26,7 +26,7 @@ export const copy = {
         'Yoga & Retreats in Marokko mit Nina Pfatischer: Vinyasa, Yin, Animal Flow, Mobility, Pranayama & Meditation. Finde deinen natürlichen Rhythmus.',
       ogDescription:
         'Yoga, das so viel mehr ist als Bewegung - verbinde dich mit deinem natürlichen Rhythmus, finde innere Ruhe und Verbundenheit.',
-      ogImageAlt: 'Nina lächelt der Sonne entgegen in einem grünen Garten',
+      ogImageAlt: 'Salty Shavasana — Nina Pfatischer Yoga',
       jobTitle: 'Yogalehrerin',
       schemaDescription:
         'Yogalehrerin, ausgebildet in Portugal und unterrichtend in Deutschland und Marokko. Pranayama & Meditation, Animal Flow, Slow Flow und Mobility - Achtsamkeit, Gelassenheit und Dankbarkeit.',
@@ -421,7 +421,7 @@ export const copy = {
         'Yoga classes & Morocco retreats with Nina Pfatischer: Vinyasa, Yin, Animal Flow, mobility, pranayama & meditation. Find your natural rhythm.',
       ogDescription:
         'Yoga that is so much more than movement - connect with your natural rhythm, find inner stillness and a sense of belonging.',
-      ogImageAlt: 'Nina smiling toward the sun in a green garden',
+      ogImageAlt: 'Salty Shavasana — Nina Pfatischer Yoga',
       jobTitle: 'Yoga Teacher',
       schemaDescription:
         'Yoga teacher trained in Portugal, teaching in Germany and Morocco. Pranayama & meditation, Animal Flow, Slow Flow, and mobility - mindfulness, serenity, and gratitude.',

@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { LANGUAGES, pathForLanguage } from '../i18n.js'
 import { PUBLIC_CONTACT_EMAIL } from '../constants.js'
+import BrandLogo from './BrandLogo.jsx'
 
 const ArrowIcon = (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -256,8 +257,9 @@ export default function Nav({ copy, language, theme, onBook, onToggleTheme }) {
       <div className="np-mm-panel">
         <div className="np-mm-head">
           <div className="np-mm-brand">
-            <span className="name">Nina Pfatischer</span>
-            <span className="sub">{copy.brandSub}</span>
+            <a href="#top" onClick={() => setMenuOpen(false)}>
+              <BrandLogo />
+            </a>
           </div>
           <button
             type="button"
@@ -326,8 +328,7 @@ export default function Nav({ copy, language, theme, onBook, onToggleTheme }) {
       <header className={`np-nav${scrolled ? ' is-scrolled' : ''}`}>
         <nav className="np-container np-nav-inner" aria-label={copy.navLabel}>
           <a href="#top" className="np-brand">
-            <span className="np-wordmark">Nina Pfatischer</span>
-            <span className="np-sub">{copy.brandSub}</span>
+            <BrandLogo />
           </a>
           <div className="np-nav-links">
             {copy.nav.map((l) => (

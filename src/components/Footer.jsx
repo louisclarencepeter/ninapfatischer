@@ -1,4 +1,5 @@
 import { PUBLIC_CONTACT_EMAIL } from '../constants.js'
+import BrandLogo from './BrandLogo.jsx'
 
 const FOOTER_IMG = '/images/gallery/rooftop-practice'
 const footerWebp = `${FOOTER_IMG}-w480.webp 480w, ${FOOTER_IMG}-w854.webp 854w`
@@ -103,6 +104,9 @@ export default function Footer({ copy, legalHrefs, onOpenCookieSettings }) {
               />
             </picture>
             <div className="np-footer-brand-copy">
+              <a href="#top" className="np-footer-logo-link">
+                <BrandLogo loading="lazy" />
+              </a>
               <div className="np-footer-wordmark">Nina Pfatischer</div>
               <p className="np-footer-tagline">{copy.footer.tagline}</p>
               <ul className="np-footer-details">

@@ -177,6 +177,41 @@ html[data-motion='ready'] [data-animate].is-visible {
   text-decoration: none;
 }
 
+.np-brand-logo {
+  display: block;
+  width: 118px;
+  height: auto;
+  max-width: 100%;
+}
+
+.np-brand {
+  flex: none;
+}
+
+.np-nav.is-scrolled .np-brand-logo,
+.np-mm-brand .np-brand-logo {
+  filter: brightness(0) saturate(100%) invert(18%) sepia(12%) saturate(688%) hue-rotate(349deg) brightness(96%) contrast(89%);
+}
+
+:root[data-theme='dark'] .np-nav.is-scrolled .np-brand-logo,
+:root[data-theme='dark'] .np-mm-brand .np-brand-logo {
+  filter: none;
+}
+
+.np-mm-brand .np-brand-logo {
+  width: 144px;
+}
+
+.np-footer-logo-link {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 24px;
+}
+
+.np-footer-logo-link .np-brand-logo {
+  width: 220px;
+}
+
 .np-wordmark {
   font-family: var(--font-display);
   font-weight: 500;
